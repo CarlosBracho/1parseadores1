@@ -1,0 +1,24 @@
+*/1 * * * * root curl 127.0.0.1/includes/mtp_cierre_nacionales_ag.php
+*/1 * * * * root sleep 3 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah.php
+*/1 * * * * root sleep 5 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag.php
+*/1 * * * * root sleep 8 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah.php
+*/1 * * * * root sleep 10 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag.php
+*/1 * * * * root sleep 13 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah.php
+*/1 * * * * root sleep 15 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag.php
+*/1 * * * * root sleep 18 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah.php
+*/1 * * * * root sleep 20 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag.php
+*/1 * * * * root sleep 23 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah.php
+*/1 * * * * root sleep 25 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag.php
+*/1 * * * * root sleep 28 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah.php
+*/1 * * * * root sleep 30 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag.php
+*/1 * * * * root sleep 33 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah.php
+*/1 * * * * root sleep 35 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag.php
+*/1 * * * * root sleep 38 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah.php
+*/1 * * * * root sleep 40 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag.php
+*/1 * * * * root sleep 43 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah.php
+*/1 * * * * root sleep 45 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag.php
+*/1 * * * * root sleep 48 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah.php
+*/1 * * * * root sleep 50 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag.php
+*/1 * * * * root sleep 53 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah.php
+*/1 * * * * root sleep 55 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag.php
+*/1 * * * * root sleep 58 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah.php

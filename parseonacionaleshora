@@ -1,0 +1,6 @@
+*/1 * * * * root sleep 5 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag_apertura.php
+*/1 * * * * root sleep 15 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah_apertura.php
+*/1 * * * * root sleep 25 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag_apertura.php
+*/1 * * * * root sleep 35 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah_apertura.php
+*/1 * * * * root sleep 45 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ag_apertura.php
+*/1 * * * * root sleep 55 && curl 127.0.0.1/includes/mtp_cierre_nacionales_ah_apertura.php

@@ -21,16 +21,15 @@ capitalcookie.txt
 twinspirecookie*.txt
 token_store.txt
 
-# Backups / Temporary
-* respaldo*
-* copy*
-* res*
-* .bak
-* mantenim iento
-* bueno no mantenimiento
-* copy
-* res2
-* x
+# Backups / Temporary (CORREGIDO SIN ESPACIOS)
+*respaldo*
+*copy*
+*res*
+*.bak
+*mantenimiento*
+*buenonomantenimiento*
+*res2*
+*x*
 
 # Test / Disposable scripts
 1.php
@@ -56,10 +55,10 @@ probar.php
 *.rar
 *.7z
 
-# AI Diagnostics (Rule 9.2)
+# AI Diagnostics & Automation Cache
 pruebas_ia/
-# Cache, perfiles de sesión y temporales de automatización
-
+parseadores_ia/bot_profile/
+parseadores_ia/img/
 *.pma
 *.binarypb
 *-journal
@@ -67,7 +66,7 @@ pruebas_ia/
 lockfile
 DevToolsActivePort
 
-# Descargas temporales y respaldos manuales con nombres corruptos
+# Descargas temporales y nombres corruptos
 *.descarga
 *.descarga2
 *malo*
