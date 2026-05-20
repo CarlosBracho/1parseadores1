@@ -1,0 +1,242 @@
+<?php
+  
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+echo "This is a warning error";
+//include ("file.php");
+
+
+if (!isset($_SESSION)){session_start();} require_once('../Connections/conexionbanca.php');include('../includes/mtp_funcion.php');
+// agregue reapertura 
+$fechaactual=fechaactualbd();
+$query_Recordset1_alertas = sprintf(
+	"SELECT * FROM 
+alertas
+WHERE  
+idalertas=5",
+	GetSQLValueString(fechaactualbd(), "date")
+);
+$Recordset1_alertas = mysqli_query($conexionbanca, $query_Recordset1_alertas) or die(mysqli_error($conexionbanca));
+$row_Recordset1_alertas = mysqli_fetch_assoc($Recordset1_alertas);
+$totalRows_Recordset1_alertas = mysqli_num_rows($Recordset1_alertas);
+//echo $totalRows_Recordset1_alertas.' 333333 '.$row_Recordset1_alertas['activo_archivo'].'<br>';
+
+
+
+
+if($totalRows_Recordset1_alertas>=1 && $row_Recordset1_alertas['activo_archivo']==0){
+$query_Recordset111 = sprintf("SELECT * 
+	FROM 
+	cookies 
+	WHERE
+	id_cookie = 1 AND cookinombre = %s
+    LIMIT 1",
+	GetSQLValueString("twinspire", "text"));   
+$Recordset111 = mysqli_query($conexionbanca, $query_Recordset111) or die(mysqli_error($conexionbanca));
+$row_Recordset111 = mysqli_fetch_assoc($Recordset111);
+$totalRows_Recordset111 = mysqli_num_rows($Recordset111);
+//echo $row_Recordset111['cookiefull'];
+
+
+function consultaCierreTwinspires2($cookie,$conexionbanca) {
+	$hipodomo[0]=""; $nombre[0]=""; $horacarr[0]=""; $BrisCode[0]=""; $numeroca[0]=""; $restante[0]=""; $horacier[0]="";
+	exec('pwsh twinspireps1.ps1');
+	
+	$str_datos = get_url_contents('http://localhost/includes/twinspireps1.json'); 
+$fulldatos = json_decode($str_datos,true); 
+
+if(count($fulldatos)>2){
+	echo 'count '.count($fulldatos).' ppaa<br>'; 
+
+}else{
+            
+	$msj=" nuevo cooike twinspire esta fallando";
+	$msjx=utf8_encode($msj);
+	$post=[
+'chat_id'=>-214345883,
+'text'=>$msjx,
+];
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, "https://api.telegram.org/bot309341364:AAETe6H8z5HXbqdv5XhpTEY-nsfBKtYQ0mE/sendMessage");
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+	curl_exec($ch);
+	curl_close($ch);
+
+}
+//var_dump($fulldatos); 
+//print_r($fulldatos); 
+if (isset($fulldatos)) {
+$x=0;
+
+foreach($fulldatos as $CurrentRace) {
+	//print_r($CurrentRace); 
+	echo 'aqui estoy<br><br><br><br><br><br>';
+	$currentRaceNumber=$CurrentRace["currentRaceNumber"];
+
+	$currentRaceNumbermenos1=$currentRaceNumber-1;
+   $hipodomo[$x]=strtoupper($CurrentRace["brisCode"]);
+   //echo '<br>';
+   //echo $CurrentRace["brisCode"];
+   //echo '<br><br>';
+   $RaceStatus=$CurrentRace["races"][$currentRaceNumbermenos1]["status"];
+ 
+   if ($RaceStatus=="Open"){
+
+   if ($RaceStatus=="Off" OR $RaceStatus=="Closed") $restante[$x]=0;
+       else if ($RaceStatus=="Open" && $CurrentRace["races"][$currentRaceNumbermenos1]["mtp"]==0) $restante[$x]=2;
+           else $restante[$x]=$CurrentRace["races"][$currentRaceNumbermenos1]["mtp"];
+   $numeroca[$x]=$CurrentRace["races"][$currentRaceNumbermenos1]["raceNumber"];
+   $horaInicial=horaactual8();
+   $minutoAnadir=$restante[$x];
+   $segundos_horaInicial=strtotime($horaInicial);
+   $segundos_minutoAnadir=$minutoAnadir*60;
+   $nuevaHora=date("H:i",$segundos_horaInicial+$segundos_minutoAnadir);
+   $horacier[$x]=$nuevaHora;
+   $horacarr[$x]=$nuevaHora;
+   echo ' hipodomo= '.$hipodomo[$x];
+   echo ' numeroca= '.$numeroca[$x];
+   echo ' RaceStatu= '.$RaceStatus.'<br>';
+   $x++;
+}}
+}
+return array($horacarr, $hipodomo, $numeroca, $restante, $horacier);
+
+
+
+}
+
+
+
+
+
+
+
+
+list($horacarr, $hipodomo, $numeroca, $restante, $horacier)=consultaCierreTwinspires2($row_Recordset111['cookiefull'],$conexionbanca);
+//var_dump($hipodomo);
+$fech=fechaactualbd();
+$horasistema=horaactual();
+$query_Recordset1 = sprintf("SELECT 
+		hi.pre_twin,
+		hi.nom_hipodromo,
+		ca.cod_carrera,
+		ca.num_carrera,
+ 		ca.est_carrera,
+ 		ca.hor_carrera,
+		ca.est_cierre,
+		ca.ABIERTOX,
+		ca.horaapertura
+	FROM carrera ca, hipodromo hi
+	WHERE	ca.cod_hipodromo=hi.cod_hipodromo AND
+ca.simulcast=0 AND
+		ca.eje_primero=0 AND
+		(ca.est_cierre=0  OR ca.est_cierre=1  OR ca.est_cierre=3) AND
+        hi.mtp_twinspire=1 AND 
+		(ca.est_carrera=0  OR ca.est_carrera=1) AND
+		ca.eje_primero=0 AND 
+		ca.fec_carrera=%s",
+
+
+
+
+
+GetSQLValueString($fech, "date"));  
+$Recordset1 = mysqli_query($conexionbanca, $query_Recordset1) or die(mysqli_error($conexionbanca));
+$row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+$totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+echo 'totalRows_Recordset1= '.$totalRows_Recordset1;
+?>
+<?php
+if ($totalRows_Recordset1>0) {
+	$g=1;
+    do {
+
+		$f=0;
+		$control=1;
+		if ($hipodomo[0]!="") {
+			foreach($hipodomo as $hip){
+				if (($row_Recordset1['est_cierre']==0 OR $row_Recordset1['est_cierre']==1 OR $row_Recordset1['est_cierre']==3) && trim($hipodomo[$f])==trim($row_Recordset1['pre_twin']) && $numeroca[$f]==$row_Recordset1['num_carrera'] && $restante[$f]<=50) {
+					$hor_carrera=$horacier[$f];
+					$cod_carrera=$row_Recordset1['cod_carrera'];
+					$cie=2;
+	 
+						$est=1;
+					if ($est!=0) { 
+						if($row_Recordset1['ABIERTOX']==0){$abiertox="TWINSPA";}else{$abiertox=0;}
+						if($row_Recordset1['horaapertura']=='00:00:00'){$horaapertura=$horasistema;}else{$horaapertura=$row_Recordset1['horaapertura'];}
+						if($row_Recordset1['est_cierre']==1){
+							$carrA=$row_Recordset1['nom_hipodromo'].': ...'.$row_Recordset1['num_carrera'];
+							$msj="Twinspire reabrio esta carrera" . "\n".$carrA;
+							$msjx=utf8_encode($msj);
+							$post=[
+								'chat_id'=>-214345883,
+								'text'=>$msjx,
+							];
+							$ch = curl_init();
+							curl_setopt($ch, CURLOPT_URL,"https://api.telegram.org/bot309341364:AAETe6H8z5HXbqdv5XhpTEY-nsfBKtYQ0mE/sendMessage");
+							curl_setopt($ch, CURLOPT_POST, 1);
+							curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+							curl_exec ($ch);
+							curl_close ($ch);
+							
+							
+						}
+							$updateSQL = sprintf("UPDATE carrera SET 
+							hor_carrera=%s, 
+							hor_mtp=%s, 
+							est_carrera=%s, 
+							est_cierre=%s, 
+							supercontrol=%s, 
+                            ABIERTOX=%s, 
+                            horaapertura=%s 
+												  WHERE cod_carrera=%s",
+													GetSQLValueString($hor_carrera, "date"),
+													GetSQLValueString($hor_carrera, "date"),
+													GetSQLValueString($est, "int"),
+													GetSQLValueString($cie, "int"),
+												    GetSQLValueString(0, "int"),
+                                                    GetSQLValueString($abiertox, "text"),
+													GetSQLValueString($horaapertura, "date"),
+													GetSQLValueString($cod_carrera, "int"));
+							$Result1 = mysqli_query($conexionbanca, $updateSQL) or die(mysqli_error($conexionbanca));
+
+
+               
+                $insertSQL2 = sprintf(
+                    "INSERT INTO quiencierrayabre 
+					(codcarrera, 
+					fechaquien, 
+					que) 
+					VALUES (%s, %s, %s)",
+                    GetSQLValueString($cod_carrera, "int"),
+                    GetSQLValueString($fechaactual, "date"),
+                    GetSQLValueString(11, "int"));
+                $Result12 = mysqli_query($conexionbanca, $insertSQL2) or die(mysqli_error($conexionbanca));
+
+
+
+
+
+
+
+
+					}
+					$g++;
+					break;
+				}
+				$f++;
+			}
+		}
+		
+	} while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
+mysqli_free_result($Recordset1);
+}}
+$file = "twinspireps1.json";
+if (!unlink($file)) {
+    echo("Error deleting $file");
+} else {
+    echo("Deleted $file");
+}
+?>

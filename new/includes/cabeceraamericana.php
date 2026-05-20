@@ -1,0 +1,52 @@
+<script language="javascript">
+	var msg = "Esta función ha sido anulada.";
+	function RClick(boton){
+	if (document.layers && boton.which == 3) {
+	alert(msg); return false; }
+	if (document.all && event.button == 2 || event.button == 3) {
+	alert(msg); return false; }
+	}
+	document.onmousedown = RClick
+</script>
+<script language="javascript"> 
+<!-- 
+function abrir_ventana() 
+{ 
+propiedades="width=500,height=480,Aresizable=no,location=no,menubar=no,scrollbars=no,status=no,toolbar=no,fullscreen=no,dependent=yes";
+window.open("../ventas/carreras_hoy.php","_blank",propiedades); 
+} 
+function rimprimeultimo() 
+{ 
+propiedades="width=640,height=580,Aresizable=no,location=no,menubar=no,scrollbars=no,status=no,toolbar=no,fullscreen=no,dependent=yes";
+window.open("../ventas/ventas_reimprimir_ultimo.php","_blank",propiedades); 
+} 
+function reportejugada() 
+{ 
+propiedades4="menubar=no,maximize=no,resizable=no,left=0,top=0,scrollbars=no,toolbar=no";
+window.open("../ventas/ventas_reporte_jugadas.php","_blank",propiedades4); 
+} 
+
+function cambio() 
+{ 
+pro1="width=440,height=480,Aresizable=no,location=no,menubar=no,scrollbars=no,";
+pro2="status=no,toolbar=no,fullscreen=no,dependent=yes,left=0,top=0";
+window.open("../ventas/ventas_cambiar_clave_usuario.php","_blank",pro1+pro2); 
+} 
+//--> 
+</script>
+<link href="../estilo/estilomenu.css" rel="stylesheet" type="text/css" />
+<nav>
+    <ul>
+        <li><a href="../admin/index.php">Carreras <br/>Pacificnas</a></li>
+        <li><a href="../admin_hnac/index.php">CARRERAS <br/>NACIONALES</a></li>
+        <li><a href="../admin/1parley.php"><br/>PARLEY</a></li>              
+     	<li><a href="../admin_lot/index.php"><br/>LOTERIA</a></li>
+        <li><a href="">TABLA FIJA <br/>Y POR PUESTO</a></li>
+        <li><a href="">JUGADAS <br/>DE OFICINA</a></li>
+        <li><a href="">GASTOS <br/>Y ANOTES</a></li>
+        <li><a href="../admin/distri_reporte_general_total.php">REPORTE <br/>GLOBAL</a></li>
+        <li><a href="">INFORMACION<br/>AGENTE-VENDEDOR</a></li>
+        <li><a href="javascript:cambio()">CAMBIAR <br/>CLAVE</a></li>
+        <li><a href="../ventas/cerrar_sesion_vendedor.php"><br/>SALIR</a></li>
+    </ul>
+</nav>

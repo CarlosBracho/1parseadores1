@@ -1,0 +1,24 @@
+Invoke-WebRequest -Uri "https://service.tvg.com/graph/v2/query" `
+-Method "POST" `
+-TimeoutSec 1 `
+-Headers @{
+"method"="POST"
+  "authority"="service.tvg.com"
+  "scheme"="https"
+  "path"="/graph/v2/query"
+  "sec-ch-ua"="`" Not;A Brand`";v=`"99`", `"Google Chrome`";v=`"91`", `"Chromium`";v=`"91`""
+  "accept"="application/json, text/plain, */*"
+  "sec-ch-ua-mobile"="?0"
+  "user-agent"="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+  "origin"="https://www.tvg.com"
+  "sec-fetch-site"="same-site"
+  "sec-fetch-mode"="cors"
+  "sec-fetch-dest"="empty"
+  "referer"="https://www.tvg.com/"
+  "accept-encoding"="gzip, deflate, br"
+  "accept-language"="es-ES,es;q=0.9"
+  "cookie"="bid=99af9d3f835c; _ga=GA1.2.348155336.1625309918; _gcl_au=1.1.1258611289.1625309918; _pxvid=a1ff7186-dbed-11eb-af46-0242ac120019; _rdt_uuid=1625309922215.392b40fc-0eac-485a-a639-ab0851d7cd37; _scid=c03797bc-126d-4bf1-b6b7-26da4ab3ec43; _qubitTracker=c3fn3j3khq0-0kqnnkaku-wvmm3io; qb_generic=:XpsBUWN:.tvg.com; _fbp=fb.1.1625309922899.589576631; QuantumMetricUserID=5cd907b5c06779ae415697a8f6e6ae2c; _gid=GA1.2.322536364.1626467888; acqOverLayShown=true; _sctr=1|1626408000000; pxcts=20038e20-e678-11eb-a2df-35bd8d17f3d2; rbzid=yd0mAnCLzcD1kpGlFfvgJwPmRosJEc2GA1Pgtjsv6XfsBObs87iMzdsSBZrfj+zvGhJEO7GFORdFaH1gYry68gw5Uw29fWI3gm1hx0v2OMIfz02SbDcxGz93ioxNbwGUzwxcFckT/L3Us/DrpXqeQVN0CBgB+LYBQI90o5PExP3ZbCYkG71+hBjjBpSnPr2d6GIg+wKUFXgsNNogV/XlELDncWKyaC4BMWRjqR0fUz33UHE07WCmVtVv1C8erK1bgKzkGYRC/JkHmQTWwIgThuUNQsMco0r+9170j4kkSD+2IXv6D/ToLLVzLXbpzE0j; rbzsessionid=3cfc20701b0192712e029deca595d252; TVG_favorite_tracks=; QuantumMetricSessionID=320f70d4816cbe2b6192cb25b9d25a65; _uetsid=c3478be0e67511eb9e63ef5568438158; _uetvid=a02cdbb0dbed11ebb0819f590dc9cc04; _px3=ba1a492df3ad730bb66aa07b9a67d3f2942957f68df5fc0056a048fbbad996bc:PHtCSbcLN/w1yi/0O4BYMnM69j3xQg7Xc5DOsLYD98hUX+kf/ECSQq+wh5RA2fSX0OzbRUATKKYlcXd2R4DjTg==:1000:gJ4Hme/VHx+sJ1wgPtAP5Synv/zIvchfqitTQc5jmDFPkGA8bQ/o7IJ3pvZLu6QtsF7r6jeJIKxE4CpnookUA15D90p7HLBh+ZmCRBK/U5iXk7JFGxaAz9Iv3/h/Jd+Buz+ge6ZC4d1DFE8ywKDQrf6GgbHuukZw2mWqp4NvHDDXL8zs61pyUbBycCQWWkft4axgIVhN/N0i2Z9zi8tuUQ==; qb_permanent=c3fn3j3khq0-0kqnnkaku-wvmm3io:8:1:4:4:0::0:1:0:Bg4ELl:Bg8gSV:A::::172.104.20.154:cedar%20knolls:2043:united%20states:US:40.82:-74.45:new%20york:501:new%20jersey:31:migrated|1626473620909:EnX7==I=CI6L=W&FLU8==I=CYBX=F/::XqxYeWt:XqxYeVP:0:0:0::0:0:.tvg.com:0; qb_session=1:0:8:EnX7=B&FLU8=B:0:XqxYeVP:0:0:0:0:.tvg.com"
+} `
+-OutFile tvg.json `
+-ContentType "application/json;charset=UTF-8" `
+-Body "{`"operationName`":`"getLhnInfo`",`"query`":`"query getLhnInfo(\n`$wagerProfile: String,\n`$trackFilter: TrackListFilter,\n`$product: String,\n`$device: String,\n`$brand: String,\n`$raceFilter: RaceListFilter,\n`$withGreyhounds: Boolean\n){\n    lhnTracks: tracks (profile: `$wagerProfile, filter: `$trackFilter){\n        id\n        races (filter: `$raceFilter, page: {current: 0, results: 2}, sort:{byPostTime: ASC}){\n            id\n            mtp\n            number\n            postTime\n            isGreyhound\n            location {\n              country\n            }\n            track {\n                code\n                name\n                perfAbbr\n            }\n            highlighted (product: `$product, device: `$device, brand: `$brand) {\n                description\n                pinnedOrder\n                action\n                style\n            }\n            type {\n                code\n            }\n            status {\n                code\n            }\n            video {\n                onTvg\n                onTvg2\n            }\n        }\n    }\n    lhnFeatureRaces: races (filter: {isHighlighted: true, status: [\`"MO\`", \`"O\`", \`"SK\`", \`"IC\`"],  allRaceClasses: `$withGreyhounds}, profile: `$wagerProfile){\n          id\n          mtp\n          number\n          postTime\n          isGreyhound\n          location {\n            country\n          }\n          track {\n              code\n              name\n              perfAbbr\n          }\n          highlighted (product: `$product, device: `$device, brand: `$brand) {\n              description\n              pinnedOrder\n              action\n              style\n          }\n          type {\n              code\n          }\n          status {\n              code\n          }\n          video {\n              onTvg\n              onTvg2\n          }\n    }\n}\n`",`"variables`":{`"wagerProfile`":`"PORT-Generic`",`"trackFilter`":{`"allTrackClasses`":true},`"raceFilter`":{`"status`":[`"MO`",`"O`",`"IC`"],`"allRaceClasses`":true},`"product`":`"TVG4`",`"device`":`"Desktop`",`"brand`":`"TVG`",`"breedsFilter`":[],`"withGreyhounds`":true}}"

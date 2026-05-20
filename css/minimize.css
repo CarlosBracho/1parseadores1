@@ -1,0 +1,395 @@
+a.two:hover {color:#000000;font-size:115%;}
+a.two:hover, a.two:active {text-decoration:none;}
+.col1 {
+	width: 72%;
+    display: table-cell;
+	height:14px;
+	font-size:9px; 
+	padding:2px 0 6px 2px; 
+	margin:-10px 0 0 0; 
+}
+.col11 {
+	height:14px;
+	padding:0 0 0 10px;
+	font-size:10px;
+	margin:-6px 0 0 0;
+	width: 72%;
+    display: table-cell;
+}
+.col2 {
+	width: 68%;
+    display: table-cell;
+}
+.col3 {
+	width: 45.5%;
+    display: table-cell;
+}
+.col4 {
+	width: 59%;
+    display: table-cell;
+}
+.col5 {
+	width: 47%;
+    display: table-cell;
+}
+.col6 {
+	width: 23%;
+    display: table-cell;
+}
+.col7 {
+	width: 24%;
+    display: table-cell;
+	height:18px;
+	font-size:8px
+}
+.col8 {
+	width: 54%;
+    display: table-cell;
+	height:19px;
+}
+.tto {
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 5px 8.9px 5px 0;
+	border-color: transparent #288DD5 transparent #288DD5;
+	margin:3% 0 0 1.5%; float: left;
+} 
+.tfrom{
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 5px 0 5px 8.7px;
+	border-color: transparent transparent transparent #2ECC40;
+	margin:3% 0 0 -0.1%;
+	float:right;
+}
+.ttoDiv {
+	background:#288DD5; 
+	color:#FFFFFF;
+	width:82%; 
+	padding:1.8% 1.8% 1.8% 1.8%; 
+	line-height:110%; 
+	font-size:10px;
+	border-radius: 3%;
+	text-align:left; 
+	float:left; 
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.tfromDiv {
+	background:#2ECC40;
+	color:#FFFFFF;
+	width:82%; 
+	padding:0 1.8% 1.8% 1.8%; 
+	line-height:110%; 
+	font-size:10px;border-radius: 3%;
+	text-align:right; 
+	float:right; 
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.chat-box-normal {
+	width:600px;
+	position:fixed;
+	right:-560px;
+	top:25%;
+	z-index:99999;
+	transition:all 1s
+}
+.chat-box-normal .green-chat {
+	width:40px;
+	height:300px;
+	float:left;
+	transition:all .3s ease-in-out;
+	text-align:left;
+	background:#26ADE4 url(../img/chat-head-closed.png) no-repeat 0 0;
+	cursor:pointer;
+	position:relative;
+	box-shadow:-4px 0 12px 0 rgba(0,0,0,.3)
+}
+.chat-box-normal .green-chat span {
+	width:40px;
+	height:40px;
+	background:transparent url(../img/chat-head-arrow.png) no-repeat center;
+	position:absolute;
+	left:0;
+	top:0
+}
+.clicked {
+	width:560px!important;
+	position:fixed;
+	right:0;
+	top:25%;
+	z-index:9999999;
+	transition:all 1s
+}
+.clicked .green-chat span {
+	display:none
+}
+.clicked .green-chat:hover span {
+	display:none
+}
+.clicked .green-chat {
+	width:40px;
+	height:300px;
+	cursor:default
+}
+.clicked .green-chat .close {
+	width:40px;
+	height:35px;
+	position:absolute;
+	right:0;
+	top:0;
+	background:transparent url("../img/close.png") no-repeat center
+}
+.chat-box-normal .chat-data {
+	width:510px;
+	height:290px;
+	padding:10px 0 0 10px;
+	float:left;
+	background:#fff;
+	display:block;
+	box-shadow:0 0 15px 0 rgba(0,0,0,.3)
+}
+.chat-box-normal .chat-data .head {
+	width:90%;
+	float:left;
+	margin:2px 0 18px;
+	font-family:"Open Sans",Arial,sans-serif;
+	font-weight:600;
+	font-size:21px;
+	color:#363636;
+	letter-spacing:-1px
+}
+.chat-box-normal .chat-data .head span {
+	font-family:"Open Sans",Arial,sans-serif;
+	font-size:21px;
+	color:#26ADE4
+}
+.chat-box-normal .chat-data p {
+	width:96%;
+	padding-left:10px;
+	float:left;
+	margin:8px 0;
+	font-family:"Open Sans",Arial,sans-serif;
+	font-weight:600;
+	font-size:15px;
+	color:#777;
+	background:transparent url("../img/chat-arrow.png") no-repeat left center
+}
+.clicked .chat-call {
+	width:540px;
+	height:35px;
+	float:right;
+	background:#363636;
+	display:block;
+	box-shadow:0 4px 12px 0 rgba(0,0,0,.3)!important
+}
+.chat-box-normal .chat-call {
+	width:560px;
+	height:35px;
+	float:right;
+	background:#363636;
+	display:block;
+	box-shadow:0
+}
+.chat-box-normal .chat-call p {
+	width:90%;
+	padding-left:25px;
+	float:left;
+	margin:6px 0 0 18px;
+	font-family:"Open Sans",Arial,sans-serif;
+	font-weight:700;
+	font-size:14px;
+	color:#fff;
+	background:transparent url("../img/phone_chat.png") no-repeat left center
+}
+.chat-box-normal .chat-call p a {
+	color:#fff
+}
+.circle-text {
+    width:15%;
+}
+.circle-text:after {
+    content: "";
+    display: block!important;
+    width: 100%;
+    height:0;
+	background:#4679BD;
+    padding-bottom: 100%;
+    -moz-border-radius: 50%; 
+    -webkit-border-radius: 50%; 
+    border-radius: 50%;
+}
+.circle-text div {
+    float:left;
+    width:100%;
+    padding-top:50%;
+    line-height:1em;
+    margin-top:-0.5em;
+    text-align:center;
+    color:white;
+	font-size:18px;
+	font-family:'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif;
+}
+.circulo {
+  padding-top:4%;	
+  float:left;
+  height: 27px;
+  width: 35px;
+  display: table-cell;
+  text-align: center;
+  font-size:18px;
+  vertical-align: middle;
+  border-radius: 50%;
+  color:white;
+  font-family:'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif;
+  z-index:2;
+}
+.circulop {
+  width: 18px;
+  display: table-cell;
+  text-align: center;
+  font-size:9px;
+  vertical-align: middle;
+  border-radius: 50%;
+  color:white;
+  font-family:'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif;
+  z-index:40;
+  background:#B30002;
+  margin:-13.5% 0 0 -92.5%;
+  float:left;
+}
+.circulopnone {
+  width: 18px;
+  display: table-cell;
+  text-align: center;
+  font-size:9px;
+  vertical-align: middle;
+  border-radius: 50%;
+  color:white;
+  font-family:'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif;
+  z-index:40;
+  background: none;
+  margin:-13.5% 0 0 -92.5%;
+  float:left;
+}
+.circulop2 {
+  height: -105px;
+  width: 15px;
+  display: table-cell;
+  text-align: center;
+  font-size:10px;
+  vertical-align: middle;
+  border-radius: 50%;
+  color:white;
+  font-family:'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif;
+  z-index:1;
+  background:#B30002;
+  margin:-12% 0 0 -92%;
+  float:left;
+}
+
+.new-message {
+  width: 18px;
+  display: table-cell;
+  text-align: center;
+  font-size:9px;
+  vertical-align: middle;
+  border-radius: 50%;
+  color:white;
+  font-family:'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif;
+  z-index:40;
+  background:#B30002;
+  margin:-13.5% 0 0 -15%;
+  float:left;
+}
+.new-message2 {
+	color: #FFFFFF;
+	background: #720103;
+	width:5%;
+	height:14px; 
+	display:table-cell;
+	text-align: center;
+	vertical-align: middle;
+	font-size:10px;
+	padding:-10%;
+}
+.benviar {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  color: #555;
+  display: inline-block;
+  font-family:'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif;
+  padding: 18px 11px 18px 11px;
+  text-decoration: none;
+}
+.divenviar {
+	height:19%; 
+	width:22%; 
+	float:left;
+	vertical-align: middle; 
+	background:#F1F1F1;
+	font-size:10px;
+	color:#333333;
+}
+.comment {
+	width:98%;
+	resize:none;
+	font-size:12px;
+	vertical-align: top;
+	box-shadow: none;
+	transition:none;
+	line-height:12px;
+	padding:0;
+	height:54px;
+}
+.c1 { 
+	width: 8px; 
+	margin:4% 0 0 0px;
+	height: 8px;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+}
+.c2 { 
+margin:4% 0 0 -9px;
+}
+.tablaMen {
+	width:98%;
+}
+.laIzqMob {
+	width:3%; 
+	height:98vh; 
+	float:left;
+	transition:all .3s ease-in-out;
+	text-align:left;
+	background:#26ADE4 url(../img/chat-head-closed.png) no-repeat 0 0;
+	box-shadow:-4px 0 12px 0 rgba(0,0,0,.2);
+	z-index:1;
+}
+.laDerMob {
+	background:#000000;
+	width:97%; 
+	height:98vh; 
+	float:left;
+	text-align:left;
+	z-index:3;
+	border:thin #BB0A25;
+}
+.new-messageMob {
+  width: 40px;
+  height:40px;
+  display: table-cell;
+  text-align: center;
+  font-size:12px;
+  vertical-align: middle;
+  border-radius: 50%;
+  color:white;
+  font-family:'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif;
+  background:#B30002;
+  margin:-0.5% 0 0 -3.3%;
+  float:left;
+  position:relative;
+  z-index:2;
+}

@@ -1,0 +1,60 @@
+# IDE
+.vscode/
+.idea/
+
+# System / OS
+Thumbs.db
+Desktop.ini
+*.lnk
+
+# PHP / Laragon
+node_modules/
+vendor/
+.env
+php.ini
+*.log
+
+# Cookies / Session
+cookies/
+cookie.txt
+capitalcookie.txt
+twinspirecookie*.txt
+token_store.txt
+
+# Backups / Temporary
+* respaldo*
+* copy*
+* res*
+* .bak
+* mantenim iento
+* bueno no mantenimiento
+* copy
+* res2
+* x
+
+# Test / Disposable scripts
+1.php
+11.php
+22.php
+777.php
+prueba.php
+prueba2.php
+borrar.php
+borrarchat.php
+borrardetectapais.php
+borrardividir.php
+borrarpagacodigo.php
+info.php
+phpinfo.php
+curltest.php
+curltwins.php
+probar.php
+
+# Large / Non-essential assets
+*.pdf
+*.zip
+*.rar
+*.7z
+
+# AI Diagnostics (Rule 9.2)
+pruebas_ia/

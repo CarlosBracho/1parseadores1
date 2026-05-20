@@ -1,0 +1,384 @@
+<?php
+if (!isset($_SESSION)) {
+    session_start();
+} require_once('../Connections/conexionbanca.php');
+$MM_authorizedUsers = "D"; $MM_restrictGoTo = "../index.php"; include("../includes/comprobar_acceso.php");
+$currentPage = $_SERVER["PHP_SELF"];
+$maxRows_Recordset1 = 600;
+$pageNum_Recordset1 = 0;
+
+$xCodigo = "-1";
+$xCodigo2 = "-1";
+$editFormAction = $_SERVER['PHP_SELF'];
+if (isset($_SERVER['QUERY_STRING'])) {
+  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+}
+
+if (isset($_GET["recordID"])) {
+  $xCodigo = $_GET["recordID"];
+  $xCodigo2 = $_GET["recordID"];
+}
+
+$modulo=18;
+$modulo2=10;
+
+$hor=horaactual();
+$fec=fechaactualbd();
+$xbanca_Recordset12 = 2;
+
+$query_Recordset12 = sprintf("/* PARSEADORES1 distri\hipodromos_distri.php - QUERY 1 */ SELECT cod_hipodromo, nom_hipodromo, hor_carrera FROM carrera WHERE carrera.fec_carrera = %s AND carrera.hor_carrera >= %s AND carrera.est_carrera = 1 AND carrera.cod_banca = %s ORDER BY carrera.hor_carrera  LIMIT 0, 20", 
+GetSQLValueString($fec, "date"), GetSQLValueString($hor, "date"), GetSQLValueString($xbanca_Recordset12, "int"));
+$Recordset12 = mysqli_query($conexionbanca, $query_Recordset12) or die(mysqli_error($conexionbanca));
+$row_Recordset12 = mysqli_fetch_assoc($Recordset12);
+$totalRows_Recordset12 = mysqli_num_rows($Recordset12);
+
+$query_Recordset3 = sprintf(
+  "/* PARSEADORES1 distri\hipodromos_distri.php - QUERY 2 */ SELECT ta.cod_taquilla, ta.nom_taquilla
+FROM taquilla ta, taquilla_opc_ame tp, agencia ag, banca ba 
+WHERE ta.cod_taquilla = tp.cod_taquilla AND ta.cod_taquilla != %s AND 
+ag.cod_agencia = ta.cod_agencia AND ba.cod_banca = ag.cod_banca AND ba.cod_banca = %s
+ORDER BY nom_taquilla",
+  GetSQLValueString($xCodigo2, "int"),
+  GetSQLValueString($_SESSION['MM_cod_banca'], "int")
+);
+$Recordset3 =mysqli_query($conexionbanca, $query_Recordset3) or die(mysqli_error($conexionbanca));
+$row_Recordset3 = mysqli_fetch_assoc($Recordset3);
+$totalRows_Recordset3 = mysqli_num_rows($Recordset3);
+
+$query_Recordset38 = sprintf(
+  "/* PARSEADORES1 distri\hipodromos_distri.php - QUERY 3 */ SELECT ta.cod_taquilla, ta.nom_taquilla
+FROM taquilla ta, taquilla_opc_ame tp, agencia ag, banca ba 
+WHERE ta.cod_taquilla = tp.cod_taquilla AND ta.cod_taquilla != %s AND 
+ag.cod_agencia = ta.cod_agencia AND ba.cod_banca = ag.cod_banca AND ba.cod_banca = %s
+ORDER BY nom_taquilla",
+  GetSQLValueString($xCodigo2, "int"),
+  GetSQLValueString($_SESSION['MM_cod_banca'], "int")
+);
+$Recordset38 =mysqli_query($conexionbanca, $query_Recordset38) or die(mysqli_error($conexionbanca));
+$row_Recordset38 = mysqli_fetch_assoc($Recordset38);
+$totalRows_Recordset38 = mysqli_num_rows($Recordset38);
+
+
+
+$query_Recordset18 = sprintf(
+  "/* PARSEADORES1 distri\hipodromos_distri.php - QUERY 4 */ SELECT 
+  ta.cod_taquilla, ta.nom_taquilla, ta.cod_agencia, ag.cod_agencia, ag.nom_agencia, ag.cod_banca,
+  ba.cod_banca, ba.nom_banca, us.nom_usuario, us.cod_taquilla
+  FROM
+  taquilla ta, agencia ag, banca ba, usuario us
+ WHERE
+ ta.cod_taquilla = %s AND ag.cod_agencia = ta.cod_agencia AND ba.cod_banca = ag.cod_banca AND us.cod_taquilla = ta.cod_taquilla",
+  GetSQLValueString($xCodigo, "int"));
+          $Recordset18= mysqli_query($conexionbanca, $query_Recordset18) or die(mysqli_error($conexionbanca));
+          $row_Recordset18 = mysqli_fetch_assoc($Recordset18);
+          $totalRows_Recordset18 = mysqli_num_rows($Recordset18);
+
+          
+     
+
+if (isset($_GET['pageNum_Recordset1'])) {
+    $pageNum_Recordset1 = $_GET['pageNum_Recordset1'];
+}
+$startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
+
+$query_Recordset1 = "/* PARSEADORES1 distri\hipodromos_distri.php - QUERY 5 */ SELECT cod_hipodromo, nom_hipodromo, est_hipodromo, bus_auto FROM hipodromo ORDER BY nom_hipodromo ASC";
+$query_limit_Recordset1 = sprintf("%s LIMIT %d, %d", $query_Recordset1, $startRow_Recordset1, $maxRows_Recordset1);
+$Recordset1 = mysqli_query($conexionbanca, $query_limit_Recordset1) or die(mysqli_error($conexionbanca));
+$row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+if (isset($_GET['totalRows_Recordset1'])) {
+    $totalRows_Recordset1 = $_GET['totalRows_Recordset1'];
+} else {
+    $all_Recordset1 = mysqli_query($conexionbanca, $query_Recordset1);
+    $totalRows_Recordset1 = mysqli_num_rows($all_Recordset1);
+}
+$totalPages_Recordset1 = ceil($totalRows_Recordset1/$maxRows_Recordset1)-1;
+$queryString_Recordset1 = "";
+if (!empty($_SERVER['QUERY_STRING'])) {
+    $params = explode("&", $_SERVER['QUERY_STRING']);
+    $newParams = array();
+    foreach ($params as $param) {
+        if (stristr($param, "pageNum_Recordset1") == false &&
+        stristr($param, "totalRows_Recordset1") == false) {
+            array_push($newParams, $param);
+        }
+    }
+    if (count($newParams) != 0) {
+        $queryString_Recordset1 = "&" . htmlentities(implode("&", $newParams));
+    }
+}
+$queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recordset1, $queryString_Recordset1);
+
+if(isset($_POST['taq_bloq'])){
+
+  $query_Recordset32 = sprintf(
+    "/* PARSEADORES1 distri\hipodromos_distri.php - QUERY 6 */ SELECT hip_bloqueados
+  FROM taquilla_opc_ame 
+  WHERE 
+  cod_taquilla= %s",
+    GetSQLValueString($_POST['principal'], "int")
+  );
+  $Recordset32 =mysqli_query($conexionbanca, $query_Recordset32) or die(mysqli_error($conexionbanca));
+  $row_Recordset32 = mysqli_fetch_assoc($Recordset32);
+  $totalRows_Recordset32 = mysqli_num_rows($Recordset32);
+    $hipodromo=$row_Recordset32['hip_bloqueados'];
+    do{
+    if($_POST['taq_bloq']==0){
+      $taquillinas=$row_Recordset38['cod_taquilla'];
+      //echo $taquillinas;
+    }else{
+    $taquillinas=$_POST['taq_bloq'];
+  }
+    
+$insertSQL1 = sprintf(
+  "/* PARSEADORES1 distri\hipodromos_distri.php - QUERY 7 */ UPDATE taquilla_opc_ame  
+      SET hip_bloqueados=%s				
+      WHERE cod_taquilla=%s",
+  
+  GetSQLValueString($hipodromo, "text"),
+  GetSQLValueString($taquillinas, "int")
+);
+$Result1 = mysqli_query($conexionbanca, $insertSQL1) or die(mysqli_error($conexionbanca));
+}while($row_Recordset38 = mysqli_fetch_assoc($Recordset38));
+
+}
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/BaseAdmin.dwt.php" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>.:Apuestas Hípicas:.</title>
+<style>
+	.boton-top{
+		display: none;
+		position:fixed;
+		bottom:0;
+		right:0;
+		width:50px;
+		height: 50px;
+		text-align:center;
+		line-height:50px;
+		color:#fff;
+		background: #F93;
+		cursor:pointer;
+		font-size:20px;
+	}
+</style>
+<!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
+<!--[if lte IE 7]>
+<link type="text/css" rel="stylesheet" media="all" href="../css/screen_ie.css" />
+<![endif]-->
+<style>
+body {
+	background-color: #eeeeee;
+	padding:0;
+	margin:0 auto;
+	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+	font-size:11px;
+}
+</style>
+<link href="../estilo/admin.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="../css/tcal.css" />
+<script type="text/javascript" src="../js/tcal.js"></script>
+<script src="../js/jquery-1.9.1.min.js"></script>
+<script>
+ $(document).ready(function() { 
+ $("#reloj").load('../includes/reloj.php?&js='+Math.random());
+ var refreshId1 = setInterval(function() {
+ $("#reloj").load('../includes/reloj.php?&js='+Math.random());
+ }, 60000);
+});
+</script>
+
+
+<!-- InstanceBeginEditable name="aHead" -->
+<script>var nav=navigator.userAgent.toLowerCase();if(nav.indexOf("firefox")!=-1){document.write('<link href="../estilo/adminFirefox.css" rel="stylesheet" type="text/css" />');}</script>
+
+
+<!-- InstanceEndEditable -->
+</head>
+<body onload="Javascript:history.go(1);" onunload="Javascript:history.go(1);">
+<div class="container">
+<div class="header" style="height:100px; background:#333">
+			<?php include("../includes/cabeceraamericana_di.php");?>
+            <div id="menu" style="height:50px; padding:0px 0px 0px 50px; margin:-10px 0px 0px 0px">
+      			<div class="triangulo_sup"></div>
+                <div style="background:#F90; margin:0px 0px 0px 0px; padding:0px 20px 5px 20px; word-spacing: normal;
+                    position:absolute;border-radius: 0px 0px 5px 5px;">
+                    <!-- InstanceBeginEditable name="Menu" -->
+                    <?php include("../includes/cabeceradistri.php");?>
+                    <!-- InstanceEndEditable -->        	
+                </div>
+            </div> <!-- end .menu -->
+		</div> <!-- end .header -->
+        <div style="background:#333; height:25px; color:#FFFFFF; padding:25px 15px 0px 0px; text-align:right;" id="datosUsuario">
+        	<div style="background: #333;position:absolute;border-radius: 0px 0px 5px 5px; padding:15px; text-align:center;
+            			margin:20px 0px 0px 0px; width:240px; font-size:16px ">
+                <!-- InstanceBeginEditable name="pagina" -->
+                Restringir Hipódromos<br/>
+				<!-- InstanceEndEditable -->        
+            </div>
+              Usuario: <?php echo "  ".$_SESSION['MM_nom_usuario']." - "; echo  vfechaActual()." | "; ?>
+             <span id="reloj"></span>
+        </div>
+  <div class="contentAdmin"><!-- InstanceBeginEditable name="Contenido" -->
+  <div style="width:98%; float:right; text-align:right; padding:1.5% 2% 0 0; height:40px; font-size:16px;font-family:'Lucida Grande','Lucida Sans Unicode','Lucida Sans','DejaVu Sans',Verdana,sans-serif;">
+        <form method="post" name="form2" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
+        	Importar bloqueo de hipodromos:
+            <select name="taq_bloq" id="exp_agencia" style="width:25%; height: auto; background:#9E1C0A; color:#FFFFFF" onclick="FetchModelo(this.value)" 
+            	class="textbox">
+                <option value="0" style="background:#9E1C0A; color:#FFFFFF">TODOS<?php
+                do {?>
+                    <option value="<?php echo $row_Recordset3['cod_taquilla']?>" style="background:#FFF; color:#000">
+                        <?php echo $row_Recordset3['nom_taquilla']?></option><?php
+                } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));?>
+            </select>
+			<input name="Exportar" id="botExp" type="submit"  value="Importar" class=" btn-danger" 
+            	style="width:70px; height:35px; font-size:12px;"/>
+			<input type="hidden" name="principal" value="<?php echo $_GET["recordID"];?>"/>
+        </form>
+    </div>
+  <br><br><br>
+      <?php if ($totalRows_Recordset1>0) {?>
+    <table width="100%" border="0" align="center" style="background: #333; color:#FFF; font-size:14px" >
+        <tr>
+        <td width="524" align="left" class="diezpunto"><?php echo $row_Recordset18['nom_taquilla']; ?></td>
+          <td width="570" align="right" class="diezpunto">Hipódromos <?php echo($startRow_Recordset1 + 1) ?>-<?php echo min($startRow_Recordset1 + $maxRows_Recordset1, $totalRows_Recordset1) ?> de <?php echo $totalRows_Recordset1 ?></td>
+          <td width="18"><?php if ($pageNum_Recordset1 > 0) { // Show if not first page?>
+            <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, 0, $queryString_Recordset1); ?>"><img src="../images/First.gif" width="18" height="13" /></a>
+          <?php } // Show if not first page?></td>
+          <td width="14"><?php if ($pageNum_Recordset1 > 0) { // Show if not first page?>
+            <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, max(0, $pageNum_Recordset1 - 1), $queryString_Recordset1); ?>"><img src="../images/Previous.gif" width="14" height="13" /></a>
+          <?php } // Show if not first page?></td>
+          <td width="14"><?php if ($pageNum_Recordset1 < $totalPages_Recordset1) { // Show if not last page?>
+            <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, min($totalPages_Recordset1, $pageNum_Recordset1 + 1), $queryString_Recordset1); ?>"><img src="../images/Next.gif" width="14" height="13" /></a>
+          <?php } // Show if not last page?></td>
+          <td width="18"><?php if ($pageNum_Recordset1 < $totalPages_Recordset1) { // Show if not last page?>
+            <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, $totalPages_Recordset1, $queryString_Recordset1); ?>"><img src="../images/Last.gif" width="18" height="13" /></a>
+          <?php } // Show if not last page?></td>
+          <td width="140" colspan="2" align="center">
+          <input type="submit" value="RESTAURAR HIPODROMOS" style="height:36px; width:180px; font-size:12px; color:#333;" class="btn btn-warning" title="" 
+onclick="hipodromo_reactivar(<?php echo $row_Recordset1['cod_hipodromo']; ?>, <?php echo $row_Recordset18['cod_taquilla']; ?>, <?php echo $modulo2; ?>, 0); return false"   />
+</td>
+        </tr>
+      </table>
+      <?php if ($totalRows_Recordset12>0) { ?>
+      <div >   
+	<table width="100%" border="0" align="center">
+        <tr style="background:forestgreen; color:#FFFFFF; height:30px">
+          <td width="467">HIPÓDROMOS DEL DIA</td>
+          <td width="198" align="center">STATUS</td>
+          <td width="103" colspan="2" align="center">ACCIONES</td>
+          
+        </tr>
+        <?php do {
+      list($h, $m, $s)=restahoraVenta(horaactual(), $row_Recordset12['hor_carrera']);
+      if ($h==0 && $m<50) { ?>
+          <tr class="brillo" style="font-size:14px">
+            <td align="left"><?php echo $row_Recordset12['nom_hipodromo']; ?></td>
+            <td align="center"><?php echo Dstatus_hipodromo($row_Recordset12['cod_hipodromo'], $row_Recordset18['cod_taquilla']); ?></td>
+            <td align="center">
+            <?php $Status=boton_hipodromo($row_Recordset12['cod_hipodromo'], $row_Recordset18['cod_taquilla']);  if($Status==1){?>
+            <input type="submit" value="BLOQUEAR" style="height:25px; width:125px; font-size:12px; color:#333;" class="btn btn-danger" title="" 
+onclick="hipodromo_restringir(<?php echo $row_Recordset12['cod_hipodromo']; ?>, <?php echo $row_Recordset18['cod_taquilla']; ?>, <?php echo $modulo; ?>, 0); return false"   />  
+<?php }else{ ?><?php echo 'HIPODROMO BLOQUEADO' ?> 
+<?php } ?>
+            </td>
+            </tr>
+          <?php }
+  } while ($row_Recordset12 = mysqli_fetch_assoc($Recordset12)); ?>
+      </table>
+      </div>
+      <?php } ?>
+    <div style="height:100%; padding:0px 0px 300px 0px ">   
+	<table width="100%" border="0" align="center">
+        <tr style="background:#5EAEFF; color:#FFFFFF; height:30px">
+          <td width="467">TODOS LOS HIPÓDROMOS</td>
+          <td width="198" align="center">STATUS</td>
+          <td width="103" colspan="2" align="center">ACCIONES</td>
+          
+        </tr>
+        <?php do { ?>
+          <tr class="brillo" style="font-size:14px">
+            <td align="left"><?php echo $row_Recordset1['nom_hipodromo']; ?></td>
+            <td align="center"><?php echo Dstatus_hipodromo($row_Recordset1['cod_hipodromo'], $row_Recordset18['cod_taquilla']); ?></td>
+            <td align="center">
+            <?php $Status=boton_hipodromo($row_Recordset1['cod_hipodromo'], $row_Recordset18['cod_taquilla']);  if($Status==1){?>
+            <input type="submit" value="BLOQUEAR" style="height:25px; width:125px; font-size:12px; color:#333;" class="btn btn-danger" title="" 
+onclick="hipodromo_restringir(<?php echo $row_Recordset1['cod_hipodromo']; ?>, <?php echo $row_Recordset18['cod_taquilla']; ?>, <?php echo $modulo; ?>, 0); return false"   />  
+<?php }else{ ?><?php echo 'HIPODROMO BLOQUEADO' ?> 
+<?php } ?>
+            </td>
+            </tr>
+          <?php } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
+      </table>
+      </div>
+      <?php } else {?>
+      <table width="100%" border="0" align="center" style="background:#5EAEFF; color:#FFFFFF; height:30px">
+        <tr style="background:#5EAEFF; color:#FFFFFF; height:30px">
+          <td>AGENTE</td>
+          <td width="227">STATUS</td>
+          <td width="127" colspan="3">ACCIONES</td>
+        </tr>
+      </table>
+        <div style="height:100%; font-size:24px; padding:200px 0px 170px 0px ">
+            No existen registros
+        </div>
+         
+      <?php }?>
+    </div>
+<span class="boton-top" title="ir arriba">▲</span>
+	<script>
+	$(window).scroll(function(){
+	    if ($(this).scrollTop() > 0) {
+	        $('.boton-top').fadeIn();
+	    } else {
+	        $('.boton-top').fadeOut();
+	    }
+	});
+
+	$('.boton-top').click(function(){
+	    $(document.body).animate({scrollTop : 0}, 100);
+	    return false;
+	});
+	</script>
+  <script>
+    function hipodromo_restringir(codigo_h, cod_taquilla, modulo, tipo){
+        $.post("../agente/Hipodromo_funcion.php", 
+        {
+    codigo_h:codigo_h,
+		cod_taquilla:cod_taquilla,
+		modulo:modulo,
+    tipo:tipo,
+		},);
+
+    location.reload();	
+    } 
+</script>
+<script>
+    function hipodromo_reactivar(codigo_h, cod_taquilla, modulo, tipo){
+        $.post("../agente/Hipodromo_reset.php", 
+        {
+    codigo_h:codigo_h,
+		cod_taquilla:cod_taquilla,
+		modulo:modulo,
+    tipo:tipo
+		},);
+    location.reload();	
+    } 
+</script>
+    
+  <!-- InstanceEndEditable -->
+  </div>
+  <div class="footer">  Copyright © Apuestas Hípicas    <!-- end .footer --></div>
+  <!-- end .container -->
+  </div>
+</body>
+<!-- InstanceEnd --></html>
+<?php
+mysqli_free_result($Recordset1);
+?>
