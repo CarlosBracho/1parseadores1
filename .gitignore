@@ -57,8 +57,7 @@ probar.php
 
 # AI Diagnostics & Automation Cache
 pruebas_ia/
-parseadores_ia/bot_profile/
-parseadores_ia/img/
+
 *.pma
 *.binarypb
 *-journal
