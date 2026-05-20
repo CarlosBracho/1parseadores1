@@ -1,0 +1,18 @@
+body{
+    text-align: center;
+}
+.justify-content-center{
+    background: black;
+    padding: auto;
+    margin: auto;
+}
+.nav-item{
+    font-size: 25px;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 10px 20px 10px 0px;
+    display: inline-block;
+}
+a{   
+    text-decoration-color: white;
+}

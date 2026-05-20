@@ -1,0 +1,27 @@
+<?php
+require_once('../Connections/conexionbanca.php');
+date_default_timezone_set("Pacific/Honolulu");
+$desde=$_POST["nom_usuario_chat"];
+//var_dump($_POST);
+$para="Soporte";
+$nacionales="Parley=> ";
+$taquilla=$_POST["cod_taquilla_chat"];
+$mensaje=$nacionales.$_POST["txtMensaje"];
+if ($_POST["txtMensaje"]!="") {
+    $insertSQL = sprintf(
+        "/* PARSEADORES1 parley\tapchatparley_chat_enviar.php - QUERY 1 */ INSERT INTO chat2 (from1, to1, message, sentdate, senttime, recd, tipo, id_taquilla) 
+			VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+        GetSQLValueString(strtoupper(trim($desde)), "text"),
+        GetSQLValueString(trim($para), "text"),
+        GetSQLValueString(trim($mensaje), "text"),
+        GetSQLValueString(fechaactualbd(), "date"),
+        GetSQLValueString(horaactual(), "date"),
+        GetSQLValueString(1, "int"),
+        GetSQLValueString(0, "int"),
+        GetSQLValueString($taquilla, "int")
+    );
+    $Result1 = mysqli_query($conexionbanca, $insertSQL) or die(mysqli_error($conexionbanca));
+}
+?>
+
+

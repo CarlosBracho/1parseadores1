@@ -1,0 +1,272 @@
+/* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
+@media screen and (min-width: 601px) {
+  h1.fonth {
+    font-size: 2.34375rem;
+  }
+}
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+    .balance{
+        font-size: 10px;
+        font-weight: 700 !important;
+        margin: 5px 0px 0px 0px;
+    }
+    .font-equipo{
+        font-size: 10px;
+        font-weight: 700 !important;
+    }
+    h1.fonth {
+        font-size: 15px;
+    }
+    h1.fonth1 {
+        font-size: 12px;
+    }
+    h5.fonth {
+        font-size: 15px;
+    }
+    h5.fonth1 {
+        font-size: 12px;
+        font-weight: 700 !important;
+    }
+
+    .breadcrumb {
+        border: 1px solid rgba(0,0,0,0.1);
+        border-radius: 3px;
+        font-size: 10px;
+        font-weight: 300;
+        text-transform: uppercase;
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .col-xl-6 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .scrollj_mobil {
+        overflow: auto;
+        width: auto;
+        height: 50vh;
+    }
+    .card-header-mobil {
+        /*padding: .75rem 1.25rem;*/
+        margin-bottom: 0;
+        background-color: rgba(0,0,0,.03);
+        border-bottom: 1px solid rgba(0,0,0,.125);
+    }
+    .form-input-premio {
+        background-color: #0dc692;
+        opacity: 1;
+        font-weight: 700 !important;
+    }
+    
+    textarea.fonth {
+        font-size: 11px;
+        /*font-weight: bold;
+        font-family: Verdana, Arial, Helvetica, sans-serif;*/
+        border: 1px solid black;
+    }
+    .tr-border-mobil {
+        border: 2px solid black;
+    }
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #eee0;
+    opacity: 1;
+}
+
+/*.fonth{
+    font-size: 5vw;
+}*/
+.sticky-top-2 {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 55px;
+    z-index: 1020;
+}
+h2.tournament {
+  line-height: 25px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.sportIcon {
+  width: 24px;
+  height: 24px;
+  margin: 0 2px 0 0;
+  float: left;
+  background-position-y: 0;
+  /*transform: scale(0.8);*/
+}
+
+.sportIcon.sportIcon--home {
+  background-position-x: 60px;
+}
+.sportIcon.sportIcon--links {
+  background-position-x: 30px;
+}
+.sportIcon.sportIcon--american-football {
+  background-position-x: 0px;
+}
+.sportIcon.sportIcon--aussie-rules {
+  background-position-x: -30px;
+}
+.sportIcon.sportIcon--badminton {
+  background-position-x: -60px;
+}
+.sportIcon.sportIcon--bandy {
+  background-position-x: -90px;
+}
+.sportIcon.sportIcon--baseball {
+  background-position-x: -120px;
+}
+
+.sportIcon.sportIcon--basketball {
+  background-position-x: -150px;
+}
+.sportIcon.sportIcon--beach-soccer {
+  background-position-x: -180px;
+}
+.sportIcon.sportIcon--beach-volleyball {
+  background-position-x: -210px;
+}
+.sportIcon.sportIcon--boxing {
+  background-position-x: -240px;
+}
+.sportIcon.sportIcon--cricket {
+  background-position-x: -270px;
+}
+.sportIcon.sportIcon--cycling {
+  background-position-x: -300px;
+}
+.sportIcon.sportIcon--darts {
+  background-position-x: -330px;
+}
+.sportIcon.sportIcon--esports {
+  background-position-x: -360px;
+}
+.sportIcon.sportIcon--field-hockey {
+  background-position-x: -390px;
+}
+.sportIcon.sportIcon--floorball {
+  background-position-x: -420px;
+}
+.sportIcon.sportIcon--futsal {
+  background-position-x: -450px;
+}
+.sportIcon.sportIcon--golf {
+  background-position-x: -480px;
+}
+.sportIcon.sportIcon--handball {
+  background-position-x: -510px;
+}
+.sportIcon.sportIcon--hockey {
+  background-position-x: -540px;
+}
+.sportIcon.sportIcon--horse-racing {
+  background-position-x: -570px;
+}
+.sportIcon.sportIcon--kabaddi {
+  background-position-x: -600px;
+}
+.sportIcon.sportIcon--mma {
+  background-position-x: -630px;
+}
+.sportIcon.sportIcon--motorsport {
+  background-position-x: -660px;
+}
+.sportIcon.sportIcon--motorsport-auto-racing {
+  background-position-x: -690px;
+}
+.sportIcon.sportIcon--motorsport-moto-racing {
+  background-position-x: -720px;
+}
+.sportIcon.sportIcon--netball {
+  background-position-x: -750px;
+}
+.sportIcon.sportIcon--pesapallo {
+  background-position-x: -780px;
+}
+.sportIcon.sportIcon--rugby-league {
+  background-position-x: -810px;
+}
+.sportIcon.sportIcon--rugby-union {
+  background-position-x: -840px;
+}
+.sportIcon.sportIcon--snooker {
+  background-position-x: -870px;
+}
+.sportIcon.sportIcon--soccer {
+  background-position-x: -900px;
+}
+.sportIcon.sportIcon--table-tennis {
+  background-position-x: -930px;
+}
+.sportIcon.sportIcon--tennis {
+  background-position-x: -960px;
+}
+.sportIcon.sportIcon--volleyball {
+  background-position-x: -990px;
+}
+.sportIcon.sportIcon--water-polo {
+  background-position-x: -1020px;
+}
+.sportIcon.sportIcon--winter-sports {
+  background-position-x: -1050px;
+}
+.sportIcon.sportIcon--winter-sports-biathlon {
+  background-position-x: -1080px;
+}
+.sportIcon.sportIcon--winter-sports-cross-country {
+  background-position-x: -1110px;
+}
+.sportIcon.sportIcon--winter-sports-alpine-skiing {
+  background-position-x: -1140px;
+}
+.sportIcon.sportIcon--winter-sports-ski-jumping {
+  background-position-x: -1170px;
+}
+
+.lineaResaltada {
+	background-color: #b9bbbe;
+	/*color: #891900;*/
+	cursor: pointer;
+        color: #FFF;
+}
+
+#scroll-wrap {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+.lightBlanco{
+   background-color: #ffff; 
+}
+.lightGris{
+   background-color: #b9bbbe; 
+}
+td.highlight {
+    background-color: whitesmoke !important;
+}
+.scroll-h93 {
+    height: 93vh;
+    overflow: auto;
+    padding-bottom: 1rem;
+}
+.list-u {
+    padding-left: 10px;
+    list-style: none;
+    font-size: 16px;
+    position: relative;
+}
+.list-u__bank {
+    font-weight: bolder;
+    list-style: none;
+}
+.list-u__unmark {
+    list-style: none;
+}

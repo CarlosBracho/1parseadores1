@@ -1,0 +1,41 @@
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+}
+
+.module {
+	/* color:#ffffff; */
+	background-color: #f7a330;
+	text-align: center;
+	height: 1px;
+}
+
+.tab1 {
+    font-family: 'Arial';
+    margin: 25px auto;
+    border-collapse: collapse;
+    border: 1px solid #eee;
+    border-bottom: 2px solid #cfcfcf;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+}
+.tr1:hover {
+    background: #f7a3308f;
+}
+.tr1:hover td {
+    color: #000;
+}
+.tr1 th, .tr1 td {
+    color: #555;
+    border: 1px solid #eee;
+    padding: 1px 1px;
+    border-collapse: collapse;
+}
+.tr1 th {
+    background: #cfcfcf;
+    color: #212121;
+    text-transform: uppercase;
+    font-size: 12px;
+}

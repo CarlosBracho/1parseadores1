@@ -1,0 +1,437 @@
+/*!
+ * Todas las modificaciones hechas a bootstrap van aquí.
+ */
+
+/* Bootstrap navbar-fixed-top */
+.navbar.navbar-default.navbar-fixed-top {
+	min-height: 50px;
+	padding: 8px 10px 0;
+	border-color: transparent;
+}
+.navbar.navbar-default.navbar-fixed-top button,
+.navbar.navbar-default.navbar-fixed-top a.btn {
+	padding: 5px 6px;
+	border-color: transparent;
+}
+.navbar.navbar-default.navbar-fixed-top button > span,
+.navbar.navbar-default.navbar-fixed-top a.btn > span,
+.navbar.navbar-default.navbar-fixed-top .caret {
+	font-size: 16px;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-header {
+	display: inline;
+	float: left;
+	margin-left: 70px;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-header h4 {
+	margin: 0;
+	padding: 8px 0 0;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-left {
+	float: left;
+	margin-right: 0;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-right {
+	float: right;
+	margin-right: 0;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-right .btn-group {
+	margin: 0px 2px;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form-title {
+	display: none;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form {
+	position: absolute;
+	left: 62px;
+	width: 232px;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] {
+	z-index: 9;
+	display: none;
+	border-color: transparent;
+	box-shadow: none;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"][active=true] {
+	display: block;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] input {
+	width: 100%;
+	background-color: #f5f5f5;
+	box-shadow: none;
+	padding-right: 40px;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] input:focus,
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] input:active {
+	background-color: rgba(255,255,255,.99);
+	box-shadow: inset 0 0 0, 0px 0px 0px 3px rgba(102, 175, 233, 0.6);
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] input:-webkit-input-placeholder {
+	color: rgba(0,0,0, .4);
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] input::-moz-placeholder {
+	color: rgba(0,0,0, .4);
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] input::-ms-input-placeholder {
+	color: rgba(0,0,0, .4);
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] input:focus::-webkit-input-placeholder,
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] input:active::-webkit-input-placeholder {
+	color: #AAAAAA;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] input:focus::-moz-placeholder,
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] input:active::-moz-placeholder {
+	color: #AAAAAA;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] input:focus:-ms-input-placeholder,
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] input:active:-ms-input-placeholder {
+	color: #AAAAAA;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] button {
+	position: relative;
+	left: -45px;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] button > span {
+	font-size: 14px;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] .form-group,
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] .input-group {
+	width: 100%;
+}
+.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] .input-group-btn {
+	border-left: 1px solid transparent;
+}
+@media (min-width:768px) {
+	.navbar.navbar-default.navbar-fixed-top button > span,
+	.navbar.navbar-default.navbar-fixed-top a.btn > span,
+	.navbar.navbar-default.navbar-fixed-top .caret {
+		font-size: 21px;
+	}
+	.menu-fv01 ~ .container--cmfv01 .navbar.navbar-default.navbar-fixed-top {
+		margin-left: 260px;
+	}
+	.menu-fv01[mini=true] ~ .container--cmfv01 .navbar.navbar-default.navbar-fixed-top {
+		margin-left: 70px;
+	}
+	.navbar.navbar-default.navbar-fixed-top button,
+	.navbar.navbar-default.navbar-fixed-top a.btn {
+		padding: 5px 10px;
+	}
+	.navbar.navbar-default.navbar-fixed-top .navbar-header {
+		display: none;
+	}
+	.navbar.navbar-default.navbar-fixed-top .navbar-form {
+		position: static;
+		left: 62px;
+		width: 100%;
+	}
+	.navbar.navbar-default.navbar-fixed-top .navbar-form-title,
+	.navbar.navbar-default.navbar-fixed-top .navbar-form[role="search"] {
+		display: block;
+	}
+}
+
+/* Bootstrap nav-taps */
+.nav-tabs {
+	margin-bottom: 10px;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+	background-color: #F5F5F5;
+}
+
+/* Bootstrap navbar-form */
+.navbar-form {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+}
+
+/* Bootstrap table */
+.table-responsive {
+	border-radius: 4px;
+}
+.table input[type="checkbox"] {
+	margin-top: -2px;
+	vertical-align: middle;
+}
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th {
+	padding: 8px 15px;
+}
+.table > thead > tr > th:first-child,
+.table > tbody > tr > th:first-child,
+.table > tfoot > tr > th:first-child {
+	width: 50px;
+	border-left: 0;
+}
+.table > thead > tr > th:last-child,
+.table > tbody > tr > th:last-child,
+.table > tfoot > tr > th:last-child {
+	width: 115px;
+	text-align: right;
+}
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+	padding: 8px 15px;
+	border: 0;
+}
+.table > thead > tr > td:last-child,
+.table > tbody > tr > td:last-child,
+.table > tfoot > tr > td:last-child {
+	text-align: right;
+}
+.table > tbody > tr > td:last-child a,
+.table > tbody > tr > td:last-child button {
+	border: none;
+	padding: 0 3px;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+	background-color: #f9eded;
+}
+.table-hover > tbody > tr:hover {
+	background-color: rgba(0,0,0, .09);
+}
+.table > tbody > tr a,
+.table > tbody > tr button {
+	text-decoration: none;
+	background-color: transparent;
+}
+.table > tbody > tr a.btn-danger,
+.table > tbody > tr button.btn-danger {
+	background-color: #d9534f;
+}
+.table tr.select-by-group:hover {
+	background-color: #ffffff !important;
+}
+.table tr.select-by-group > th {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #dddddd;
+	text-align: left !important;
+}
+.table tr.select-by-group.level0 > th,
+.table tr.select-by-group.level1 > th {
+	background-color: #d9edf7 !important;
+}
+.table tr.select-by-group.level2 > th {
+	background-color: #f5f5f5 !important;
+}
+.table tfoot {
+	border-top: 2px solid #dddddd;
+}
+.table.vertical tr > th,
+.table.vertical tr > td {	
+	border-top: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
+}
+@media(min-width:768px) {
+	.table {
+		margin-bottom: 0;
+	}
+	.table > thead > tr > th,
+	.table > tbody > tr > th,
+	.table > tfoot > tr > th {
+		display: table-cell;
+		padding: 8px 20px;
+	}
+	.table > thead > tr > td,
+	.table > tbody > tr > td,
+	.table > tfoot > tr > td {
+		padding: 10px 20px;
+	}
+	.table > thead > tr > td:last-child,
+	.table > tbody > tr > td:last-child,
+	.table > tfoot > tr > td:last-child {
+		width: 135px;
+	}
+}
+
+/* Bootstrap DataTable */
+.DataTable {
+	font-size: 13px !important;
+	border-radius: 4px;
+	border: 1px solid #dddddd;
+}
+.DataTable .label {
+	font-size: 11px;
+}
+
+/* Bootstrap buttons */
+.btn {
+	font-weight: 600;
+}
+.btn-default:focus,
+.btn-group.open .btn-default.dropdown-toggle {
+	-webkit-box-shadow: inset 0 0 0 rgba(102, 175, 233, 0.6), 0px 0px 0px 3px rgba(92, 184, 92, 0.6);
+  	box-shadow: inset 0 0 0 rgba(188, 188, 188, 0.6), 0px 0px 0px 3px rgba(188, 188, 188, 0.6);
+}
+.btn-success:focus {
+	-webkit-box-shadow: inset 0 0 0 rgba(102, 175, 233, 0.6), 0px 0px 0px 3px rgba(102, 175, 233, 0.6);
+  	box-shadow: inset 0 0 0 rgba(102, 175, 233, 0.6), 0px 0px 0px 3px rgba(92, 184, 92, 0.6);
+}
+.btn-danger:focus {
+	-webkit-box-shadow: inset 0 0 0 rgba(229, 121, 119, 0.6), 0px 0px 0px 3px rgba(229, 121, 119, 0.6);
+  	box-shadow: inset 0 0 0 rgba(229, 121, 119, 0.6), 0px 0px 0px 3px rgba(229, 121, 119, 0.6);
+}
+.btn-warning {
+	color: #000000 !important;
+}
+.btn-warning:focus {
+	-webkit-box-shadow: inset 0 0 0 rgba(255, 193, 7, 0.6), 0px 0px 0px 3px rgba(255, 193, 7, 0.6);
+  	box-shadow: inset 0 0 0 rgba(255, 193, 7, 0.6), 0px 0px 0px 3px rgba(255, 193, 7, 0.6);
+}
+.pagination a:focus {
+	-webkit-box-shadow: inset 0 0 0 rgba(102, 175, 233, 0.6), 0px 0px 0px 3px rgba(102, 175, 233, 0.6);
+  	box-shadow: inset 0 0 0 rgba(102, 175, 233, 0.6), 0px 0px 0px 3px rgba(102, 175, 233, 0.6);
+}
+.btn-link:hover,
+.btn-link:focus,
+.btn-link:active,
+.btn-link:visited,
+.btn-link:link {
+	text-decoration: none;
+}
+.btn-lg {
+	font-weight: 600;
+}
+.btn-lg,
+.input-lg {
+	height: 42px;
+	font-size: 14px;
+}
+
+/* Bootstrap - breadcrumbs */
+.breadcrumb {
+	margin-bottom: 0;
+	padding: 3px 0 0;
+	background-color: inherit;
+}
+.breadcrumb > li.hide + li:before {
+	content: "";	
+	padding: 0;
+}
+@media(min-width: 768px) {
+	.breadcrumb {
+		display: block;
+		padding: 5px 0;
+	}
+}
+
+/* Boostrap panels */
+.panel .panel-heading {
+	font-weight: 600;
+}
+
+/* Panels and tables */
+.panel .table-responsive {
+	border-radius: 0;
+}
+
+/* Bootstrap form-control */
+.form-control:focus {
+	border-color: #66afe9;
+  	outline: 0;
+    -webkit-box-shadow: inset 0 0 0 rgba(102, 175, 233, 0.6), 0px 0px 0px 3px rgba(102, 175, 233, 0.6);
+  	box-shadow: inset 0 0 0 rgba(102, 175, 233, 0.6), 0px 0px 0px 3px rgba(102, 175, 233, 0.6);
+}
+.form-control-feedback {
+	font-size: 16px;
+	line-height: 34px;
+	color: rgba(0,0,0,.56);
+}
+
+/* Bootstrap fieldset */
+fieldset {
+	margin-bottom: 15px;
+	padding: 3px 15px 0;
+	border-radius: 3px;
+	border: 1px solid #dddddd;
+}
+legend {
+	padding: 0 5px;
+	margin: 0;
+	width: auto;
+	font-size: 16px;
+	border: none;
+}
+
+/* Bootstrap modal */
+.modal {
+	z-index: 99999;
+}
+.modal-title {
+	font-weight: 600;
+}
+.modal-body {
+	padding: 15px 15px 0;
+}
+.modal-footer {
+	padding-top: 0;
+	border-top: none;
+}
+.modal-backdrop {
+	z-index: 99998;
+}
+.modal .modal-body {
+	max-height: 440px;
+	overflow-x: auto;
+	overflow-y: auto;
+	margin-bottom: 10px;
+}
+
+/* Bootstrap input-group-addon */
+.input-group-addon {
+	background-color: transparent;
+}
+
+/* Bootstrap labels */
+.label {
+	font-size: 13px;
+}
+.label.label-default-filter {
+	color: #878b8e;
+	border: 1px solid #A2AFB1;
+}
+.label.label-info2 {
+	background-color: #17A2B8;
+}
+.label.label-info2-filter {
+	color: #17A2B8;
+	border: 1px solid #17A2B8;
+}
+.label.label-info2-filter.multiline {
+	display: inline-block;
+	margin: 0 0 -4px;
+}
+.label.label-info2.multiline {
+	display: inline-block;
+	margin: 0 0 -4px;
+}
+
+/* Bootstrap .checkbox */
+div.checkbox {
+	margin: 0;
+}
+
+/* Bootstrap alert */
+.alert {
+	padding: 9px 15px;
+}
+.alert-dismissible .close {
+	right: 0;
+}
+
+/* list-group-item */
+.list-group-item > .ignore-badge {
+	float: right;
+}
+
+/* pagination */
+.pagination {
+	float: right;
+	margin: 0;
+}

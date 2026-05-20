@@ -1,0 +1,40 @@
+@media all {
+    div.saltopagina{
+       display: none;
+    }
+ }
+    
+ @media print{
+    div.saltopagina{
+       display:block;
+       page-break-before:always;
+    }
+ }
+
+
+ .headt td {
+    min-width: 235px;
+    height: 100px;
+    background-color: #433;
+  }
+  
+  table {
+    color: #4ef;
+  }
+
+
+  .contenedorimagen{
+   width:100%;
+   height:100%;
+}
+/*Aplicamos la propiedad object-fit cover, ajustar su tamaño y no perder la proporcion de nuestra imagen*/
+
+img{
+  object-fit: fill;
+  width:100%;
+  height:100%;
+  float: none;
+}
+
+
+

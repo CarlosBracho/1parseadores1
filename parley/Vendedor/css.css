@@ -1,0 +1,285 @@
+/***Footer Medium***/
+
+#footer1 .footer-medium h3 {
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #252525;
+}
+
+#footer1 .footer-medium {
+    padding: 50px 0;
+}
+
+
+/*about-widget*/
+
+.about-widget p {
+    margin: 17px 0 0;
+}
+
+.newsletter-widget {
+    float: left;
+    width: 100%;
+}
+
+.newsletter-widget p {
+    margin: 0 0 17px;
+}
+
+.newsletter-widget form {
+    width: 100%;
+    height: 40px;
+    float: left;
+    position: relative;
+}
+
+.newsletter-widget form [type="text"] {
+    border: 1px solid #dadada;
+    border-right: 0;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #787878;
+    padding: 11px 15px;
+    float: left;
+    width: 100%;
+}
+
+.newsletter-widget form [type="submit"] {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 11px 13px;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.kode-dark-overlay {
+    position: relative;
+}
+
+.kode-dark-overlay:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+}
+
+.kode-form-list li {
+    color: #000;
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.kode-form-list li i {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #009;
+    margin-right: 20px;
+    text-align: center;
+    font-size: 18px;
+    padding: 5px 0px 0px 0px;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.9);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.9);
+}
+
+.kode-form-list li p {
+    display: inline-block;
+    width: auto;
+}
+
+.kode-forminfo .kode-team-network {
+    float: left;
+}
+
+.kode-form-list {
+    float: left;
+    width: 100%;
+}
+
+.kode-forminfo {
+    float: left;
+    padding: 0 15px;
+    width: 100%;
+}
+
+
+/***social-links1***/
+
+.social-links1 li {
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+.social-links1 li:last-child {
+    margin: 0;
+}
+
+.social-links1 li a {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    padding: 3px 0;
+    display: block;
+    font-size: 16px;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+    z-index: 11;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+.social-links1 li a:before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.social-links1 li a:hover:before {
+    top: 0;
+}
+
+.fb-bg1 {
+    background-color: #3b5997;
+}
+
+.tw-bg1 {
+    background-color: #00aceb;
+}
+
+.youtube-bg1 {
+    background-color: #f0ad4e;
+}
+
+.linkedin-bg1 {
+    background-color: #5182aa;
+}
+
+.kode_bg_white .bx-wrapper .bx-viewport {
+    background: none;
+}
+
+.kode_bg_white strong {
+    color: #fff;
+}
+
+.mini-noticias {
+    background-color: #efefef;
+    padding: 20px;
+    color: #333;
+    height: 80px;
+}
+
+.mini-noticias strong {
+    color: #ffba00;
+}
+
+.mini-buscador {
+    background-color: #2d2d2d;
+    padding: 20px;
+    color: #fff;
+    height: 80px;
+}
+
+.mini-buscador:before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: -80px;
+    margin-right: 120px;
+    border-bottom: 80px solid #2d2d2d;
+    border-left: 80px solid transparent;
+    height: 80px;
+}
+
+.mini-buscador2 {
+    background-color: #2d2d2d;
+    padding: 3px 0px 0px 0px;
+    color: #fff;
+    height: 50px;
+}
+
+.mini-buscador2:before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: -50px;
+    margin-right: 120px;
+    border-bottom: 50px solid #2d2d2d;
+    border-left: 50px solid transparent;
+    height: 50px;
+}
+
+.payment_logos {
+    margin: auto;
+    background: #4B4B4B;
+}
+
+a#a-banking-imgs {
+    color: #4B4B4B;
+}
+
+div#banking-imgs {
+    display: flex;
+    justify-content: space-between;
+}
+
+div#banking-imgs span {
+    display: inline-block;
+    line-height: 37px;
+    padding-top: 16px;
+    padding-left: 22px;
+    padding-right: 10px;
+    padding-bottom: 15px;
+}
+
+div#bol-artcle-lines {
+    font-size: 12px;
+    line-height: 2em;
+    letter-spacing: 0.43px;
+    font-weight: 400;
+    color: #4B4B4B;
+    text-align: justify;
+    padding: 40px;
+}
+
+.footerEndContactInfo {
+    background: #2D2E2C;
+    height: 45px;
+    margin-left: -20px;
+}
+
+img.espn-img {
+    margin-top: 10px;
+}
+
+img.forbes-img {
+    margin-top: 9px;
+}
+
+img.newsweek-img {
+    margin-top: 10px;
+}
+
+img.sports-ilustrated-img {
+    margin-top: 10px;
+}
+
+img.usa-today-img {
+    margin-top: 15px;
+}

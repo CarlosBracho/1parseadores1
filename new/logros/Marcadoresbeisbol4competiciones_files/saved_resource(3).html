@@ -1,0 +1,97 @@
+
+<!-- saved from url=(0038)https://www.flashscore.com.ve/beisbol/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" src="./prebid-4.2.0.js.descarga"></script></head><body style="margin:0;padding:0;">
+    
+
+        <script>
+        	var sizes = [[160, 600]];
+			
+        	var PREBID_TIMEOUT = 1000;
+			var doNotChange = 'doNotChange';			
+
+			
+			var adUnits = [{
+                code: doNotChange,
+                mediaTypes: {
+                    banner: {
+                        sizes: sizes
+                    }
+                },
+                bids: [{
+            bidder: 'appnexus',
+            params: {
+               placementId: '20099424'
+            }
+        },
+        {
+            bidder: 'rubicon',
+            params: {
+                accountId: '12554',
+                siteId: '344358',
+                zoneId: '1819646',
+                sizes:[9]
+      }				
+								}]
+            }];
+
+
+   var passbackTagHtml = '<a href="https://www.mismarcadores.com/mobile/" target="_blank"><img alt="mismarcadores" src="https://content.livesportmedia.eu/media?name=2020-03_flashscore_es_160x600.jpg&type=jpeg" style="width: 160px; height: 600px; " /></a>';
+
+    // ======= DO NOT EDIT BELOW THIS LINE =========== //
+    
+   var pbjs = pbjs || {};
+            pbjs.que = pbjs.que || [];
+
+			(function() {
+				var pbjsEl = document.createElement("script"); pbjsEl.type = "text/javascript";
+				pbjsEl.async = true; var isHttps = 'https:' === document.location.protocol;
+				pbjsEl.src = "https://www.flashscore.com.mx/x/js/prebid-4.2.0.js";
+				var pbjsTargetEl = document.getElementsByTagName("head")[0];
+				pbjsTargetEl.insertBefore(pbjsEl, pbjsTargetEl.firstChild);
+			})();
+			
+pbjs.que.push(function() {
+pbjs.bidderSettings = {
+					rubicon: {
+						bidCpmAdjustment : function(bidCpm){
+							return bidCpm * 0.05;
+						}
+					}
+				};
+			                pbjs.addAdUnits(adUnits);
+				pbjs.setConfig({
+					bidderSequence: "random",
+					bidderTimeout: PREBID_TIMEOUT,
+
+//GDPR Consent Parameters					
+					consentManagement: {
+						cmpApi: "iab", 
+						allowAuctionWithoutConsent: true, 
+						timeout: 8000
+					}
+				});
+				
+                pbjs.requestBids({
+                    timeout: PREBID_TIMEOUT,
+                    bidsBackHandler: function() {
+                        var iframe = document.getElementById('postbid_if_atf');
+                        var iframeDoc = iframe.contentWindow.document;
+                        var adServerTargeting = pbjs.getAdserverTargetingForAdUnitCode(doNotChange);
+
+                        if (adServerTargeting && adServerTargeting['hb_adid']) {
+                            pbjs.renderAd(iframeDoc, adServerTargeting['hb_adid']);
+                        } else {
+                            iframe.width = sizes[0][0];
+                            iframe.height = sizes[0][1];
+                            iframeDoc.write(passbackTagHtml);
+                            iframeDoc.close();
+                        }
+                    }
+                });
+            });
+        </script>
+
+        <iframe id="postbid_if_atf" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0" allowtransparency="true" width="160" height="600" src="./saved_resource(9).html"></iframe>
+
+    
+</body></html>

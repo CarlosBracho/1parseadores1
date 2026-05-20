@@ -1,0 +1,153 @@
+/************************************************
+ * ntf 														*
+ ************************************************/
+
+#ntf {
+	z-index: 99999999999;
+	position: fixed;
+	left: 0;
+	right: 0;
+	min-width: 30px;
+	margin: 0 auto;
+	border: none;
+}
+#ntf[data-position='top'] {
+	top: 0;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+#ntf[data-position='bottom'] {
+	bottom: 0;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+}
+#ntf.responsive {
+	width: 100%;
+}
+#ntf.responsive[data-position='top'] {
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+#ntf.responsive[data-position='bottom'] {
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+}
+@media (min-width: 768px) {
+	#ntf.responsive {
+		width: 40%;
+	}
+	#ntf.responsive[data-position='top'] {
+		border-bottom-right-radius: 6px;
+		border-bottom-left-radius: 6px;
+	}
+	#ntf.responsive[data-position='bottom'] {
+		border-top-right-radius: 6px;
+		border-top-left-radius: 6px;
+	}
+}
+#ntf .ntf-text {
+	font-size: 14px;
+	padding-left: 15px;
+	padding-right: 15px;
+	max-height: 380px;
+	overflow-y: auto;
+}
+#ntf[data-position='top'] .ntf-text {
+	padding-top: 15px;
+}
+#ntf[data-position='bottom'] .ntf-text {
+	padding-bottom: 15px;
+}
+#ntf .ntf-close {
+	padding: 0;
+	text-align: center;
+}
+#ntf .ntf-close > button {
+	width: 100%;
+	padding: 0;
+	background-color: transparent;
+	border: none;
+	font-size: 18px;
+	cursor: pointer;
+	outline: none;
+}
+#ntf .ntf-close > button::-moz-focus-inner {
+	border: 0;
+}
+#ntf .ntf-close > button > span {
+	display: inline-block;
+	padding: 5px 0;
+	color: rgba(0,0,0,.34);
+	-webkit-transition-duration:  .3s;
+		-moz-transition-duration:  .3s;
+			-o-transition-duration: .3s;
+				transition-duration: .3s;
+}
+#ntf[data-position='top'] .ntf-close > button > span {
+	-webkit-transform:  rotate(-90deg);
+		-moz-transform:  rotate(-90deg);
+			-o-transform: rotate(-90deg);
+				transform: rotate(-90deg);
+}
+#ntf[data-position='bottom'] .ntf-close > button > span {
+	-webkit-transform:  rotate(90deg);
+		-moz-transform:  rotate(90deg);
+			-o-transform: rotate(90deg);
+				transform: rotate(90deg);
+}
+#ntf .ntf-close > button:hover > span {
+	color: rgba(0,0,0,.65);
+}
+
+/************************************************
+ * Temas  	 												*
+ ************************************************/
+#ntf[data-type='info'] {
+	background-color: rgba(184,216,216,.97);
+	color: #506568;
+}
+#ntf[data-type='success'] {
+	background-color: rgba(223, 240, 216,.97);
+	color: #60773d;
+}
+#ntf[data-type='danger'] {
+	background-color: rgba(244,176,188,.97);
+	color: #933244;
+}
+#ntf[data-type='warning'] {
+	background-color: rgba(252, 248, 227,.97);
+	color: #8a6d3b;
+}
+
+/************************************************
+ * Animations 												*
+ ************************************************/
+@keyframes slideDown {
+	from {
+		margin-top: -100%;
+	}
+	to {
+		margin-top: 0px;
+	}
+}
+@keyframes slideUp {
+	from {
+		margin-bottom: -100%;
+	}
+	to {
+		margin-bottom: 0px;
+	}
+}
+.slideDown {
+	-webkit-animation-name: slideDown;
+		animation-name: slideDown;
+}
+.slideUp {
+	-webkit-animation-name: slideUp;
+		animation-name: slideUp;
+}
+.slideDown,
+.slideUp {
+	-webkit-animation-duration: .250s;
+		animation-duration: .250s;
+}
