@@ -27,4 +27,6 @@ Este documento recopila las instrucciones operativas y técnicas para cualquier 
 ### 3. Buenas Prácticas y Calidad
 *   **DRY (Don't Repeat Yourself)**: Evita duplicar constantes globales como `imgDir`. Declara y crea el directorio una sola vez antes de registrar los listeners.
 *   **Modificaciones Quirúrgicas**: Realiza ediciones mínimas en líneas específicas en lugar de reescribir funciones completas para mantener el control de cambios limpio.
-*   **Trazabilidad SQL**: Toda consulta SQL debe tener un comentario inicial describiendo su origen (ej. `/* Origen: NombreFuncion / Archivo.php */`).
+*   **Trazabilidad SQL**: Toda consulta SQL debe tener un comentario inicial describiendo su origen (ej. `/* Origen: NombreFuncion / Archivo.php */` o `/* Origen: Archivo.php */`).
+*   **Persistencia Real**: En entornos productivos, asegurar que las sentencias de mutación de base de datos (`mysqli_query`) y la inclusión de scripts transaccionales (`procesar_ticket_retirados_hnac.php`) estén activas y no permanezcan comentadas.
+

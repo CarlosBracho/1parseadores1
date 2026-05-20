@@ -22,6 +22,8 @@
 | 2026-05-18 | Extracción de Dividendos y Soporte de Empates | Diseñada e integrada extracción de ganadores (posición 1) y dividendos `win` en `bot/inh_bot.js` mediante recorrido defensivo de `resultsInhsByRacesId.nodes`, con soporte para empates y fallback de `0`. Se migró el separador a tres puntos (`...`), expandiendo el validador y mapeo de `web_scraping_inh.php` a 7 campos con inicialización condicional segura. |
 | 2026-05-18 | Optimización de Salida y Hora de Ejecución | Eliminada la cadena estática de depuración `[TRACK DATA]` en `web_scraping_inh.php` y reemplazada por la hora de ejecución estructurada y dinámica mediante `date('g:i s') . 's'` para lograr telemetría visual limpia e inmediata de la sincronía del raspador. |
 | 2026-05-18 | Discriminación de Alertas y Aviso de Arranque | Rediseñada la persistencia de `$estadoCarreras` a matriz multidimensional asociativa (`status`, `retirados`, `ganador`, `dividendo`) en `web_scraping_inh.php` garantizando compatibilidad PHP 5.6/8.3. Se implementó una bandera de inicialización única para despachar una sola notificación a Telegram ("nacionales automaticas activadas") al recibir la primera ráfaga de red, y se añadieron cuatro condicionales atómicas e independientes de intercepción diferencial con cURL DRY sin usar `utf8_encode()`. |
+| 2026-05-20 | Activación de Producción y Trazabilidad SQL | Activada la mutación física de retirados en la base de datos MariaDB y la inclusión del procesador de tickets nativo, agregando trazabilidad SQL mediante comentarios internos en `web_scraping_inh.php` y asegurando compatibilidad multiplataforma y retroactiva. |
+
 
 
 

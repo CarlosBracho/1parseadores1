@@ -41,6 +41,8 @@
 | **date('g:i s') . 's'** | Telemetría | Formateador dinámico nativo de PHP para prefijar el instante exacto de procesamiento del bloque de carrera en consola. |
 | **inicializacionNotificada** | Bandera Global | Control booleano global en `web_scraping_inh.php` para disparar el mensaje de inicialización de red única ("nacionales automaticas activadas") a Telegram. |
 | **estadoCarreras (Multidimensional)** | Memoria Volátil | Estructura indexada `$estadoCarreras[$trackName][$raceNumber]` que retiene un array asociativo con estados individuales de estatus, retirados, ganador y dividendo por carrera. |
+| **Trazabilidad SQL (updateSQL)** | Trazabilidad | Comentario interno `/* Origen: web_scraping_inh.php */` en la consulta UPDATE para identificar de manera unívoca la procedencia de la mutación física de retirados. |
+
 
 
 

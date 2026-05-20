@@ -2,6 +2,7 @@
 
 | Fecha | Tarea | Estado | Resultado |
 |-------|-------|--------|-----------|
+| 2026-05-20 | Adición de Trazabilidad SQL y Confirmación de Persistencia Real | Completado | Se inyectó el comentario de trazabilidad SQL `/* Origen: web_scraping_inh.php */` en la consulta `$updateSQL` y se confirmó la activación definitiva de la mutación de inscritos y el procesamiento de tickets retirados. |
 | 2026-05-12 | Configuración de `.gitignore` e inicialización de documentación obligatoria | Completado | Se aplicó el archivo `.gitignore` reduciendo los archivos pendientes de miles a 132. Se crearon los archivos base de arquitectura y esquema. |
 | 2026-05-12 | Renombrado y refactorización de proveedor Betbird | Completado | Archivos renombrados y punteros actualizados en `betbird_generador_json.php` y `betbird_ia.php`. Verificado con grep. |
 | 2026-05-13 | Refactorización quirúrgica motor CapitalOTB | Completado | Sustitución mínima de cURL por Puppeteer. Verificado con php -l. Se preservó el estilo original. |
