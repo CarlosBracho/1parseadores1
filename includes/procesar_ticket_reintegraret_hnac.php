@@ -1,8 +1,5 @@
 <?php
- 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
 if (isset($car)) {
     $query_Recordset0 = sprintf("/* PARSEADORES1 includes\procesar_ticket_reintegraret_hnac.php - QUERY 1 */ SELECT ta.cod_taquilla 
 		FROM taquilla ta, taquilla_opc_hnac tp 

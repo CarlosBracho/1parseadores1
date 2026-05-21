@@ -53,6 +53,23 @@ if (!empty($_SERVER['QUERY_STRING'])) {
     }
 }
 $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recordset1, $queryString_Recordset1);
+
+// PRE-CARGA ÚNICA: todos los inscritos del día en 1 query (Optimización N+1)
+$inscritos_preload = array();
+$query_preload = sprintf(
+    "/* Origen: caballos_lista_hnac.php */ SELECT ins.cod_inscrito_hnac, ins.num_caballo_hnac, ins.est_inscrito_hnac, ins.cod_carrera_hnac
+    FROM inscritos ins
+    INNER JOIN carrera_hnac ca ON ca.cod_carrera_hnac = ins.cod_carrera_hnac
+    WHERE ca.fec_carrera_hnac = %s",
+    GetSQLValueString($xFechaCarrera_Recordset1, "date")
+);
+$Recordset_preload = mysqli_query($conexionbanca, $query_preload);
+if ($Recordset_preload) {
+    while ($row_pre = mysqli_fetch_assoc($Recordset_preload)) {
+        $inscritos_preload[$row_pre['cod_carrera_hnac']][] = $row_pre;
+    }
+    mysqli_free_result($Recordset_preload);
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -158,29 +175,20 @@ Carreras <?php echo($startRow_Recordset1 + 1) ?>-<?php echo min($startRow_Record
       <td align="left"><?php echo $row_Recordset1['nom_hipodromo_hnac']." Carr: ...".$row_Recordset1['num_carrera_hnac']; ?></td>
       <td style="font-size:18px">
         <?php
-            $query_Recordset3 = sprintf(
-    "/* PARSEADORES1 admin_hnac\caballos_lista_hnac.php - QUERY 2 */ SELECT * 
-				FROM carrera_hnac, inscritos 
-				WHERE 
-				carrera_hnac.cod_carrera_hnac = %s AND
-				inscritos.cod_carrera_hnac = carrera_hnac.cod_carrera_hnac",
-    GetSQLValueString($row_Recordset1['cod_carrera_hnac'], "int")
-);
-            $Recordset3 = mysqli_query($conexionbanca, $query_Recordset3) or die(mysqli_error($conexionbanca));
-            $row_Recordset3 = mysqli_fetch_assoc($Recordset3);
-            $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
-
-        
+            $cod_carr_loop = $row_Recordset1['cod_carrera_hnac'];
+            $rows_Recordset3 = isset($inscritos_preload[$cod_carr_loop]) ? $inscritos_preload[$cod_carr_loop] : array();
+            $totalRows_Recordset3 = count($rows_Recordset3);
+            
         if ($totalRows_Recordset3>0) {
             $g=0;
-            do {
+            foreach ($rows_Recordset3 as $row_Recordset3) {
                 if ($row_Recordset3['est_inscrito_hnac']==0) {?>
 					[<a href="caballos_reintegrar_hnac.php?recordID=<?php echo $row_Recordset3['cod_inscrito_hnac']; ?>&codCarr=<?php echo $row_Recordset3['cod_carrera_hnac']; ?>&numCab=<?php echo $row_Recordset3['num_caballo_hnac']; ?>" title="reintegrar ejemplar"><?php echo $row_Recordset3['num_caballo_hnac']; ?></a>]
 					
 				<?php
                 $g++;
                 }
-            } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));
+            }
         } else {
             echo "NINGUNO";
         }
@@ -188,7 +196,7 @@ Carreras <?php echo($startRow_Recordset1 + 1) ?>-<?php echo min($startRow_Record
       </td>
       <td width="36" align="center"><strong><a href="caballos_retirar_add_hnac.php?recordID=<?php echo $row_Recordset1['cod_carrera_hnac']; ?>" title="retirar ejemplares"><i class="fa fa-plus-circle fa-2x"></i></a></strong></td>
       <td width="39" align="center">
-      <?php if ($g>1) {?>
+      <?php if (isset($g) && $g>1) {?>
       	<strong><a href="caballos_reintegrar_all_hnac.php?recordID=<?php echo $row_Recordset1['cod_carrera_hnac']; ?>" title="reintegrar todos los ejemplares"><i class="fa fa-undo fa-2x"></i></a></strong>
       <?php }?>
       </td>
