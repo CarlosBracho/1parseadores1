@@ -64,28 +64,6 @@ if (isset($_SERVER['QUERY_STRING'])) {
       GetSQLValueString($fechaactual, "date")
   );
   $Result2 = mysqli_query($conexionbanca, $insertSQL2) or die(mysqli_error($conexionbanca));
-
-  // Alerta automatizada de Telegram por cierre manual de carrera (Nacionales HNAC)
-  $tiempo_formateado = date('g:i s') . ' segundos';
-  $msj = "el usuario " . $nom_usuario . " mandó a cerrar la carrera " . $num_carrera . " de las nacionales a las " . $tiempo_formateado;
-
-  $post = [
-      'chat_id' => -1003755064511,
-      'text' => $msj,
-  ];
-
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "https://api.telegram.org/bot309341364:AAETe6H8z5HXbqdv5XhpTEY-nsfBKtYQ0mE/sendMessage");
-  curl_setopt($ch, CURLOPT_POST, 1);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-  curl_setopt($ch, CURLOPT_TIMEOUT, 3);
-  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-  curl_exec($ch);
-  curl_close($ch);
-
   $updateGoTo = "admin_apertura_lista_hnac.php";
   mysqli_free_result($Recordset1);
   if (isset($_SERVER['QUERY_STRING'])) {
