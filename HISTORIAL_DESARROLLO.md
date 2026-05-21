@@ -25,6 +25,9 @@
 | 2026-05-20 | Activación de Producción y Trazabilidad SQL | Activada la mutación física de retirados en la base de datos MariaDB y la inclusión del procesador de tickets nativo, agregando trazabilidad SQL mediante comentarios internos en `web_scraping_inh.php` y asegurando compatibilidad multiplataforma y retroactiva. |
 | 2026-05-21 | Optimización de Latencia — Módulo Retiro/Reintegro HNAC | Eliminados cuellos de botella de N+1 queries en `caballos_lista_hnac.php` (pre-carga unificada de inscritos), N×M queries síncronas en `procesar_ticket_retirados_hnac.php` (consolidación en 1 JOIN cross-taquilla), y directivas de debug en `procesar_ticket_reintegraret_hnac.php`. Reducción de latencia estimada 80–90%. |
 | 2026-05-21 | Optimización y Bulk Update en Reintegro HNAC | Refactorizado `procesar_ticket_reintegraret_hnac.php`: consolidada la extracción de tickets en una consulta SELECT JOIN unificada, filtrado en memoria y actualización masiva por lotes (chunks) de 200 con WHERE IN y comentarios de trazabilidad. |
+| 2026-05-21 | Automatización de Cierre Transaccional | Implementada intercepción de estatus Abierta->Cerrada (1->2) en `web_scraping_inh.php`, preparando la mutación local de `carrera_hnac` y el insert a la `bitacora` (comentadas por seguridad), controladas por el mapa de bits `alerta_cierre_enviada`. |
+| 2026-05-21 | Consistencia de Arranque y Control de Estados Preexistentes | Inyectada evaluación condicional `!isset($viejo['status']) && $statusId === 2` en `web_scraping_inh.php` para contrastar con MariaDB y forzar cierre/bitácora locales comentados. |
+| 2026-05-21 | Diagnóstico de Comportamiento Cruzado | Auditadas las implicaciones de concurrencia e I/O de retirados y consistencia de arranque en `web_scraping_inh.php`, verificando el control contra el lazo infinito de procesamiento. |
 
 
 

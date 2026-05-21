@@ -14,6 +14,8 @@
   - Campos detectados: `cod_carrera_hnac`, `cod_hipodromo_hnac`, `num_carrera_hnac`, `fec_carrera_hnac`, `hor_carrera_hnac`, `est_carrera_hnac`, `can_caballos_hnac`.
 - `venta_hnac`: Registro de transacciones de venta.
   - Campos detectados: `fec_venta_hnac`, `cod_carrera_hnac`, `num_ticket_hnac`, `mon_venta_hnac`, `num_caballo_hnac`, `cod_tventa_hnac`, `est_ticket_hnac`, `pag_premio_hnac`, `est_calculo_hnac`, `id_usuario`.
+- `bitacora`: Registro de eventos y auditoría del sistema de apuestas.
+  - Campos detectados: `des_bitacora`, `hor_bitacora`, `fec_bitacora`.
 
 ## Notas
 - El esquema completo debe ser extraído del servidor remoto o del archivo `.sql` de respaldo más reciente.

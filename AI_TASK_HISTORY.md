@@ -2,7 +2,11 @@
 
 | Fecha | Tarea | Estado | Resultado |
 |-------|-------|--------|-----------|
+| 2026-05-21 | Diagnóstico de Comportamiento Cruzado en Arranque | Completado | Auditada la precedencia topológica y comportamiento cruzado del lazo de retirados y la consistencia en el arranque de `web_scraping_inh.php`, verificando el aislamiento I/O y bloqueo de lazo infinito. |
+| 2026-05-21 | Consistencia de Arranque y Control de Estados Preexistentes | Completado | Inyectada condicional complementaria `!isset($viejo['status'])` en `web_scraping_inh.php`. Si la carrera inicia cerrada (`status === 2`), interroga MariaDB 10 y ejecuta el cierre y bitácora comentados, resguardado por la flag `alerta_cierre_enviada`. |
+| 2026-05-21 | Automatización de Cierre Transaccional | Completado | Interceptada transición Abierta->Cerrada en `web_scraping_inh.php`, emulando localmente queries de cierre e insertando bitácora, resguardado por una flag en la caché. |
 | 2026-05-21 | Optimización de procesar_ticket_reintegraret_hnac.php | Completado | Consolidado SELECT de tickets en 1 sola consulta, filtrado en memoria y Bulk Update en chunks de 200 para evitar patrón N+1. |
+
 | 2026-05-20 | Optimización de latencia — N+1 y N×M queries en módulo retiro/reintegro HNAC | Completado | (Causa #1) Pre-carga de inscritos en 1 query en `caballos_lista_hnac.php`. (Causa #2) Consolidación de N SELECTs por taquilla en 1 JOIN en `procesar_ticket_retirados_hnac.php`. (Causa #3) Eliminados `ini_set` de debug en `procesar_ticket_reintegraret_hnac.php`. |
 | 2026-05-20 | Adición de Trazabilidad SQL y Confirmación de Persistencia Real | Completado | Se inyectó el comentario de trazabilidad SQL `/* Origen: web_scraping_inh.php */` en la consulta `$updateSQL` y se confirmó la activación definitiva de la mutación de inscritos y el procesamiento de tickets retirados. |
 | 2026-05-12 | Configuración de `.gitignore` e inicialización de documentación obligatoria | Completado | Se aplicó el archivo `.gitignore` reduciendo los archivos pendientes de miles a 132. Se crearon los archivos base de arquitectura y esquema. |

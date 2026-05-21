@@ -44,6 +44,10 @@
 | **Trazabilidad SQL (updateSQL)** | Trazabilidad | Comentario interno `/* Origen: web_scraping_inh.php */` en la consulta UPDATE para identificar de manera unívoca la procedencia de la mutación física de retirados. |
 | **procesar_ticket_reintegraret_hnac.php** | Script PHP | Script optimizado para el reintegro de tickets de caballos nacionales (HNAC). Unifica la lectura en una sola consulta y utiliza Bulk Update en lotes para eliminar la latencia de red. |
 | **Bulk Update (IN chunks)** | Optimización BD | Técnica de actualización masiva estructurada en lotes de 200 IDs en `procesar_ticket_reintegraret_hnac.php` para evitar sobrecargar MariaDB y optimizar la escritura WAN. |
+| **alerta_cierre_enviada** | Bandera Volátil | Flag en la caché `$estadoCarreras` para evitar el procesamiento redundante y la duplicidad de sentencias SQL en MariaDB ante ráfagas del WebSocket. |
+| **cierreCarreraSQL / insertBitacoraSQL** | Lógica SQL | Sentencias SQL locales estructuradas en `web_scraping_inh.php` para emular el cierre físico de una carrera nacional y registrar el evento en `bitacora` (comentadas por seguridad). |
+| **Filtro Consistencia Arranque** | Lógica PHP | Evaluación condicional `!isset($viejo['status'])` en `web_scraping_inh.php` para detectar e interceptar tramas cerradas iniciales contra MariaDB. |
+| **Precedencia Topológica (Retirados/Consistencia)** | Regla de Diseño | Orden lineal en `web_scraping_inh.php` donde retirados se procesa tras resolver `$codCarreraReal`, conviviendo con la consistencia de arranque de forma no bloqueante. |
 
 
 
