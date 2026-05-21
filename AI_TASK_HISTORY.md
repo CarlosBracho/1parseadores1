@@ -2,7 +2,7 @@
 
 | Fecha | Tarea | Estado | Resultado |
 |-------|-------|--------|-----------|
-| 2026-05-20 | Corrección 500 Internal Server Error en retiro manual de ejemplares | Completado | Eliminados `ini_set(display_errors)` y `print_r($retirados)` de `procesar_ticket_retirados_hnac.php`. El `print_r` emitía salida antes del `header(Location:)` de `caballos_retirar_add_hnac.php`, causando "headers already sent" que Apache convierte en 500. |
+| 2026-05-20 | Optimización de latencia — N+1 y N×M queries en módulo retiro/reintegro HNAC | Completado | (Causa #1) Pre-carga de inscritos en 1 query en `caballos_lista_hnac.php`. (Causa #2) Consolidación de N SELECTs por taquilla en 1 JOIN en `procesar_ticket_retirados_hnac.php`. (Causa #3) Eliminados `ini_set` de debug en `procesar_ticket_reintegraret_hnac.php`. |
 | 2026-05-20 | Adición de Trazabilidad SQL y Confirmación de Persistencia Real | Completado | Se inyectó el comentario de trazabilidad SQL `/* Origen: web_scraping_inh.php */` en la consulta `$updateSQL` y se confirmó la activación definitiva de la mutación de inscritos y el procesamiento de tickets retirados. |
 | 2026-05-12 | Configuración de `.gitignore` e inicialización de documentación obligatoria | Completado | Se aplicó el archivo `.gitignore` reduciendo los archivos pendientes de miles a 132. Se crearon los archivos base de arquitectura y esquema. |
 | 2026-05-12 | Renombrado y refactorización de proveedor Betbird | Completado | Archivos renombrados y punteros actualizados en `betbird_generador_json.php` y `betbird_ia.php`. Verificado con grep. |

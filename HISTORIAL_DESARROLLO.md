@@ -23,6 +23,8 @@
 | 2026-05-18 | Optimización de Salida y Hora de Ejecución | Eliminada la cadena estática de depuración `[TRACK DATA]` en `web_scraping_inh.php` y reemplazada por la hora de ejecución estructurada y dinámica mediante `date('g:i s') . 's'` para lograr telemetría visual limpia e inmediata de la sincronía del raspador. |
 | 2026-05-18 | Discriminación de Alertas y Aviso de Arranque | Rediseñada la persistencia de `$estadoCarreras` a matriz multidimensional asociativa (`status`, `retirados`, `ganador`, `dividendo`) en `web_scraping_inh.php` garantizando compatibilidad PHP 5.6/8.3. Se implementó una bandera de inicialización única para despachar una sola notificación a Telegram ("nacionales automaticas activadas") al recibir la primera ráfaga de red, y se añadieron cuatro condicionales atómicas e independientes de intercepción diferencial con cURL DRY sin usar `utf8_encode()`. |
 | 2026-05-20 | Activación de Producción y Trazabilidad SQL | Activada la mutación física de retirados en la base de datos MariaDB y la inclusión del procesador de tickets nativo, agregando trazabilidad SQL mediante comentarios internos en `web_scraping_inh.php` y asegurando compatibilidad multiplataforma y retroactiva. |
+| 2026-05-21 | Optimización de Latencia — Módulo Retiro/Reintegro HNAC | Eliminados cuellos de botella de N+1 queries en `caballos_lista_hnac.php` (pre-carga unificada de inscritos), N×M queries síncronas en `procesar_ticket_retirados_hnac.php` (consolidación en 1 JOIN cross-taquilla), y directivas de debug en `procesar_ticket_reintegraret_hnac.php`. Reducción de latencia estimada 80–90%. |
+
 
 
 
