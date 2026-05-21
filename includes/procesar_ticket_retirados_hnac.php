@@ -1,8 +1,4 @@
 <?php
- 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 if (isset($car)) {
     $query_Recordset0 = sprintf("/* PARSEADORES1 includes\procesar_ticket_retirados_hnac.php - QUERY 1 */ SELECT ta.cod_taquilla 
@@ -18,7 +14,6 @@ if (isset($car)) {
 
     if ($totalRows_Recordset0>0) {
         $retirados=arrayRetiradosHNAC($car);
-        print_r($retirados);
         do {
             $taq=$row_Recordset0['cod_taquilla'];
             $query_Recordset3 = sprintf(
