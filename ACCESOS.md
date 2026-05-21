@@ -18,4 +18,4 @@
 *   **Servidor**: Laragon (Apache/Nginx)
 *   **Ruta de PHP**: `E:\laragon\bin\php\php-8.3.29-nts-Win32-vs16-x64\php.exe`
 *   **Ruta de Datos**: `E:\laragon\www\1parseadores1`
-* **Última Verificación**: 2026-05-20 - Confirmada la persistencia e integración del núcleo transaccional de retirados.
+* **Última Verificación**: 2026-05-21 - Confirmada la persistencia e integración del núcleo de retirados y de la optimización del motor de reintegros de tickets.

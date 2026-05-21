@@ -29,4 +29,5 @@ Este documento recopila las instrucciones operativas y técnicas para cualquier 
 *   **Modificaciones Quirúrgicas**: Realiza ediciones mínimas en líneas específicas en lugar de reescribir funciones completas para mantener el control de cambios limpio.
 *   **Trazabilidad SQL**: Toda consulta SQL debe tener un comentario inicial describiendo su origen (ej. `/* Origen: NombreFuncion / Archivo.php */` o `/* Origen: Archivo.php */`).
 *   **Persistencia Real**: En entornos productivos, asegurar que las sentencias de mutación de base de datos (`mysqli_query`) y la inclusión de scripts transaccionales (`procesar_ticket_retirados_hnac.php`) estén activas y no permanezcan comentadas.
+*   **Optimización de Consultas (N+1 / Bulk Update)**: Evita bucles que disparen consultas a la base de datos de manera reiterada. Consolida la lectura en consultas `SELECT` unificadas que usen `JOIN`s, y realiza actualizaciones masivas (`UPDATE`) utilizando arrays divididos en lotes (`array_chunk`) con la cláusula `IN (...)` para proteger la red WAN y no saturar `max_allowed_packet` en MariaDB.
 

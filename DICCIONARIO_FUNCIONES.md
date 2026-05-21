@@ -42,6 +42,8 @@
 | **inicializacionNotificada** | Bandera Global | Control booleano global en `web_scraping_inh.php` para disparar el mensaje de inicialización de red única ("nacionales automaticas activadas") a Telegram. |
 | **estadoCarreras (Multidimensional)** | Memoria Volátil | Estructura indexada `$estadoCarreras[$trackName][$raceNumber]` que retiene un array asociativo con estados individuales de estatus, retirados, ganador y dividendo por carrera. |
 | **Trazabilidad SQL (updateSQL)** | Trazabilidad | Comentario interno `/* Origen: web_scraping_inh.php */` en la consulta UPDATE para identificar de manera unívoca la procedencia de la mutación física de retirados. |
+| **procesar_ticket_reintegraret_hnac.php** | Script PHP | Script optimizado para el reintegro de tickets de caballos nacionales (HNAC). Unifica la lectura en una sola consulta y utiliza Bulk Update en lotes para eliminar la latencia de red. |
+| **Bulk Update (IN chunks)** | Optimización BD | Técnica de actualización masiva estructurada en lotes de 200 IDs en `procesar_ticket_reintegraret_hnac.php` para evitar sobrecargar MariaDB y optimizar la escritura WAN. |
 
 
 

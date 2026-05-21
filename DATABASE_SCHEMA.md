@@ -18,4 +18,5 @@
 ## Notas
 - El esquema completo debe ser extraído del servidor remoto o del archivo `.sql` de respaldo más reciente.
 - **VETO DE ESTRUCTURA**: Según la Regla 1.2, no se debe alterar la estructura de la BD directamente. Solicitar cambios al usuario.
+- **Verificación 2026-05-21**: Se corroboró la existencia y fecha de modificación del archivo `apuestas_estructura.sql` en la raíz (modificado hoy mismo). No se realizaron alteraciones de esquema en MariaDB ni se crearon nuevos índices, respetando el veto de estructura.
 
