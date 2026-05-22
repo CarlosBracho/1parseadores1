@@ -34,6 +34,8 @@
 | 2026-05-21 09:19 | Habilitación de escrituras transaccionales I/O reales en producción | Remoción de comentarios en ejecutores mysqli_query para cierre en caliente, consistencia de arranque y dividendos en web_scraping_inh.php | Éxito | Transición exitosa a producción real. Se confirmó la compilación con linter PHP y validación de sintaxis. |
 | 2026-05-22 00:30 | SyntaxError por llave de cierre huérfana en `watchandwager_creador.php` | Remoción de llaves `}` excedentes en la sección final del script | Éxito | Ocurrió al aplanar las condicionales y remover los condicionales externos sin ajustar las llaves de cierre. |
 | 2026-05-22 00:31 | Residuo visual HTML `te" value="form1">` en `alertas_edit.php` | Remoción quirúrgica de la cadena de texto huérfana al final de la maquetación Bootstrap | Éxito | Residuo originado durante la reorganización y maquetación responsiva en columnas del formulario. |
+| 2026-05-22 21:12 | Error JavaScript `Uncaught ReferenceError: chequearEnvio is not defined` en `alertas_lista.php` | Definir la variable `statusEnvio` y la función `chequearEnvio` en el bloque de script principal | Éxito | Habilita el envío de formularios de control (PAUSAR/INICIAR, DESACTIVAR/ACTIVAR CÓDIGO) sin excepciones JS. |
+
 
 
 

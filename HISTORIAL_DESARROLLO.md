@@ -33,4 +33,6 @@
 | 2026-05-21 | Activación Total de Escrituras Transaccionales I/O | Removidas quirúrgicamente las barras de comentario de todas las sentencias mysqli_query (cierre en caliente, consistencia de arranque y pre-carga de dividendos) en `web_scraping_inh.php`, pasando al modo operativo de producción real. |
 | 2026-05-22 | Módulo de Alertas y Trazabilidad | Creada la tabla `alertas_registros` e implementado sistema de registro de IP multi-entorno para llamados y ejecuciones en `watchandwager_creador.php` y `mtp_betbird.php`. Rediseñado el panel administrativo de alertas con Bootstrap 4 e integrada modal jQuery AJAX interactiva. |
 | 2026-05-22 | Ajuste Estético Nativo y Retrocompatibilidad | Removida la estructura de Cards de Bootstrap en el panel de alertas. Se restauró el layout líquido y de alta densidad del sistema sobre el fondo gris `#E5E5E5` clásico, manteniendo compatibilidad dual (PHP 5.6 / 8.3), inyectando un fallback de control de visibilidad JS puro para el modal de historial y cargando explícitamente la librería `alertify` para evitar excepciones ReferenceError en consola. |
+| 2026-05-22 | Corrección de Botones en Listado de Alertas | Definida la función JavaScript `chequearEnvio()` y la variable global `statusEnvio` en `admin/alertas_lista.php` para habilitar el envío correcto de formularios sin excepciones JS. |
+
 

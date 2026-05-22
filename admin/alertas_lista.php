@@ -116,6 +116,16 @@ body {
 <link rel="stylesheet" href="../modal/css/alertify.min.css" />
 <script src="../modal/js/alertify.min.js"></script>
 <script>
+var statusEnvio = false;
+function chequearEnvio() {
+    if (!statusEnvio) {
+        statusEnvio = true;
+        return true;
+    } else {
+        alert("El formulario ya está siendo enviado, por favor aguarde un instante.");
+        return false;
+    }
+}
  $(document).ready(function() { 
  $("#reloj").load('../includes/reloj.php?&js='+Math.random());
  var refreshId1 = setInterval(function() {

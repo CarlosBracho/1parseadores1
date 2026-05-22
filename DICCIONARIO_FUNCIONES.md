@@ -58,5 +58,7 @@
 | **admin/alertas_lista.php (Clásico)** | UI / Lógica PHP | Panel principal de alertas reestructurado en base a una tabla clásica compacta y de alta densidad que hereda `.contentAdmin` y `.xfirefox` de `estilo/admin.css` sobre fondo `#E5E5E5`, cargando explícitamente la librería `alertify` para solventar ReferenceError ante caídas de red. |
 | **Bypass Híbrido Historial (JS)** | Script JS | Mecanismo de contingencia en `alertas_lista.php` que intercepta clics del historial; si el disparador de Bootstrap falla, manipula directamente el DOM (estilo, opacidad y backdrop) para visualizar y cerrar el modal. |
 | **admin/alertas_edit.php (Clásico)** | UI / Lógica PHP | Formulario clásico de configuración con ancho de 920px, fondo `#E1E1E1`, contenedores de tabla clásicos y cajas de texto de clase `.textbox`, manteniendo intacta la lógica horaria manual. |
+| **chequearEnvio** | Función JavaScript | Función global de seguridad que previene envíos redundantes o dobles clics en formularios de administración usando la bandera `statusEnvio`. |
+
 
 
