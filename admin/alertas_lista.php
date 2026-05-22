@@ -87,7 +87,7 @@ $query_Recordset1 = sprintf(
     (SELECT MAX(fecha_hora) FROM alertas_registros r WHERE r.id_alerta = alertas.Idalertas AND r.tipo = 1) as ultima_ejecucion,
     (SELECT MAX(fecha_hora) FROM alertas_registros r WHERE r.id_alerta = alertas.Idalertas AND r.tipo = 0) as ultimo_llamado
 	FROM 
-	alertas ORDER BY nombrealerta"
+	alertas ORDER BY ultima_ejecucion DESC, nombrealerta ASC"
 );
 
 
@@ -324,22 +324,6 @@ function chequearEnvio() {
                             </td>
                             <td align="center" style="border-bottom: 1px solid #D5D5D5; padding: 5px;">
                                 <div style="display: flex; flex-direction: column; gap: 4px; max-width: 140px; margin: auto;">
-                                    <?php if($row_Recordset1['pausa']==0){ ?>
-                                        <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();" style="margin: 0;">
-                                            <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
-                                            <input type="hidden" name="pausa" value="1">
-                                            <input type="hidden" name="FinalizarReabrir" value="1">
-                                            <button type="submit" style="cursor: pointer; width: 100%; padding: 4px; font-weight: bold; background: #D70000; color: #FFF; border: 1px solid #C00; border-radius: 3px; font-size: 10px;">PAUSAR</button>
-                                        </form>
-                                    <?php } else { ?>
-                                        <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();" style="margin: 0;">
-                                            <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
-                                            <input type="hidden" name="pausa" value="0">
-                                            <input type="hidden" name="FinalizarReabrir" value="0">
-                                            <button type="submit" style="cursor: pointer; width: 100%; padding: 4px; font-weight: bold; background: #35b128; color: #FFF; border: 1px solid #33842a; border-radius: 3px; font-size: 10px;">INICIAR</button>
-                                        </form>
-                                    <?php } ?>
-
                                     <?php if($row_Recordset1['activo_archivo'] != 3){ ?>
                                         <?php if($row_Recordset1['activo_archivo']==0){ ?>
                                             <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();" style="margin: 0;">

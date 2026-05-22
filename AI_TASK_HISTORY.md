@@ -2,6 +2,8 @@
 
 | Fecha | Tarea | Estado | Resultado |
 |-------|-------|--------|-----------|
+| 2026-05-22 | Eliminación del Botón Iniciar/Pausar Alertas | Completado | Removido el bloque HTML/PHP de renderizado de los botones PAUSAR e INICIAR en la columna de Acciones en `admin/alertas_lista.php`. |
+| 2026-05-22 | Ordenación de Lista de Alertas por Última Ejecución | Completado | Modificada la consulta principal en `admin/alertas_lista.php` para ordenar por `ultima_ejecucion DESC, nombrealerta ASC`, mostrando de primero las alertas de ejecución más reciente. |
 | 2026-05-22 | Conversión de Horas de Alertas a Horario de Venezuela (VET) | Completado | Modificadas las vistas alertas_lista.php y alertas_historial_ajax.php sumando un desfase de +6 horas (strtotime('+6 hour')) a la fecha de última ejecución, último llamado e historial del modal. |
 | 2026-05-22 | Controladores Nativos de Modal, Desbloqueo de Formularios y Trazabilidad de Última Ejecución | Completado | Implementado controlador nativo JS en modal de historial y AJAX nativo (XHR) sin dependencias, añadido timeout de 5 segundos para desbloqueo de envíos de formularios (`chequearEnvio()`), y calculador PHP `tiempoTranscurridoAlerta()` alimentado por subconsultas SQL optimizadas en el Recordset 1. |
 | 2026-05-22 | Corrección de Opacidad de Modal e Interferencia de Alertify | Completado | Removidas las clases de conflicto de Bootstrap (.modal .fade) en el div de la modal de `admin/alertas_lista.php` y reforzada la visibilidad en CSS con opacity/visibility. Implementada una salvaguarda 'typeof' en `includes/cabeceraadmin.php` para evitar ReferenceErrors de alertify en el hilo principal de JS. |
