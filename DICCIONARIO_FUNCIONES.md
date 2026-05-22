@@ -56,9 +56,6 @@
 | **finalizar_script_alertas** | Función PHP | Finalizador limpio compatible con la Regla 9.3 para scripts CLI que asegura la limpieza del buffer y la salida ordenada. |
 | **alertas_historial_ajax.php** | Script AJAX | Controlador AJAX ligero para consultar y retornar la tabla con los últimos 100 movimientos de una alerta en `alertas_registros`. |
 | **admin/alertas_lista.php (Clásico)** | UI / Lógica PHP | Panel principal de alertas reestructurado en base a una tabla clásica compacta y de alta densidad que hereda `.contentAdmin` y `.xfirefox` de `estilo/admin.css` sobre fondo `#E5E5E5`, cargando explícitamente la librería `alertify` para solventar ReferenceError ante caídas de red. |
-| **Bypass Híbrido Historial (JS)** | Script JS | Mecanismo de contingencia en `alertas_lista.php` que intercepta clics del historial; si el disparador de Bootstrap falla, manipula directamente el DOM (estilo, opacidad y backdrop) para visualizar y cerrar el modal. |
+| **Bypass Híbrido Historial (JS)** | Script JS | Mecanismo en `alertas_lista.php` desacoplado de las librerías JS de Bootstrap mediante CSS moderno personalizado que neutraliza estilos heredados de Bootstrap 2.0.3 y un disparador directo jQuery con delegación de eventos. |
 | **admin/alertas_edit.php (Clásico)** | UI / Lógica PHP | Formulario clásico de configuración con ancho de 920px, fondo `#E1E1E1`, contenedores de tabla clásicos y cajas de texto de clase `.textbox`, manteniendo intacta la lógica horaria manual. |
 | **chequearEnvio** | Función JavaScript | Función global de seguridad que previene envíos redundantes o dobles clics en formularios de administración usando la bandera `statusEnvio`. |
-
-
-

@@ -2,6 +2,7 @@
 
 | Fecha | Tarea | Estado | Resultado |
 |-------|-------|--------|-----------|
+| 2026-05-22 | Corrección de Modal de Historial en Panel de Alertas | Completado | Corregido el botón "HISTORIAL" en `admin/alertas_lista.php` mediante la inyección de estilos CSS auto-contenidos (bypasseando Bootstrap 2.0.3) y una lógica de jQuery simplificada que delega y activa la modal de forma nativa sin depender de la librería JS de Bootstrap. |
 | 2026-05-22 | Corrección de Botones en Listado de Alertas | Completado | Definida la función JavaScript `chequearEnvio()` y la variable global `statusEnvio` en `admin/alertas_lista.php` para habilitar el envío correcto de formularios sin excepciones JS. |
 | 2026-05-22 | Retrocompatibilidad, reconexión de historial y ajuste estético nativo | Completado | Removida maquetación Bootstrap de `admin/alertas_lista.php` y `admin/alertas_edit.php`, restableciendo la estética clásica (naranja/gris/blanco) del software y su fondo gris `#E5E5E5`. Incorporado un disparador híbrido JS seguro en el botón de historial tolerante a fallos de jQuery y corregido error de consola ReferenceError cargando explícitamente la librería `alertify`. |
 

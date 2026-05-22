@@ -107,6 +107,63 @@ body {
 	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
 	font-size:11px;
 }
+/* Estilos modernos y override de Bootstrap 2.0.3 para la modal del historial */
+#historialModal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    z-index: 99999 !important;
+    display: none !important;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+#historialModal.show {
+    display: flex !important;
+}
+#historialModal .modal-dialog {
+    position: relative !important;
+    width: 90% !important;
+    max-width: 800px !important;
+    margin: 30px auto !important;
+    pointer-events: auto !important;
+}
+#historialModal .modal-content {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    background-color: #fff !important;
+    border: 1px solid rgba(0,0,0,.2) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5) !important;
+    outline: 0 !important;
+}
+/* Spinner animado nativo */
+.spinner-ia {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: text-bottom;
+    border: .2em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-ia-keyframes .75s linear infinite;
+    margin-right: 5px;
+}
+@keyframes spinner-ia-keyframes {
+    to { transform: rotate(360deg); }
+}
 </style>
 <link href="../estilo/admin.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
@@ -269,60 +326,33 @@ function chequearEnvio() {
 
             <script>
             $(document).ready(function() {
+                // Delegacion para cerrar la modal al hacer clic en los botones de cierre o fuera de la caja
+                $(document).on('click', '#historialModal [data-dismiss="modal"], #historialModal [data-bs-dismiss="modal"], #historialModal .close', function() {
+                    $('#historialModal').removeClass('show');
+                    document.body.classList.remove('modal-open');
+                });
+
+                $(document).on('click', '#historialModal', function(e) {
+                    if (e.target === this) {
+                        $('#historialModal').removeClass('show');
+                        document.body.classList.remove('modal-open');
+                    }
+                });
+
+                // Accion para abrir y cargar el historial via AJAX
                 $(document).on('click', '.btn-ver-historial', function() {
                     var idAlerta = $(this).data('id');
                     var nombreAlerta = $(this).data('nombre');
+                    
+                    // Configurar titulo y spinner de carga
                     $('#historialModalLabel').text('Historial: ' + nombreAlerta + ' (ID: ' + idAlerta + ')');
-                    $('#historialModalBody').html('<div class="text-center py-4"><span class="spinner-border spinner-border-sm"></span> Cargando historial...</div>');
+                    $('#historialModalBody').html('<div class="text-center py-4"><span class="spinner-ia"></span> Cargando historial...</div>');
                     
-                    var modalOpenSuccess = false;
-                    try {
-                        if (typeof $.fn.modal === 'function') {
-                            $('#historialModal').modal('show');
-                            modalOpenSuccess = true;
-                        }
-                    } catch(e) {
-                        console.warn("Bootstrap modal failed, fallback to hybrid JS:", e);
-                    }
+                    // Mostrar modal y añadir la clase al body
+                    $('#historialModal').addClass('show');
+                    document.body.classList.add('modal-open');
                     
-                    if (!modalOpenSuccess) {
-                        var modalEl = document.getElementById('historialModal');
-                        if (modalEl) {
-                            modalEl.style.display = 'block';
-                            modalEl.style.opacity = '1';
-                            modalEl.classList.add('show');
-                            
-                            var oldBackdrops = document.querySelectorAll('.modal-backdrop');
-                            oldBackdrops.forEach(function(bp) { bp.remove(); });
-                            
-                            var backdrop = document.createElement('div');
-                            backdrop.className = 'modal-backdrop fade show';
-                            document.body.appendChild(backdrop);
-                            document.body.classList.add('modal-open');
-                            
-                            var closeButtons = modalEl.querySelectorAll('[data-dismiss="modal"], [data-bs-dismiss="modal"], .close');
-                            closeButtons.forEach(function(btn) {
-                                btn.onclick = function() {
-                                    modalEl.style.display = 'none';
-                                    modalEl.classList.remove('show');
-                                    var backdropEl = document.querySelector('.modal-backdrop');
-                                    if (backdropEl) { backdropEl.remove(); }
-                                    document.body.classList.remove('modal-open');
-                                };
-                            });
-                            
-                            modalEl.onclick = function(e) {
-                                if (e.target === modalEl) {
-                                    modalEl.style.display = 'none';
-                                    modalEl.classList.remove('show');
-                                    var backdropEl = document.querySelector('.modal-backdrop');
-                                    if (backdropEl) { backdropEl.remove(); }
-                                    document.body.classList.remove('modal-open');
-                                }
-                            };
-                        }
-                    }
-                    
+                    // Carga AJAX
                     $('#historialModalBody').load('alertas_historial_ajax.php?id=' + idAlerta, function(response, status, xhr) {
                         if (status == "error") {
                             $('#historialModalBody').html('<div class="alert alert-danger m-3">Error al cargar el historial. Intente de nuevo.</div>');

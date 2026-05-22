@@ -35,8 +35,4 @@
 | 2026-05-22 00:30 | SyntaxError por llave de cierre huérfana en `watchandwager_creador.php` | Remoción de llaves `}` excedentes en la sección final del script | Éxito | Ocurrió al aplanar las condicionales y remover los condicionales externos sin ajustar las llaves de cierre. |
 | 2026-05-22 00:31 | Residuo visual HTML `te" value="form1">` en `alertas_edit.php` | Remoción quirúrgica de la cadena de texto huérfana al final de la maquetación Bootstrap | Éxito | Residuo originado durante la reorganización y maquetación responsiva en columnas del formulario. |
 | 2026-05-22 21:12 | Error JavaScript `Uncaught ReferenceError: chequearEnvio is not defined` en `alertas_lista.php` | Definir la variable `statusEnvio` y la función `chequearEnvio` en el bloque de script principal | Éxito | Habilita el envío de formularios de control (PAUSAR/INICIAR, DESACTIVAR/ACTIVAR CÓDIGO) sin excepciones JS. |
-
-
-
-
-
+| 2026-05-22 21:20 | Botón HISTORIAL inactivo y modal roto por versión antigua de Bootstrap CSS (2.0.3) | Implementar modal auto-contenida con CSS puro (Flexbox, overlay y spinner) y disparadores JS/jQuery desacoplados del bundle JS | Éxito | Resuelve el conflicto entre Bootstrap 2.0.3 CSS y bootstrap.bundle.min.js (BS 4/5) sin alterar el resto del diseño clásico. |

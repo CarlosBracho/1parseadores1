@@ -26,5 +26,4 @@
 - **VETO DE ESTRUCTURA**: Según la Regla 1.2, no se debe alterar la estructura de la BD directamente. Solicitar cambios al usuario.
 - **Verificación 2026-05-21**: Se corroboró la existencia y fecha de modificación del archivo `apuestas_estructura.sql` en la raíz (modificado hoy mismo). No se realizaron alteraciones de esquema en MariaDB ni se crearon nuevos índices, respetando el veto de estructura, y se activaron por completo las escrituras transaccionales I/O reales en caliente para cierres de carrera y pre-carga de dividendos simples (estatus de confirmación 2).
 - **Verificación 2026-05-22**: Los ajustes correctivos de la interfaz y botones en el módulo de alertas se realizaron sin modificar la estructura o esquema de base de datos.
-
-
+- **Verificación 2026-05-22 (2)**: La corrección quirúrgica del modal de historial asíncrono se completó sin alteraciones a las tablas, campos o datos en la base de datos.
