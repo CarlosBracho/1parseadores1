@@ -202,14 +202,14 @@ body {
                                     <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
                                     <input type="hidden" name="pausa" value="1">
                                     <input type="hidden" name="FinalizarReabrir" value="1">
-                                    <button class="btn btn-sm btn-danger btn-block mb-2 font-weight-bold" type="submit">PAUSAR</button>
+                                    <button class="btn btn-sm btn-danger w-100 btn-block mb-2 font-weight-bold" type="submit">PAUSAR</button>
                                 </form>
                               <?php } else { ?>
                                 <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
                                     <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
                                     <input type="hidden" name="pausa" value="0">
                                     <input type="hidden" name="FinalizarReabrir" value="0">
-                                    <button class="btn btn-sm btn-success btn-block mb-2 font-weight-bold" type="submit">INICIAR</button>
+                                    <button class="btn btn-sm btn-success w-100 btn-block mb-2 font-weight-bold" type="submit">INICIAR</button>
                                 </form>
                               <?php } ?>
 
@@ -218,21 +218,21 @@ body {
                                   <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
                                       <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
                                       <input type="hidden" name="ESTADO_CODIGO" value="1">
-                                      <button class="btn btn-sm btn-outline-danger btn-block mb-2" style="font-size: 11px;" type="submit">DESACTIVAR CÓDIGO</button>
+                                      <button class="btn btn-sm btn-outline-danger w-100 btn-block mb-2" style="font-size: 11px;" type="submit">DESACTIVAR CÓDIGO</button>
                                   </form>
                                 <?php } else { ?>
                                   <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
                                       <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
                                       <input type="hidden" name="ESTADO_CODIGO" value="0">
-                                      <button class="btn btn-sm btn-outline-primary btn-block mb-2" style="font-size: 11px;" type="submit">ACTIVAR CÓDIGO</button>
+                                      <button class="btn btn-sm btn-outline-primary w-100 btn-block mb-2" style="font-size: 11px;" type="submit">ACTIVAR CÓDIGO</button>
                                   </form>
                                 <?php } ?>
                               <?php } ?>
                             </div>
                             
                             <div>
-                              <a href='alertas_edit.php?recordID=<?php echo $row_Recordset1['Idalertas']; ?>' class="btn btn-sm btn-info text-white btn-block mb-2 font-weight-bold">EDITAR</a>
-                              <button class="btn btn-sm btn-secondary btn-block btn-ver-historial font-weight-bold" data-id="<?php echo $row_Recordset1['Idalertas']; ?>" data-nombre="<?php echo htmlspecialchars($row_Recordset1['nombrealerta']); ?>">HISTORIAL</button>
+                              <a href='alertas_edit.php?recordID=<?php echo $row_Recordset1['Idalertas']; ?>' class="btn btn-sm btn-info text-white w-100 btn-block mb-2 font-weight-bold">EDITAR</a>
+                              <button class="btn btn-sm btn-secondary w-100 btn-block btn-ver-historial font-weight-bold" data-id="<?php echo $row_Recordset1['Idalertas']; ?>" data-nombre="<?php echo htmlspecialchars($row_Recordset1['nombrealerta']); ?>">HISTORIAL</button>
                             </div>
                           </div>
                         </div>
@@ -249,7 +249,7 @@ body {
                 <div class="modal-content border-0 shadow">
                   <div class="modal-header bg-dark text-white">
                     <h5 class="modal-title" id="historialModalLabel" style="font-size: 15px; font-weight: bold;">Historial de Alerta</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" style="font-size: 24px; border: none; background: none; opacity: 0.8;">
+                    <button type="button" class="close text-white" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close" style="font-size: 24px; border: none; background: none; opacity: 0.8;">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
@@ -259,7 +259,7 @@ body {
                     </div>
                   </div>
                   <div class="modal-footer bg-light">
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal" data-bs-dismiss="modal">Cerrar</button>
                   </div>
                 </div>
               </div>
