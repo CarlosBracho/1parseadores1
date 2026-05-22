@@ -113,6 +113,8 @@ body {
 <link rel="stylesheet" type="text/css" href="../css/tcal.css" />
 <script type="text/javascript" src="../js/tcal.js"></script>
 <script src="../js/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="../modal/css/alertify.min.css" />
+<script src="../modal/js/alertify.min.js"></script>
 <script>
  $(document).ready(function() { 
  $("#reloj").load('../includes/reloj.php?&js='+Math.random());
@@ -154,93 +156,83 @@ body {
         
         <?php if ($totalRows_Recordset1 > 0) { ?>
             <div style="height:100%; padding:0px 0px 100px 0px">   
-                <div class="row">
-                  <?php do { 
-                    $nuevahora1 = date('H:i:s', strtotime('+6 hour', strtotime($row_Recordset1['horainicio'])));
-                    $nuevahora2 = date('H:i:s', strtotime('+6 hour', strtotime($row_Recordset1['horafin'])));
-                  ?>
-                  <div class="col-12 col-md-6 mb-4">
-                    <div class="card shadow-sm border-0">
-                      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 text-truncate" style="max-width: 80%; font-size: 15px; font-weight: bold;"><?php echo htmlspecialchars($row_Recordset1['nombrealerta']); ?></h5>
-                        <span class="badge badge-secondary" style="font-size: 11px;">ID: <?php echo $row_Recordset1['Idalertas']; ?></span>
-                      </div>
-                      <div class="card-body bg-white p-3">
-                        <div class="row">
-                          <div class="col-7">
-                            <p class="mb-1 text-muted" style="font-size: 11px; margin: 0;"><strong>Link Principal:</strong></p>
-                            <p class="mb-2 text-truncate" style="font-size: 12px; margin: 0;"><a href="<?php echo htmlspecialchars($row_Recordset1['link_principal']); ?>" target="_blank"><?php echo htmlspecialchars($row_Recordset1['link_principal']); ?></a></p>
-                            
-                            <p class="mb-1 text-muted" style="font-size: 11px; margin: 5px 0 0 0;"><strong>Comentario:</strong></p>
-                            <p class="mb-3 text-muted" style="font-size: 12px; min-height: 38px; margin: 0; line-height: 14px;"><?php echo htmlspecialchars($row_Recordset1['comentario']); ?></p>
-                            
-                            <div class="row text-center border-top border-bottom py-1" style="font-size: 11px; margin: 0; background-color: #f8f9fa;">
-                              <div class="col-6 border-right">
-                                <strong>Inicio:</strong> <?php echo horaampm($nuevahora1); ?>
-                              </div>
-                              <div class="col-6">
+                <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0" style="font-size: 12px; background: #FFF; border: 1px solid #CCC; font-family: Tahoma, Geneva, sans-serif;">
+                    <thead>
+                        <tr style="background: #333; color: #FFF; height: 35px; font-weight: bold; text-align: left;">
+                            <th style="padding-left: 10px; width: 5%; text-align: center;">ID</th>
+                            <th style="width: 25%;">Alerta / Link Principal</th>
+                            <th style="width: 30%;">Comentario</th>
+                            <th style="width: 15%; text-align: center;">Horario (In/Fin)</th>
+                            <th style="width: 13%; text-align: center;">Parámetros</th>
+                            <th style="width: 12%; text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php do { 
+                            $nuevahora1 = date('H:i:s', strtotime('+6 hour', strtotime($row_Recordset1['horainicio'])));
+                            $nuevahora2 = date('H:i:s', strtotime('+6 hour', strtotime($row_Recordset1['horafin'])));
+                            $bgColor = ($row_Recordset1['pausa'] == 1) ? '#FBEBEB' : '#FFF';
+                        ?>
+                        <tr class="brillo" style="border-bottom: 1px solid #D5D5D5; background: <?php echo $bgColor; ?>; height: 60px;">
+                            <td align="center" style="border-bottom: 1px solid #D5D5D5; font-weight: bold;"><?php echo $row_Recordset1['Idalertas']; ?></td>
+                            <td align="left" style="border-bottom: 1px solid #D5D5D5; padding: 5px;">
+                                <strong style="color: #F90; font-size: 13px;"><?php echo htmlspecialchars($row_Recordset1['nombrealerta']); ?></strong><br>
+                                <a href="<?php echo htmlspecialchars($row_Recordset1['link_principal']); ?>" target="_blank" style="font-size: 11px; color: #0066CC; text-decoration: underline; word-break: break-all;"><?php echo htmlspecialchars($row_Recordset1['link_principal']); ?></a>
+                            </td>
+                            <td align="left" style="border-bottom: 1px solid #D5D5D5; font-size: 11px; color: #444; padding: 5px;"><?php echo htmlspecialchars($row_Recordset1['comentario']); ?></td>
+                            <td align="center" style="border-bottom: 1px solid #D5D5D5; font-size: 11px;">
+                                <strong>Inicio:</strong> <?php echo horaampm($nuevahora1); ?><br>
                                 <strong>Fin:</strong> <?php echo horaampm($nuevahora2); ?>
-                              </div>
-                            </div>
-                            <div class="row text-center pt-1" style="font-size: 11px; margin: 0;">
-                              <div class="col-4 border-right">
-                                <strong>Fallos:</strong> <?php echo $row_Recordset1['cont_fallos_reporte']; ?>
-                              </div>
-                              <div class="col-4 border-right">
-                                <strong>Rep. (m):</strong> <?php echo $row_Recordset1['min_para_reportar']; ?>
-                              </div>
-                              <div class="col-4">
-                                <strong>Repetir:</strong> <?php echo $row_Recordset1['mini_para_repetir']; ?>s
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-5 border-left d-flex flex-column justify-content-between">
-                            <!-- Acciones -->
-                            <div class="mb-2">
-                              <?php if($row_Recordset1['pausa']==0){ ?>
-                                <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
-                                    <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
-                                    <input type="hidden" name="pausa" value="1">
-                                    <input type="hidden" name="FinalizarReabrir" value="1">
-                                    <button class="btn btn-sm btn-danger w-100 btn-block mb-2 font-weight-bold" type="submit">PAUSAR</button>
-                                </form>
-                              <?php } else { ?>
-                                <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
-                                    <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
-                                    <input type="hidden" name="pausa" value="0">
-                                    <input type="hidden" name="FinalizarReabrir" value="0">
-                                    <button class="btn btn-sm btn-success w-100 btn-block mb-2 font-weight-bold" type="submit">INICIAR</button>
-                                </form>
-                              <?php } ?>
+                            </td>
+                            <td align="center" style="border-bottom: 1px solid #D5D5D5; font-size: 11px; line-height: 1.4;">
+                                Fallos: <?php echo $row_Recordset1['cont_fallos_reporte']; ?><br>
+                                Rep. (m): <?php echo $row_Recordset1['min_para_reportar']; ?><br>
+                                Repetir: <?php echo $row_Recordset1['mini_para_repetir']; ?>s
+                            </td>
+                            <td align="center" style="border-bottom: 1px solid #D5D5D5; padding: 5px;">
+                                <div style="display: flex; flex-direction: column; gap: 4px; max-width: 140px; margin: auto;">
+                                    <?php if($row_Recordset1['pausa']==0){ ?>
+                                        <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();" style="margin: 0;">
+                                            <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
+                                            <input type="hidden" name="pausa" value="1">
+                                            <input type="hidden" name="FinalizarReabrir" value="1">
+                                            <button type="submit" style="cursor: pointer; width: 100%; padding: 4px; font-weight: bold; background: #D70000; color: #FFF; border: 1px solid #C00; border-radius: 3px; font-size: 10px;">PAUSAR</button>
+                                        </form>
+                                    <?php } else { ?>
+                                        <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();" style="margin: 0;">
+                                            <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
+                                            <input type="hidden" name="pausa" value="0">
+                                            <input type="hidden" name="FinalizarReabrir" value="0">
+                                            <button type="submit" style="cursor: pointer; width: 100%; padding: 4px; font-weight: bold; background: #35b128; color: #FFF; border: 1px solid #33842a; border-radius: 3px; font-size: 10px;">INICIAR</button>
+                                        </form>
+                                    <?php } ?>
 
-                              <?php if($row_Recordset1['activo_archivo'] != 3){ ?>
-                                <?php if($row_Recordset1['activo_archivo']==0){ ?>
-                                  <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
-                                      <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
-                                      <input type="hidden" name="ESTADO_CODIGO" value="1">
-                                      <button class="btn btn-sm btn-outline-danger w-100 btn-block mb-2" style="font-size: 11px;" type="submit">DESACTIVAR CÓDIGO</button>
-                                  </form>
-                                <?php } else { ?>
-                                  <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
-                                      <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
-                                      <input type="hidden" name="ESTADO_CODIGO" value="0">
-                                      <button class="btn btn-sm btn-outline-primary w-100 btn-block mb-2" style="font-size: 11px;" type="submit">ACTIVAR CÓDIGO</button>
-                                  </form>
-                                <?php } ?>
-                              <?php } ?>
-                            </div>
-                            
-                            <div>
-                              <a href='alertas_edit.php?recordID=<?php echo $row_Recordset1['Idalertas']; ?>' class="btn btn-sm btn-info text-white w-100 btn-block mb-2 font-weight-bold">EDITAR</a>
-                              <button class="btn btn-sm btn-secondary w-100 btn-block btn-ver-historial font-weight-bold" data-id="<?php echo $row_Recordset1['Idalertas']; ?>" data-nombre="<?php echo htmlspecialchars($row_Recordset1['nombrealerta']); ?>">HISTORIAL</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <?php } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
-                </div>
+                                    <?php if($row_Recordset1['activo_archivo'] != 3){ ?>
+                                        <?php if($row_Recordset1['activo_archivo']==0){ ?>
+                                            <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();" style="margin: 0;">
+                                                <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
+                                                <input type="hidden" name="ESTADO_CODIGO" value="1">
+                                                <button type="submit" style="cursor: pointer; width: 100%; padding: 4px; background: #FFEBEB; color: #C00; border: 1px solid #D70000; border-radius: 3px; font-size: 10px;">DESACTIVAR CÓDIGO</button>
+                                            </form>
+                                        <?php } else { ?>
+                                            <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();" style="margin: 0;">
+                                                <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
+                                                <input type="hidden" name="ESTADO_CODIGO" value="0">
+                                                <button type="submit" style="cursor: pointer; width: 100%; padding: 4px; background: #EBF3FF; color: #0059B3; border: 1px solid #0066CC; border-radius: 3px; font-size: 10px;">ACTIVAR CÓDIGO</button>
+                                            </form>
+                                        <?php } ?>
+                                    <?php } ?>
+
+                                    <div style="display: flex; gap: 4px; margin-top: 2px;">
+                                        <a href="alertas_edit.php?recordID=<?php echo $row_Recordset1['Idalertas']; ?>" style="flex: 1; text-align: center; text-decoration: none; padding: 4px; font-weight: bold; background: #F90; color: #FFF; border: 1px solid #E08000; border-radius: 3px; font-size: 10px; line-height: 1.4;">EDITAR</a>
+                                        <button class="btn-ver-historial" data-id="<?php echo $row_Recordset1['Idalertas']; ?>" data-nombre="<?php echo htmlspecialchars($row_Recordset1['nombrealerta']); ?>" style="flex: 1; cursor: pointer; padding: 4px; font-weight: bold; background: #6E6C64; color: #FFF; border: 1px solid #555; border-radius: 3px; font-size: 10px;">HISTORIAL</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
+                    </tbody>
+                </table>
             </div>
 
             <!-- Modal Historial -->
@@ -272,7 +264,54 @@ body {
                     var nombreAlerta = $(this).data('nombre');
                     $('#historialModalLabel').text('Historial: ' + nombreAlerta + ' (ID: ' + idAlerta + ')');
                     $('#historialModalBody').html('<div class="text-center py-4"><span class="spinner-border spinner-border-sm"></span> Cargando historial...</div>');
-                    $('#historialModal').modal('show');
+                    
+                    var modalOpenSuccess = false;
+                    try {
+                        if (typeof $.fn.modal === 'function') {
+                            $('#historialModal').modal('show');
+                            modalOpenSuccess = true;
+                        }
+                    } catch(e) {
+                        console.warn("Bootstrap modal failed, fallback to hybrid JS:", e);
+                    }
+                    
+                    if (!modalOpenSuccess) {
+                        var modalEl = document.getElementById('historialModal');
+                        if (modalEl) {
+                            modalEl.style.display = 'block';
+                            modalEl.style.opacity = '1';
+                            modalEl.classList.add('show');
+                            
+                            var oldBackdrops = document.querySelectorAll('.modal-backdrop');
+                            oldBackdrops.forEach(function(bp) { bp.remove(); });
+                            
+                            var backdrop = document.createElement('div');
+                            backdrop.className = 'modal-backdrop fade show';
+                            document.body.appendChild(backdrop);
+                            document.body.classList.add('modal-open');
+                            
+                            var closeButtons = modalEl.querySelectorAll('[data-dismiss="modal"], [data-bs-dismiss="modal"], .close');
+                            closeButtons.forEach(function(btn) {
+                                btn.onclick = function() {
+                                    modalEl.style.display = 'none';
+                                    modalEl.classList.remove('show');
+                                    var backdropEl = document.querySelector('.modal-backdrop');
+                                    if (backdropEl) { backdropEl.remove(); }
+                                    document.body.classList.remove('modal-open');
+                                };
+                            });
+                            
+                            modalEl.onclick = function(e) {
+                                if (e.target === modalEl) {
+                                    modalEl.style.display = 'none';
+                                    modalEl.classList.remove('show');
+                                    var backdropEl = document.querySelector('.modal-backdrop');
+                                    if (backdropEl) { backdropEl.remove(); }
+                                    document.body.classList.remove('modal-open');
+                                }
+                            };
+                        }
+                    }
                     
                     $('#historialModalBody').load('alertas_historial_ajax.php?id=' + idAlerta, function(response, status, xhr) {
                         if (status == "error") {
@@ -287,7 +326,7 @@ body {
                 No existen registros de alertas configurados en el sistema.
             </div>
         <?php } ?>
-</div>>
+    </div>
   <!-- InstanceEndEditable -->
   </div>
   <div class="footer">  Copyright © Apuestas Hípicas    <!-- end .footer --></div>
