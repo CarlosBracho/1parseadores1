@@ -130,6 +130,8 @@ body {
 }
 #historialModal.show {
     display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 #historialModal .modal-dialog {
     position: relative !important;
@@ -303,7 +305,7 @@ function chequearEnvio() {
             </div>
 
             <!-- Modal Historial -->
-            <div class="modal fade" id="historialModal" tabindex="-1" role="dialog" aria-labelledby="historialModalLabel" aria-hidden="true">
+            <div id="historialModal" tabindex="-1" role="dialog" aria-labelledby="historialModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content border-0 shadow">
                   <div class="modal-header bg-dark text-white">

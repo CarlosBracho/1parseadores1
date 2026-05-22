@@ -103,7 +103,11 @@ function estadoMensaje() {
 			$("#nuevoMen").html(response);
 		},
 		error: function(){ 
-			alertify.error('<font size="4">Verifique su conexión a internet!</font>');
+			if (typeof alertify !== 'undefined') {
+				alertify.error('<font size="4">Verifique su conexión a internet!</font>');
+			} else {
+				console.warn('Verifique su conexión a internet! (alertify no definido)');
+			}
 			//setTimeout(loadHora, tiempo);
 		}    
 	});
