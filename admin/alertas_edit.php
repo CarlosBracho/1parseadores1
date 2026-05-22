@@ -1,5 +1,5 @@
 <?php
- opcache_reset();
+  
  echo 'opcache_reset<br>';
 
 
@@ -65,25 +65,56 @@ if (isset($_GET["recordID"])) {
     $xCodigo2 = $_GET["recordID"];
 }
 
-
-echo $_POST['fecha_inicio'].$_POST['fecha_fin'].$_POST['STATUS'].$_POST['PAUSA'].$_POST['CONTEO'].$_POST['MM_update'];
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
+
+
+
+
+  $hora_inicio=str_replace("+", "-", $_SESSION['ZonaHorario']);
+  //$hora_inicio = strtotime($hora_inicio, strtotime($_POST['hora_inicio']));
+  $hora_inicio = strtotime('-6 hour', strtotime($_POST['hora_inicio']));
+  $hora_inicio = date('H:i:s', $hora_inicio);
+  
+  //echo $_POST['hora_inicio']." ".$hora_inicio.$_SESSION['ZonaHorario'];
+  
+  $hora_fin=str_replace("+", "-", $_SESSION['ZonaHorario']);
+  //$hora_fin = strtotime($hora_fin, strtotime($_POST['hora_fin']));
+  $hora_fin = strtotime('-6 hour', strtotime($_POST['hora_fin']));
+  $hora_fin = date('H:i:s', $hora_fin);
+
+
+
+
+
+
 $insertSQL2 = sprintf(
-    "/* PARSEADORES1 admin\alertas_edit.php - QUERY 1 */ UPDATE alertas
+    "/* admin\alertas_edit.php - QUERY 1 */ UPDATE alertas
         SET
     horainicio=%s, 
     horafin=%s,
     activo_archivo=%s, 
     pausa=%s,
+    cont_fallos_reporte=%s,
     min_para_reportar=%s,
+    link_principal=%s,	
+    comentario=%s,	
     mensajealerta=%s,	
+    mensajealerta_error=%s,	
+    id_chat=%s,	
+    id_chat_error=%s,	
     mini_para_repetir=%s WHERE Idalertas=%s",
-    GetSQLValueString($_POST['fecha_inicio'], "date"),
-    GetSQLValueString($_POST['fecha_fin'], "date"),
-    GetSQLValueString($_POST['STATUS'], "int"),
+    GetSQLValueString($hora_inicio, "date"),
+    GetSQLValueString($hora_fin, "date"),
+    GetSQLValueString($_POST['activo_archivo'], "int"),
     GetSQLValueString($_POST['PAUSA'], "int"),
+    GetSQLValueString($_POST['CONTEO'], "int"),
     GetSQLValueString($_POST['REPORTE'], "int"),
-    GetSQLValueString($_POST['MENSAJE'], "text"),   
+    GetSQLValueString($_POST['link_principal'], "text"),   
+    GetSQLValueString($_POST['comentario'], "text"),   
+    GetSQLValueString($_POST['MENSAJE'], "text"),  
+    GetSQLValueString($_POST['MENSAJE_error'], "text"), 
+    GetSQLValueString($_POST['id_chat'], "text"),
+    GetSQLValueString($_POST['id_chat_error'], "text"),   
     GetSQLValueString($_POST['MINIMOP'], "int"),
     GetSQLValueString($_POST['IDA'], "int")
 
@@ -93,7 +124,7 @@ $Result2 = mysqli_query($conexionbanca, $insertSQL2) or die(mysqli_error($conexi
 }
 
 
-$query_Recordset1 = sprintf("/* PARSEADORES1 admin\alertas_edit.php - QUERY 2 */ SELECT *  
+$query_Recordset1 = sprintf("/* admin\alertas_edit.php - QUERY 2 */ SELECT *  
 FROM alertas
 WHERE
 Idalertas = %s",
@@ -102,8 +133,22 @@ $Recordset1 = mysqli_query($conexionbanca, $query_Recordset1) or die(mysqli_erro
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 
+echo $_SESSION['ZonaHorario'].' ZonaHorario';
+
 $inicio=$row_Recordset1['horainicio'];
+//$inicio = strtotime($_SESSION['ZonaHorario'], strtotime($inicio));
+$inicio = strtotime('+6 hour', strtotime($inicio));
+$inicio = date('H:i:s', $inicio);
+
+
+
+
 $fin=$row_Recordset1['horafin'];
+//$fin = strtotime($_SESSION['ZonaHorario'], strtotime($fin));
+$fin = strtotime('+6 hour', strtotime($fin));
+$fin = date('H:i:s', $fin);
+
+
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -111,7 +156,7 @@ $fin=$row_Recordset1['horafin'];
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>.:Apuestas Hípicas:.</title>
+<title>í</title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <script src="../SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
@@ -278,224 +323,136 @@ $(document).ready(function() {
     </div>
 	<div style="padding:70px 10px 20px 10px; text-align:left; font-size:18px; height: auto">
         <form method="POST" name="form1" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
-        	<div style="width:920px; text-align:left; font-size:18px; background: #E1E1E1">
-              <table width="919" align="center" border="0" cellpadding="0" cellspacing="0" style="line-height:13px">
-                <tr valign="baseline">
-                  <td height="44" colspan="5" align="center" valign="middle" nowrap bgcolor="#333333" 
-                  	style="color:#FFF; font-size:24px; font-weight: bold;">
-                  	CONFIGURAR ALERTA
-                  </td>
-                <tr valign="baseline">
-                  <td width="1" align="left" valign="middle" nowrap>&nbsp;</td>
-                  <td colspan="4" align="left" valign="middle" nowrap><br>
-                  	<div style="width:98.5%; text-align:left; padding:6px 0px 6px 8px; font-size:18px; background: #FFF">
-                    Nombre de alerta:
-                  	<?php echo $row_Recordset1['nombrealerta']; ?>
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-dark text-white text-center py-3">
+                    <h3 class="mb-0 font-weight-bold" style="font-size: 22px;">CONFIGURAR ALERTA</h3>
+                </div>
+                <div class="card-body bg-light p-4" style="font-size: 13px;">
+                    <!-- Nombre de Alerta -->
+                    <div class="form-group row mb-4">
+                        <label class="col-sm-3 col-form-label font-weight-bold" style="font-size: 15px;">Nombre de Alerta:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control-plaintext font-weight-bold bg-white px-3 py-2 border rounded" style="font-size: 16px; color: #333;" readonly value="<?php echo htmlspecialchars($row_Recordset1['nombrealerta']); ?>">
+                        </div>
                     </div>
-                    <br>
-                  </td>
 
+                    <h5 class="border-bottom pb-2 mb-3 text-primary font-weight-bold" style="font-size: 15px;">Parámetros de Ejecución</h5>
+                    <div class="row">
+                        <!-- Horas -->
+                        <div class="col-md-6 mb-3">
+                            <label class="font-weight-bold">Hora de Inicio</label>
+                            <input type="time" name="hora_inicio" class="form-control" value="<?php echo htmlentities($inicio, ENT_COMPAT, 'utf-8'); ?>">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="font-weight-bold">Hora de Fin</label>
+                            <input type="time" name="hora_fin" class="form-control" value="<?php echo htmlentities($fin, ENT_COMPAT, 'utf-8'); ?>">
+                        </div>
+                    </div>
 
-                <tr valign="baseline">
-                  <td align="right" nowrap>&nbsp;</td>
-                  <td align="right" nowrap>&nbsp;</td>
-                  <td align="right" nowrap>&nbsp;</td>
-                  <td align="right" nowrap>&nbsp;</td>
-                  <td align="right" nowrap>&nbsp;</td>
-                </tr>
-              
-                
+                    <div class="row">
+                        <!-- Ejecución Código -->
+                        <div class="col-md-6 mb-3">
+                            <label class="font-weight-bold">Ejecución Código</label>
+                            <select name="activo_archivo" class="form-control">
+                                <option value="0" <?php if (!(strcmp(0, htmlentities($row_Recordset1['activo_archivo'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>ACTIVO</option>
+                                <option value="3" <?php if (!(strcmp(3, htmlentities($row_Recordset1['activo_archivo'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>INACTIVO</option>
+                            </select>
+                        </div>
+                        <!-- Estatus de Pausa -->
+                        <div class="col-md-6 mb-3">
+                            <label class="font-weight-bold">Estatus de Pausa Alerta</label>
+                            <select name="PAUSA" class="form-control">
+                                <option value="0" <?php if (!(strcmp(0, htmlentities($row_Recordset1['pausa'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>ACTIVO</option>
+                                <option value="3" <?php if (!(strcmp(3, htmlentities($row_Recordset1['pausa'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>INACTIVO</option>
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <!-- Conteo de Fallos -->
+                        <div class="col-md-4 mb-3">
+                            <label class="font-weight-bold">Máx. Conteo Fallos para Reportar</label>
+                            <input type="text" name="CONTEO" class="form-control" value="<?php echo htmlentities($row_Recordset1['cont_fallos_reporte'], ENT_COMPAT, 'utf-8'); ?>">
+                        </div>
+                        <!-- Minutos para Reportar -->
+                        <div class="col-md-4 mb-3">
+                            <label class="font-weight-bold">Minutos para Reportar</label>
+                            <input type="text" name="REPORTE" class="form-control" value="<?php echo htmlentities($row_Recordset1['min_para_reportar'], ENT_COMPAT, 'utf-8'); ?>">
+                        </div>
+                        <!-- Reposo entre Ejecuciones -->
+                        <div class="col-md-4 mb-3">
+                            <label class="font-weight-bold">Reposo para Repetir (segundos)</label>
+                            <input type="text" name="MINIMOP" class="form-control" value="<?php echo htmlentities($row_Recordset1['mini_para_repetir'], ENT_COMPAT, 'utf-8'); ?>">
+                        </div>
+                    </div>
 
-<table width="920" align="center" border="0"  style="line-height:11px" cellpadding="0" cellspacing="0">
+                    <h5 class="border-bottom pb-2 mt-4 mb-3 text-primary font-weight-bold" style="font-size: 15px;">Enlaces y Comentarios</h5>
+                    <!-- Link Principal -->
+                    <div class="form-group mb-3">
+                        <label class="font-weight-bold">Link Principal</label>
+                        <input type="text" name="link_principal" class="form-control" value="<?php echo htmlentities($row_Recordset1['link_principal'], ENT_COMPAT, 'utf-8'); ?>">
+                    </div>
+                    <!-- Comentario -->
+                    <div class="form-group mb-3">
+                        <label class="font-weight-bold">Comentario</label>
+                        <textarea name="comentario" class="form-control" rows="3"><?php echo htmlentities($row_Recordset1['comentario'], ENT_COMPAT, 'utf-8'); ?></textarea>
+                    </div>
 
-                <tr valign="baseline">
-                  <td height="26" colspan="5" align="center" valign="middle" nowrap bgcolor="#5EAEFF">EDITAR ALERTAS</td>
-                </tr>
-               
-                <tr valign="baseline">
-                  <td height="26" colspan="5" align="center" valign="middle" nowrap bgcolor="#00fbff"> 
-               HORAS
-                  </td>
-                </tr>
+                    <h5 class="border-bottom pb-2 mt-4 mb-3 text-primary font-weight-bold" style="font-size: 15px;">Notificaciones Telegram (Funcionamiento Normal)</h5>
+                    <div class="row">
+                        <!-- Chat Telegram normal -->
+                        <div class="col-md-5 mb-3">
+                            <label class="font-weight-bold">Chat Telegram</label>
+                            <select name="id_chat" class="form-control">
+                                <option value="0" <?php if (!(strcmp("0", htmlentities($row_Recordset1['id_chat'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>Ningún Chat Seleccionado</option>
+                                <option value="-1001639542248" <?php if (!(strcmp("-1001639542248", htmlentities($row_Recordset1['id_chat'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>Alertas Operador</option>
+                                <option value="-214345883" <?php if (!(strcmp("-214345883", htmlentities($row_Recordset1['id_chat'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>Alertas Funcionamiento Ame Nac Ani</option>
+                                <option value="-576782283" <?php if (!(strcmp("-576782283", htmlentities($row_Recordset1['id_chat'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>Alertas Funcionamiento Parley</option>
+                                <option value="-1001346769670" <?php if (!(strcmp("-1001346769670", htmlentities($row_Recordset1['id_chat'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>Alertas Criticas</option>
+                                <option value="-641022783" <?php if (!(strcmp("-641022783", htmlentities($row_Recordset1['id_chat'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>Alertas Pruebas</option>
+                            </select>
+                        </div>
+                        <!-- Mensaje normal -->
+                        <div class="col-md-7 mb-3">
+                            <label class="font-weight-bold">Mensaje Telegram</label>
+                            <input type="text" name="MENSAJE" class="form-control" value="<?php echo htmlentities($row_Recordset1['mensajealerta'], ENT_COMPAT, 'utf-8'); ?>">
+                        </div>
+                    </div>
 
-                <tr valign="baseline">
-            <td nowrap align="left">Hora Inicio</td>
-            <td>
-            <input type="time" name="fecha_inicio" id="datepicker" style="width:140px; height: auto" value="<?php echo htmlentities($inicio, ENT_COMPAT, 'utf-8'); ?>" />
+                    <h5 class="border-bottom pb-2 mt-4 mb-3 text-primary font-weight-bold" style="font-size: 15px;">Notificaciones Telegram (Mal Funcionamiento / Fallos)</h5>
+                    <div class="row">
+                        <!-- Chat Telegram error -->
+                        <div class="col-md-5 mb-3">
+                            <label class="font-weight-bold">Chat Telegram Fallos</label>
+                            <select name="id_chat_error" class="form-control">
+                                <option value="0" <?php if (!(strcmp("0", htmlentities($row_Recordset1['id_chat_error'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>Ningún Chat Seleccionado</option>
+                                <option value="-1001639542248" <?php if (!(strcmp("-1001639542248", htmlentities($row_Recordset1['id_chat_error'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>Alertas Operador</option>
+                                <option value="-214345883" <?php if (!(strcmp("-214345883", htmlentities($row_Recordset1['id_chat_error'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>Alertas Funcionamiento Ame Nac Ani</option>
+                                <option value="-576782283" <?php if (!(strcmp("-576782283", htmlentities($row_Recordset1['id_chat_error'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>Alertas Funcionamiento Parley</option>
+                                <option value="-1001346769670" <?php if (!(strcmp("-1001346769670", htmlentities($row_Recordset1['id_chat_error'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>Alertas Criticas</option>
+                                <option value="-641022783" <?php if (!(strcmp("-641022783", htmlentities($row_Recordset1['id_chat_error'], ENT_COMPAT, 'utf-8')))) { echo "SELECTED"; } ?>>Alertas Pruebas</option>
+                            </select>
+                        </div>
+                        <!-- Mensaje error -->
+                        <div class="col-md-7 mb-3">
+                            <label class="font-weight-bold">Mensaje Telegram Fallos</label>
+                            <input type="text" name="MENSAJE_error" class="form-control" value="<?php echo htmlentities($row_Recordset1['mensajealerta_error'], ENT_COMPAT, 'utf-8'); ?>">
+                        </div>
+                    </div>
 
-            </td>
-
-            <td nowrap align="left">Hora fin</td>
-            <td>
-            <input type="time" name="fecha_fin" id="datepicker" style="width:140px; height: auto" value="<?php echo htmlentities($fin, ENT_COMPAT, 'utf-8'); ?>" />
-
-            </td>
-
-            </tr>
-
-            <tr valign="baseline">
-                  <td height="26" colspan="5" align="center" valign="middle" nowrap bgcolor="#00fbff"> 
-               DESACTIVAR ALERTA
-                  </td>
-                </tr>
-          
-                <tr valign="baseline">
-            <td nowrap align="left">STATUS ALERTA</td>
-            <td>
-            <select name="STATUS" style="width:140px; height: auto" class="textbox" tabindex="4"> 
-					                        <option value="0" <?php if (!(strcmp(0, htmlentities($row_Recordset1['activo_archivo'], ENT_COMPAT, 'utf-8')))) {
-    echo "SELECTED";
-} ?>>ACTIVO</option>
-                      <option value="3" <?php if (!(strcmp(3, htmlentities($row_Recordset1['activo_archivo'], ENT_COMPAT, 'utf-8')))) {
-    echo "SELECTED";
-} ?>>INACTIVO</option>
-                  </select>
-            </td>
-           </tr>
-
-
-           <tr valign="baseline">
-                  <td height="26" colspan="5" align="center" valign="middle" nowrap bgcolor="#00fbff"> 
-               PAUSAR ALERTA
-                  </td>
-                </tr>
-          
-                <tr valign="baseline">
-            <td nowrap align="left">STATUS DE PAUSA ALERTA</td>
-            <td>
-            <select name="PAUSA" style="width:140px; height: auto" class="textbox" tabindex="4"> 
-					                        <option value="0" <?php if (!(strcmp(0, htmlentities($row_Recordset1['pausa'], ENT_COMPAT, 'utf-8')))) {
-    echo "SELECTED";
-} ?>>ACTIVO</option>
-                      <option value="3" <?php if (!(strcmp(1, htmlentities($row_Recordset1['pausa'], ENT_COMPAT, 'utf-8')))) {
-    echo "SELECTED";
-} ?>>INACTIVO</option>
-                  </select>
-            </td>
-           </tr>
-
-           <tr valign="baseline">
-                  <td height="26" colspan="5" align="center" valign="middle" nowrap bgcolor="#00fbff"> 
-               MAXIMO DE CONTEO DE FALLOS PARA REPORTAR
-                  </td>
-                </tr>
-
-                <tr valign="baseline">
-            <td nowrap align="left">NUMERO DE CONTEOS</td>
-            <td>
-            <input type="text" name="CONTEO" class="textboxsmal" style="height:auto; width:100px" onclick="ocultaDiv('Info4');"
-              value="<?php echo htmlentities($row_Recordset1['cont_fallos_reporte'], ENT_COMPAT, 'utf-8'); ?>" 
-              size="10"/>
-            </td>
-           </tr>
-
-           <tr valign="baseline">
-                  <td height="26" colspan="5" align="center" valign="middle" nowrap bgcolor="#00fbff"> 
-               MINUTOS QUE TIENEN QUE PASAR PARA REPORTAR
-                  </td>
-                </tr>
-
-                <tr valign="baseline">
-            <td nowrap align="left">INGRESE MINUTOS</td>
-            <td>
-            <input type="text" name="REPORTE" class="textboxsmal" style="height:auto; width:100px" onclick="ocultaDiv('Info4');"
-              value="<?php echo htmlentities($row_Recordset1['min_para_reportar'], ENT_COMPAT, 'utf-8'); ?>" 
-              size="10"/>
-              <div id="Info4" style="float: left; width:auto; color: #F00; margin:-13px 0px 0px 0px; font-size:10px">
-              <?php echo $row_Recordset1['min_para_reportar']; ?></div>
-            </td>
-           </tr>
-           
-           <tr valign="baseline">
-                  <td height="26" colspan="5" align="center" valign="middle" nowrap bgcolor="#00fbff"> 
-               MINIMO PARA REPETIR LA ALERTA(OPCION NUEVA)
-                  </td>
-                </tr>
-
-                <tr valign="baseline">
-            <td nowrap align="left">POR SEGUNDOS SE INGRESA</td>
-            <td>
-            <input type="text" name="MINIMOP" class="textboxsmal" style="height:auto; width:100px" onclick="ocultaDiv('Info4');"
-              value="<?php echo htmlentities($row_Recordset1['mini_para_repetir'], ENT_COMPAT, 'utf-8'); ?>" 
-              size="10"/>
-            </td>
-           </tr>
-
-           <tr valign="baseline">
-                  <td height="26" colspan="5" align="center" valign="middle" nowrap bgcolor="#00fbff"> 
-               MENSAJE QUE ENVIA LA ALERTA
-                  </td>
-                </tr>
-
-                <tr valign="baseline">
-            <td nowrap align="left">INGRESE MENSAJE</td>
-            <td>
-            <input type="text" name="MENSAJE" class="textboxsmal" style="height:100px; width:400px" onclick="ocultaDiv('Info4');"
-              value="<?php echo htmlentities($row_Recordset1['mensajealerta'], ENT_COMPAT, 'utf-8'); ?>" 
-              size="10"/>
-            </td>
-           </tr>
-
-<input type="hidden" name="IDA" value="<?php echo $row_Recordset1['Idalertas']; ?>">
-           
-
-
-
-
-
-
-
-
-
-
-
-                <tr valign="baseline">
-                  <td height="20" colspan="11" align="center" valign="bottom" nowrap bgcolor="#5EAEFF">&nbsp;</td>
-                </tr>
-                </table>
-              <table width="924" align="center">
-                <tr valign="baseline">
-                  <td width="28" align="left" nowrap>&nbsp;</td>
-                  <td width="362" align="left" nowrap><br />
-                  	<input type="submit" class="btn badge-warning" value="GUARDAR DATOS"  tabindex="50"
-                  	style="width:180px; height:50px; font-size:16px;" />
-                  </td>
-
-                  <td width="26" align="left" nowrap>&nbsp;</td>
-                  <!--<td align="center" valign="bottom" nowrap>
-                  <a href='../agente/agente_restringir_jugadas_parley.php?recordID=<?php //echo $row_Recordset1['cod_taquilla']; ?>' target="_blank" class="btn btn-success" style="width:180px; height:40px; font-size:16px;">
-                  <div style="padding:10px 0px 0px 0px">BLOQUEAR JUGADAS</div></a>
-                  </td>-->
-                  <td width="26" align="left" nowrap>&nbsp;</td>
-                  <td width="26" align="left" nowrap>&nbsp;</td>
-                  <td width="26" align="left" nowrap>&nbsp;</td>
-                  <td width="26" align="left" nowrap>&nbsp;</td>
-                  <td width="26" align="left" nowrap>&nbsp;</td>
-                  <td width="26" align="left" nowrap>&nbsp;</td>
-                  <td width="26" align="left" nowrap>&nbsp;</td>
-                  <td width="26" align="left" nowrap>&nbsp;</td>
-                  <td width="26" align="left" nowrap>&nbsp;</td>
-                  <td width="26" align="left" nowrap>&nbsp;</td>
-                  <td width="26" align="left" nowrap>&nbsp;</td>
-                  
-                  <td align="right" valign="bottom" nowrap>
-                  <a href='../admin/alertas_lista.php'
-                  class="btn  btn-danger" style="width:150px; height:40px; font-size:16px;">
-                  	<div style="padding:10px 0px 0px 0px">CANCELAR</div>
-                  </a>
-                  </td>
-                  <td width="37" align="left" nowrap>&nbsp;</td>
-                </tr>
-                <tr valign="baseline">
-                  <td nowrap align="left">&nbsp;</td>
-                  <td colspan="9" align="left" nowrap>&nbsp;</td>
-                </tr>
-
-              </table>
-               
-          </div>
-          <input type="hidden" name="MM_update" value="form1">
+                    <!-- Inputs Ocultos -->
+                    <input type="hidden" name="IDA" value="<?php echo $row_Recordset1['Idalertas']; ?>">
+                    <input type="hidden" name="MM_update" value="form1">
+                </div>
+                <div class="card-footer bg-white d-flex justify-content-between align-items-center py-3">
+                    <button type="submit" class="btn btn-warning font-weight-bold px-4 py-2 shadow-sm text-dark" style="font-size: 15px; border-radius: 4px;">
+                        GUARDAR DATOS
+                    </button>
+                    <a href="../admin/alertas_lista.php" class="btn btn-danger font-weight-bold px-4 py-2 shadow-sm" style="font-size: 15px; border-radius: 4px;">
+                        CANCELAR
+                    </a>
+                </div>
+            </div>
 
           <?php
 ?>

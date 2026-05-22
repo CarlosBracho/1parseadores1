@@ -28,9 +28,7 @@
 | 2026-05-21 | Automatización de Cierre Transaccional | Implementada intercepción de estatus Abierta->Cerrada (1->2) en `web_scraping_inh.php`, preparando la mutación local de `carrera_hnac` y el insert a la `bitacora` (comentadas por seguridad), controladas por el mapa de bits `alerta_cierre_enviada`. |
 | 2026-05-21 | Consistencia de Arranque y Control de Estados Preexistentes | Inyectada evaluación condicional `!isset($viejo['status']) && $statusId === 2` en `web_scraping_inh.php` para contrastar con MariaDB y forzar cierre/bitácora locales comentados. |
 | 2026-05-21 | Diagnóstico de Comportamiento Cruzado | Auditadas las implicaciones de concurrencia e I/O de retirados y consistencia de arranque en `web_scraping_inh.php`, verificando el control contra el lazo infinito de procesamiento. |
-
-
-
-
-
-
+| 2026-05-21 | Activación de Creaciones Automáticas I/O | Remoción de los comentarios de bloque de la Fase 3 en `web_scraping_inh.php` para activar de forma física la apertura de carreras y plantillas de inscritos en MariaDB 10, con sanitización GetSQLValueString. |
+| 2026-05-21 | Pre-carga Automatizada de Resultados y Dividendos Simples | Interceptado el arribo de ganadores y dividendos desde el WebSocket en `web_scraping_inh.php`, aplicando la conversión matemática a base 10 con redondeo a 2 decimales para la taquilla local, preparando localmente las consultas SQL comentadas (est_confirmacion_hnac = 2) y protegiendo el flujo contra I/O redundante vía flag de caché volátil. |
+| 2026-05-21 | Activación Total de Escrituras Transaccionales I/O | Removidas quirúrgicamente las barras de comentario de todas las sentencias mysqli_query (cierre en caliente, consistencia de arranque y pre-carga de dividendos) en `web_scraping_inh.php`, pasando al modo operativo de producción real. |
+| 2026-05-22 | Módulo de Alertas y Trazabilidad | Creada la tabla `alertas_registros` e implementado sistema de registro de IP multi-entorno para llamados y ejecuciones en `watchandwager_creador.php` y `mtp_betbird.php`. Rediseñado el panel administrativo de alertas con Bootstrap 4 e integrada modal jQuery AJAX interactiva. |

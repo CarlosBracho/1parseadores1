@@ -25,20 +25,100 @@ $query_alerta = "/*  watchandwager_creador.php */ SELECT * FROM alertas WHERE Id
 $res_alerta = mysqli_query($conexionbanca, $query_alerta) or die(mysqli_error($conexionbanca));
 $row_alerta = mysqli_fetch_assoc($res_alerta);
 
-if ($row_alerta && $row_alerta['activo_archivo'] == 0) {
-    $hora_inicio = $row_alerta['horainicio'];
-    $hora_fin = $row_alerta['horafin'];
+if (!function_exists('obtener_ip_servidor')) {
+    function obtener_ip_servidor() {
+        $ip = '';
+        if (isset($_SERVER['SERVER_ADDR']) && !empty($_SERVER['SERVER_ADDR'])) {
+            $ip = $_SERVER['SERVER_ADDR'];
+        } elseif (isset($_SERVER['LOCAL_ADDR']) && !empty($_SERVER['LOCAL_ADDR'])) {
+            $ip = $_SERVER['LOCAL_ADDR'];
+        }
+        if (empty($ip) || $ip === '127.0.0.1' || $ip === '::1') {
+            $host = gethostname();
+            if ($host) {
+                $ip_host = gethostbyname($host);
+                if ($ip_host && $ip_host !== $host) {
+                    $ip = $ip_host;
+                }
+            }
+        }
+        return $ip ? $ip : '127.0.0.1';
+    }
+}
 
-    if ($hora_actual >= $hora_inicio && $hora_actual <= $hora_fin) {
-        echo "Procesando Alerta 41 - Automatización Activa.<br>";
+if (!function_exists('finalizar_script_alertas')) {
+    function finalizar_script_alertas($mensaje) {
+        echo $mensaje . "<br>";
+        fflush(STDOUT);
+        while (ob_get_level() > 0) {
+            ob_end_flush();
+        }
+        echo "\nDONE\n";
+        exit(0);
+    }
+}
 
-        // BLOQUE COMENTADO SEGÚN REQUERIMIENTO DE SEGURIDAD VISUAL
-       // /* 
-        $update_alerta = sprintf("UPDATE alertas SET contadoralerta = contadoralerta + 1, fec_alerta = %s, hor_alerta = %s WHERE idalertas = 41",
-            GetSQLValueString($hoy, "date"),
-            GetSQLValueString($hora_actual, "date"));
-        mysqli_query($conexionbanca, $update_alerta) or die(mysqli_error($conexionbanca));
-        //*/
+if (!$row_alerta) {
+    finalizar_script_alertas("Alerta 41 no encontrada.");
+}
+
+$ip_servidor = obtener_ip_servidor();
+$fecha_hora_actual = date('Y-m-d H:i:s');
+
+// Registrar Llamado (tipo = 0)
+$insert_llamado = sprintf(
+    "/* Origen: RegistroLlamado / watchandwager_creador.php */ INSERT INTO alertas_registros (id_alerta, tipo, fecha_hora, ip_servidor) VALUES (%s, %s, %s, %s)",
+    GetSQLValueString(41, "int"),
+    GetSQLValueString(0, "int"),
+    GetSQLValueString($fecha_hora_actual, "date"),
+    GetSQLValueString($ip_servidor, "text")
+);
+mysqli_query($conexionbanca, $insert_llamado) or die(mysqli_error($conexionbanca));
+
+// Validar si el código está activo (activo_archivo = 0 significa ACTIVO)
+if ($row_alerta['activo_archivo'] != 0) {
+    finalizar_script_alertas("Alerta 41 inactiva en la configuración de la base de datos.");
+}
+
+$hora_inicio = $row_alerta['horainicio'];
+$hora_fin = $row_alerta['horafin'];
+
+// Validar rango horario
+if ($hora_actual < $hora_inicio || $hora_actual > $hora_fin) {
+    finalizar_script_alertas("Fuera de rango horario para Alerta 41 ($hora_inicio - $hora_fin).");
+}
+
+// Validar reposo (mini_para_repetir en segundos en base a ultima_bien)
+$mini_para_repetir = '-' . $row_alerta['mini_para_repetir'] . ' second';
+$tiemponorepeticion = strtotime($mini_para_repetir, strtotime($hora_actual));
+$tiemponorepeticion = date('H:i:s', $tiemponorepeticion);
+$tiemponorepeticion = $hoy . ' ' . $tiemponorepeticion;
+
+if ($tiemponorepeticion <= $row_alerta['ultima_bien']) {
+    finalizar_script_alertas("No ha transcurrido el tiempo de reposo (" . $row_alerta['mini_para_repetir'] . "s) desde la última ejecución.");
+}
+
+// Si pasa todas las validaciones, procede a la ejecución efectiva
+echo "Procesando Alerta 41 - Automatización Activa.<br>";
+
+// Descomentar y actualizar la alerta en BD con ultima_bien y contador
+$update_alerta = sprintf(
+    "/* Origen: ActualizacionAlerta / watchandwager_creador.php */ UPDATE alertas SET contadoralerta = contadoralerta + 1, fec_alerta = %s, hor_alerta = %s, ultima_bien = %s WHERE idalertas = 41",
+    GetSQLValueString($hoy, "date"),
+    GetSQLValueString($hora_actual, "date"),
+    GetSQLValueString($fecha_hora_actual, "date")
+);
+mysqli_query($conexionbanca, $update_alerta) or die(mysqli_error($conexionbanca));
+
+// Registrar Ejecución Efectiva (tipo = 1)
+$insert_ejecucion = sprintf(
+    "/* Origen: RegistroEjecucion / watchandwager_creador.php */ INSERT INTO alertas_registros (id_alerta, tipo, fecha_hora, ip_servidor) VALUES (%s, %s, %s, %s)",
+    GetSQLValueString(41, "int"),
+    GetSQLValueString(1, "int"),
+    GetSQLValueString($fecha_hora_actual, "date"),
+    GetSQLValueString($ip_servidor, "text")
+);
+mysqli_query($conexionbanca, $insert_ejecucion) or die(mysqli_error($conexionbanca));
 
         // 2. FILTRADO DE HIPÓDROMOS HABILITADOS
         $query_hipo = "/* WatchandWager Creador / watchandwager_creador.php */ SELECT cod_hipodromo, nom_hipodromo, nom_hipodromo_hpi FROM hipodromo WHERE mtp_WatchandWager = 1";
@@ -158,10 +238,4 @@ if ($row_alerta && $row_alerta['activo_archivo'] == 0) {
         } else {
             echo "Error al conectar con la API de WatchandWager.<br>";
         }
-    } else {
-        echo "Fuera de rango horario para Alerta 41 ($hora_inicio - $hora_fin).<br>";
-    }
-} else {
-    echo "Alerta 41 inactiva o no encontrada.<br>";
-}
 ?>

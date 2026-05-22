@@ -45,11 +45,14 @@
 | **procesar_ticket_reintegraret_hnac.php** | Script PHP | Script optimizado para el reintegro de tickets de caballos nacionales (HNAC). Unifica la lectura en una sola consulta y utiliza Bulk Update en lotes para eliminar la latencia de red. |
 | **Bulk Update (IN chunks)** | Optimización BD | Técnica de actualización masiva estructurada en lotes de 200 IDs en `procesar_ticket_reintegraret_hnac.php` para evitar sobrecargar MariaDB y optimizar la escritura WAN. |
 | **alerta_cierre_enviada** | Bandera Volátil | Flag en la caché `$estadoCarreras` para evitar el procesamiento redundante y la duplicidad de sentencias SQL en MariaDB ante ráfagas del WebSocket. |
-| **cierreCarreraSQL / insertBitacoraSQL** | Lógica SQL | Sentencias SQL locales estructuradas en `web_scraping_inh.php` para emular el cierre físico de una carrera nacional y registrar el evento en `bitacora` (comentadas por seguridad). |
+| **cierreCarreraSQL / insertBitacoraSQL** | Lógica SQL | Sentencias SQL locales estructuradas en `web_scraping_inh.php` para emular el cierre físico de una carrera nacional y registrar el evento en `bitacora` (activadas en producción). |
 | **Filtro Consistencia Arranque** | Lógica PHP | Evaluación condicional `!isset($viejo['status'])` en `web_scraping_inh.php` para detectar e interceptar tramas cerradas iniciales contra MariaDB. |
 | **Precedencia Topológica (Retirados/Consistencia)** | Regla de Diseño | Orden lineal en `web_scraping_inh.php` donde retirados se procesa tras resolver `$codCarreraReal`, conviviendo con la consistencia de arranque de forma no bloqueante. |
-
-
-
-
+| **Creaciones Automáticas (Fase 3)** | Lógica SQL (I/O) | Bloque transaccional de creación que inserta automáticamente carreras e inscritos (plantilla con caballos SIN ASIGNAR, estatus activo 1) en MariaDB 10 cuando compruebaCarr_hnac() retorna 0. |
+| **dividendos_registrados** | Bandera Volátil | Flag en la caché `$estadoCarreras` para mitigar duplicados e impedir ejecuciones de inserción redundantes de dividendos. |
+| **Conversión Matemática de Dividendos** | Algoritmo PHP | Conversión proporcional de base de 100 del stream a escala de 10 de taquillas mediante división por 10 y redondeo a 2 decimales. |
+| **insLugar1SQL a insLugar4SQL / updateConfirmacionSQL** | Lógica SQL | Sentencias locales para la pre-carga atómica de los 4 resultados oficiales obligatorios y la actualización de cabecera a revisión (confirmación 2), activas en producción. |
+| **obtener_ip_servidor** | Función PHP | Rutina multi-entorno tolerante a fallos para capturar la IP física real del servidor en entornos Web y CLI/consola. |
+| **finalizar_script_alertas** | Función PHP | Finalizador limpio compatible con la Regla 9.3 para scripts CLI que asegura la limpieza del buffer y la salida ordenada. |
+| **alertas_historial_ajax.php** | Script AJAX | Controlador AJAX ligero para consultar y retornar la tabla con los últimos 100 movimientos de una alerta en `alertas_registros`. |
 

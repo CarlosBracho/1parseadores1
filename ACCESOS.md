@@ -18,4 +18,4 @@
 *   **Servidor**: Laragon (Apache/Nginx)
 *   **Ruta de PHP**: `E:\laragon\bin\php\php-8.3.29-nts-Win32-vs16-x64\php.exe`
 *   **Ruta de Datos**: `E:\laragon\www\1parseadores1`
-* **Última Verificación**: 2026-05-21 - Confirmada la persistencia del núcleo de retirados, la optimización de reintegros de tickets y la consistencia de arranque ante carreras cerradas preexistentes en web_scraping_inh.php.
+* **Última Verificación**: 2026-05-22 - Concluida la auditoría, modernización y habilitación de trazabilidad de IP del módulo de alertas. Los scripts y vistas compilan correctamente tras las correcciones de linter.

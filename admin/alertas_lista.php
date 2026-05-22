@@ -14,10 +14,12 @@ if (isset($_GET['pageNum_Recordset1'])) {
     $pageNum_Recordset1 = $_GET['pageNum_Recordset1'];
 }
 
-
+$horaTxt=horaactual();
+$hora=horaactual();
+$fecha=fechaactualbd();
 if(isset($_POST['ESTADO_CODIGO'])){
   $insertSQL1 = sprintf(
-    "/* PARSEADORES1 admin\alertas_lista.php - QUERY 1 */ UPDATE alertas
+    "/* admin\alertas_lista.php - QUERY 1 */ UPDATE alertas
 
 SET
 activo_archivo = %s
@@ -31,7 +33,7 @@ activo_archivo = %s
 
   if(isset($_POST['FinalizarReabrir'])){
     $insertSQL1 = sprintf(
-      "/* PARSEADORES1 admin\alertas_lista.php - QUERY 2 */ UPDATE alertas
+      "/* admin\alertas_lista.php - QUERY 2 */ UPDATE alertas
   
   SET
   pausa = %s
@@ -48,13 +50,10 @@ activo_archivo = %s
 
 $startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
 $query_Recordset1 = sprintf(
-"/* PARSEADORES1 admin\alertas_lista.php - QUERY 3 */ SELECT *
+"/* admin\alertas_lista.php - QUERY 3 */ SELECT *
 	FROM 
-	alertas"
+	alertas ORDER BY nombrealerta"
 );
-
-
-
 
 
 
@@ -93,7 +92,7 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>.:Apuestas Hípicas:.</title>
+<title>í</title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->
@@ -124,6 +123,7 @@ body {
 </script>
 <!-- InstanceBeginEditable name="aHead" -->
 <script>var nav=navigator.userAgent.toLowerCase();if(nav.indexOf("firefox")!=-1){document.write('<link href="../estilo/adminFirefox.css" rel="stylesheet" type="text/css" />');}</script>
+<script src="../js/bootstrap.bundle.min.js"></script>
 <!-- InstanceEndEditable -->
 </head>
 <body onload="Javascript:history.go(1);" onunload="Javascript:history.go(1);">
@@ -150,99 +150,144 @@ body {
               Usuario: <?php echo "  ".$_SESSION['MM_nom_usuario']." - "; echo  vfechaActual()." | "; ?>
              <span id="reloj"></span>
         </div>
-  <div class="contentAdmin"><!-- InstanceBeginEditable name="Contenido" -->
-  	<div style="height:100%; font-size:18px;" class="xfirefox">
+  <div class="contentAdmin"><!-- InstanceBeginEditable name="Contenido" -->  	<div style="height:100%; font-size:18px; padding-top: 30px;" class="xfirefox">
         
-          <?php if ($totalRows_Recordset1>0) {?>
-    
-    <div style="height:100%; padding:0px 0px 200px 0px ">   
-	<br><br><br><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-  	<tr style="background:#333333; color:#FFFFFF; height:30px; font-family:'Lucida Grande','Lucida Sans Unicode','Lucida Sans','DejaVu Sans',Verdana,sans-serif;">
-    <td># ALERTA</td>
-    <td>NOMBRE DE ALERTA</td>
-    <td>PAUSAR O INICIAR</td>
-    <td>DESACTIVAR CODIGO SI O NO</td>
-    <td>EDITAR</td>
-  </tr>
-  <?php do { ?>
-    <tr class="brillo" style="border-bottom:1px solid  #D5D5D5">
-    <td align="left"><?php
-      echo $row_Recordset1['Idalertas']?>
-      </td>
-      <td align="left"><?php
-      echo $row_Recordset1['nombrealerta']?>
-      </td>
-      <td align="center">
-      <?php  if($row_Recordset1['pausa']==0){ ?>
-        <form method="POST" name="Finalizar" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
-            <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
-            <input type="hidden" name="pausa" value="1">
-            <input type="hidden" name="FinalizarReabrir" value="1">
-            <div class="d-grid gap-2">
-                <button class="btn btn-danger" type="submit">PAUSAR</button>
+        <?php if ($totalRows_Recordset1 > 0) { ?>
+            <div style="height:100%; padding:0px 0px 100px 0px">   
+                <div class="row">
+                  <?php do { 
+                    $nuevahora1 = date('H:i:s', strtotime('+6 hour', strtotime($row_Recordset1['horainicio'])));
+                    $nuevahora2 = date('H:i:s', strtotime('+6 hour', strtotime($row_Recordset1['horafin'])));
+                  ?>
+                  <div class="col-12 col-md-6 mb-4">
+                    <div class="card shadow-sm border-0">
+                      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 text-truncate" style="max-width: 80%; font-size: 15px; font-weight: bold;"><?php echo htmlspecialchars($row_Recordset1['nombrealerta']); ?></h5>
+                        <span class="badge badge-secondary" style="font-size: 11px;">ID: <?php echo $row_Recordset1['Idalertas']; ?></span>
+                      </div>
+                      <div class="card-body bg-white p-3">
+                        <div class="row">
+                          <div class="col-7">
+                            <p class="mb-1 text-muted" style="font-size: 11px; margin: 0;"><strong>Link Principal:</strong></p>
+                            <p class="mb-2 text-truncate" style="font-size: 12px; margin: 0;"><a href="<?php echo htmlspecialchars($row_Recordset1['link_principal']); ?>" target="_blank"><?php echo htmlspecialchars($row_Recordset1['link_principal']); ?></a></p>
+                            
+                            <p class="mb-1 text-muted" style="font-size: 11px; margin: 5px 0 0 0;"><strong>Comentario:</strong></p>
+                            <p class="mb-3 text-muted" style="font-size: 12px; min-height: 38px; margin: 0; line-height: 14px;"><?php echo htmlspecialchars($row_Recordset1['comentario']); ?></p>
+                            
+                            <div class="row text-center border-top border-bottom py-1" style="font-size: 11px; margin: 0; background-color: #f8f9fa;">
+                              <div class="col-6 border-right">
+                                <strong>Inicio:</strong> <?php echo horaampm($nuevahora1); ?>
+                              </div>
+                              <div class="col-6">
+                                <strong>Fin:</strong> <?php echo horaampm($nuevahora2); ?>
+                              </div>
+                            </div>
+                            <div class="row text-center pt-1" style="font-size: 11px; margin: 0;">
+                              <div class="col-4 border-right">
+                                <strong>Fallos:</strong> <?php echo $row_Recordset1['cont_fallos_reporte']; ?>
+                              </div>
+                              <div class="col-4 border-right">
+                                <strong>Rep. (m):</strong> <?php echo $row_Recordset1['min_para_reportar']; ?>
+                              </div>
+                              <div class="col-4">
+                                <strong>Repetir:</strong> <?php echo $row_Recordset1['mini_para_repetir']; ?>s
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-5 border-left d-flex flex-column justify-content-between">
+                            <!-- Acciones -->
+                            <div class="mb-2">
+                              <?php if($row_Recordset1['pausa']==0){ ?>
+                                <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
+                                    <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
+                                    <input type="hidden" name="pausa" value="1">
+                                    <input type="hidden" name="FinalizarReabrir" value="1">
+                                    <button class="btn btn-sm btn-danger btn-block mb-2 font-weight-bold" type="submit">PAUSAR</button>
+                                </form>
+                              <?php } else { ?>
+                                <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
+                                    <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
+                                    <input type="hidden" name="pausa" value="0">
+                                    <input type="hidden" name="FinalizarReabrir" value="0">
+                                    <button class="btn btn-sm btn-success btn-block mb-2 font-weight-bold" type="submit">INICIAR</button>
+                                </form>
+                              <?php } ?>
+
+                              <?php if($row_Recordset1['activo_archivo'] != 3){ ?>
+                                <?php if($row_Recordset1['activo_archivo']==0){ ?>
+                                  <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
+                                      <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
+                                      <input type="hidden" name="ESTADO_CODIGO" value="1">
+                                      <button class="btn btn-sm btn-outline-danger btn-block mb-2" style="font-size: 11px;" type="submit">DESACTIVAR CÓDIGO</button>
+                                  </form>
+                                <?php } else { ?>
+                                  <form method="POST" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
+                                      <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
+                                      <input type="hidden" name="ESTADO_CODIGO" value="0">
+                                      <button class="btn btn-sm btn-outline-primary btn-block mb-2" style="font-size: 11px;" type="submit">ACTIVAR CÓDIGO</button>
+                                  </form>
+                                <?php } ?>
+                              <?php } ?>
+                            </div>
+                            
+                            <div>
+                              <a href='alertas_edit.php?recordID=<?php echo $row_Recordset1['Idalertas']; ?>' class="btn btn-sm btn-info text-white btn-block mb-2 font-weight-bold">EDITAR</a>
+                              <button class="btn btn-sm btn-secondary btn-block btn-ver-historial font-weight-bold" data-id="<?php echo $row_Recordset1['Idalertas']; ?>" data-nombre="<?php echo htmlspecialchars($row_Recordset1['nombrealerta']); ?>">HISTORIAL</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <?php } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
+                </div>
             </div>
-        </form>
-        <?php  }else{ ?>
-        <form method="POST" name="Reabrir" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
-            <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
-            <input type="hidden" name="pausa" value="0">
-            <input type="hidden" name="FinalizarReabrir" value="0">
-            <div class="d-grid gap-2">
-                <button class="btn btn-primary" type="submit">INICIAR</button>
+
+            <!-- Modal Historial -->
+            <div class="modal fade" id="historialModal" tabindex="-1" role="dialog" aria-labelledby="historialModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content border-0 shadow">
+                  <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="historialModalLabel" style="font-size: 15px; font-weight: bold;">Historial de Alerta</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" style="font-size: 24px; border: none; background: none; opacity: 0.8;">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body p-0" id="historialModalBody">
+                    <div class="text-center py-4">
+                      Cargando...
+                    </div>
+                  </div>
+                  <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cerrar</button>
+                  </div>
+                </div>
+              </div>
             </div>
-        </form>
-        <?php  } ?>
-      </td>
 
-
-
-      <td align="center">
-      <?php  if($row_Recordset1['activo_archivo']==3){ 
-
-
- } else{if($row_Recordset1['activo_archivo']==0){ ?>
-        <form method="POST" name="CODIGO" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
-            <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
-            <input type="hidden" name="ESTADO_CODIGO" value="1">
-            <div class="d-grid gap-2">
-                <button class="btn btn-danger" type="submit">DESACTIVAR_CODIGO</button>
+            <script>
+            $(document).ready(function() {
+                $(document).on('click', '.btn-ver-historial', function() {
+                    var idAlerta = $(this).data('id');
+                    var nombreAlerta = $(this).data('nombre');
+                    $('#historialModalLabel').text('Historial: ' + nombreAlerta + ' (ID: ' + idAlerta + ')');
+                    $('#historialModalBody').html('<div class="text-center py-4"><span class="spinner-border spinner-border-sm"></span> Cargando historial...</div>');
+                    $('#historialModal').modal('show');
+                    
+                    $('#historialModalBody').load('alertas_historial_ajax.php?id=' + idAlerta, function(response, status, xhr) {
+                        if (status == "error") {
+                            $('#historialModalBody').html('<div class="alert alert-danger m-3">Error al cargar el historial. Intente de nuevo.</div>');
+                        }
+                    });
+                });
+            });
+            </script>
+        <?php } else { ?>
+            <div class="alert alert-info text-center" style="font-size: 20px; padding: 50px 0;">
+                No existen registros de alertas configurados en el sistema.
             </div>
-        </form>
-        <?php  }else{ ?>
-        <form method="POST" name="CODIGO" action="<?php echo $editFormAction; ?>" onsubmit="return chequearEnvio();">
-            <input type="hidden" name="Idalertas" value="<?php echo $row_Recordset1['Idalertas']; ?>">
-            <input type="hidden" name="ESTADO_CODIGO" value="0">
-            <div class="d-grid gap-2">
-                <button class="btn btn-primary" type="submit">ACTIVAR_CODIGO</button>
-            </div>
-        </form>
-        <?php  } }?>
-      </td>
-
-      <td align="center">
-      	<a href='alertas_edit.php?recordID=<?php echo $row_Recordset1['Idalertas']; ?>'class="btn btn-info"> EDITAR </a>
-      </td>
-
-
-
-    </tr>
-<?php } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
-   </table>
-      </div>
-       <?php } else {?>
-      <table width="100%" border="0" align="center" style="background:#5EAEFF; color:#FFFFFF; height:30px">
-  <tr  class="tablajugada">
-  
-    <td width="146">NOMBRE DE ALERTA</td>
-    <td colspan="3">PAUSAR O INICIAR</td>
-  </tr>
-  </table>
-          <div style="height:100%; font-size:24px; padding:200px 0px 170px 0px ">
-            No existen registros
-        </div>
-   
-      <?php }?>  
-</div>
+        <?php } ?>
+</div>>
   <!-- InstanceEndEditable -->
   </div>
   <div class="footer">  Copyright © Apuestas Hípicas    <!-- end .footer --></div>

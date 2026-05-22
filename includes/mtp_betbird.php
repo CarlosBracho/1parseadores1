@@ -29,6 +29,40 @@ idalertas=24",
     $totalRows_Recordset1_alertas = mysqli_num_rows($Recordset1_alertas);
     echo 'Idalertas= '.$row_Recordset1_alertas['Idalertas'].'<br>';
 
+    if (!function_exists('obtener_ip_servidor')) {
+        function obtener_ip_servidor() {
+            $ip = '';
+            if (isset($_SERVER['SERVER_ADDR']) && !empty($_SERVER['SERVER_ADDR'])) {
+                $ip = $_SERVER['SERVER_ADDR'];
+            } elseif (isset($_SERVER['LOCAL_ADDR']) && !empty($_SERVER['LOCAL_ADDR'])) {
+                $ip = $_SERVER['LOCAL_ADDR'];
+            }
+            if (empty($ip) || $ip === '127.0.0.1' || $ip === '::1') {
+                $host = gethostname();
+                if ($host) {
+                    $ip_host = gethostbyname($host);
+                    if ($ip_host && $ip_host !== $host) {
+                        $ip = $ip_host;
+                    }
+                }
+            }
+            return $ip ? $ip : '127.0.0.1';
+        }
+    }
+
+    $ip_servidor = obtener_ip_servidor();
+    $fecha_hora_actual = date('Y-m-d H:i:s');
+
+    // Registrar Llamado (tipo = 0)
+    $insert_llamado = sprintf(
+        "/* Origen: RegistroLlamado / mtp_betbird.php */ INSERT INTO alertas_registros (id_alerta, tipo, fecha_hora, ip_servidor) VALUES (%s, %s, %s, %s)",
+        GetSQLValueString(24, "int"),
+        GetSQLValueString(0, "int"),
+        GetSQLValueString($fecha_hora_actual, "date"),
+        GetSQLValueString($ip_servidor, "text")
+    );
+    mysqli_query($conexionbanca, $insert_llamado) or die(mysqli_error($conexionbanca));
+
     $mini_para_repetir='-'.$row_Recordset1_alertas['mini_para_repetir'].' second';
     $tiemponorepeticion = strtotime($mini_para_repetir, strtotime($hora)) ;
     $tiemponorepeticion = date('H:i:s', $tiemponorepeticion);
@@ -188,6 +222,16 @@ if ($totalRows_Recordset1>0) {
             GetSQLValueString($row_Recordset1_alertas['Idalertas'], "int")
         );
         $Result1 = mysqli_query($conexionbanca, $updateSQL) or die(mysqli_error($conexionbanca));
+
+        // Registrar Ejecución Efectiva (tipo = 1)
+        $insert_ejecucion = sprintf(
+            "/* Origen: RegistroEjecucion / mtp_betbird.php */ INSERT INTO alertas_registros (id_alerta, tipo, fecha_hora, ip_servidor) VALUES (%s, %s, %s, %s)",
+            GetSQLValueString(24, "int"),
+            GetSQLValueString(1, "int"),
+            GetSQLValueString($fecha_hora_actual, "date"),
+            GetSQLValueString($ip_servidor, "text")
+        );
+        mysqli_query($conexionbanca, $insert_ejecucion) or die(mysqli_error($conexionbanca));
 
 
     $t=0;
