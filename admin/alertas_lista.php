@@ -45,12 +45,47 @@ activo_archivo = %s
       $Result1 = mysqli_query($conexionbanca, $insertSQL1) or die(mysqli_error($conexionbanca));
     }
 
+function tiempoTranscurridoAlerta($fechaHora) {
+    if (empty($fechaHora)) {
+        return "Nunca";
+    }
+    $ahora = new DateTime();
+    $fecha = new DateTime($fechaHora);
+    $diferencia = $ahora->diff($fecha);
+    
+    if ($fecha > $ahora) {
+        return "Hace instantes";
+    }
+    
+    if ($diferencia->y > 0) {
+        return "Hace " . $diferencia->y . " año" . ($diferencia->y > 1 ? "s" : "");
+    }
+    if ($diferencia->m > 0) {
+        return "Hace " . $diferencia->m . " me" . ($diferencia->m > 1 ? "ses" : "s");
+    }
+    if ($diferencia->d > 0) {
+        return "Hace " . $diferencia->d . " día" . ($diferencia->d > 1 ? "s" : "");
+    }
+    if ($diferencia->h > 0) {
+        return "Hace " . $diferencia->h . " hora" . ($diferencia->h > 1 ? "s" : "");
+    }
+    if ($diferencia->i > 0) {
+        return "Hace " . $diferencia->i . " min";
+    }
+    if ($diferencia->s > 0) {
+        return "Hace " . $diferencia->s . " seg";
+    }
+    return "Hace instantes";
+}
+
 
 
 
 $startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
 $query_Recordset1 = sprintf(
-"/* admin\alertas_lista.php - QUERY 3 */ SELECT *
+"/* admin\alertas_lista.php - QUERY 3 */ SELECT *,
+    (SELECT MAX(fecha_hora) FROM alertas_registros r WHERE r.id_alerta = alertas.Idalertas AND r.tipo = 1) as ultima_ejecucion,
+    (SELECT MAX(fecha_hora) FROM alertas_registros r WHERE r.id_alerta = alertas.Idalertas AND r.tipo = 0) as ultimo_llamado
 	FROM 
 	alertas ORDER BY nombrealerta"
 );
@@ -176,9 +211,15 @@ body {
 <script src="../modal/js/alertify.min.js"></script>
 <script>
 var statusEnvio = false;
+var timerEnvio = null;
 function chequearEnvio() {
     if (!statusEnvio) {
         statusEnvio = true;
+        if (timerEnvio) clearTimeout(timerEnvio);
+        timerEnvio = setTimeout(function() {
+            statusEnvio = false;
+            console.log('statusEnvio desbloqueado por timeout de seguridad');
+        }, 5000);
         return true;
     } else {
         alert("El formulario ya está siendo enviado, por favor aguarde un instante.");
@@ -247,6 +288,29 @@ function chequearEnvio() {
                             <td align="left" style="border-bottom: 1px solid #D5D5D5; padding: 5px;">
                                 <strong style="color: #F90; font-size: 13px;"><?php echo htmlspecialchars($row_Recordset1['nombrealerta']); ?></strong><br>
                                 <a href="<?php echo htmlspecialchars($row_Recordset1['link_principal']); ?>" target="_blank" style="font-size: 11px; color: #0066CC; text-decoration: underline; word-break: break-all;"><?php echo htmlspecialchars($row_Recordset1['link_principal']); ?></a>
+                                <div style="font-size: 10px; color: #666; margin-top: 5px; line-height: 1.3;">
+                                    <strong>Última Ejecución:</strong> 
+                                    <span style="color: #2b7a1d; font-weight: bold;">
+                                        <?php 
+                                        if (!empty($row_Recordset1['ultima_ejecucion'])) {
+                                            echo tiempoTranscurridoAlerta($row_Recordset1['ultima_ejecucion']) . " (" . date('d/m h:i A', strtotime($row_Recordset1['ultima_ejecucion'])) . ")";
+                                        } else {
+                                            echo "Ninguna registrada";
+                                        }
+                                        ?>
+                                    </span>
+                                    <br>
+                                    <strong>Último Llamado:</strong> 
+                                    <span style="color: #777;">
+                                        <?php 
+                                        if (!empty($row_Recordset1['ultimo_llamado'])) {
+                                            echo tiempoTranscurridoAlerta($row_Recordset1['ultimo_llamado']) . " (" . date('d/m h:i A', strtotime($row_Recordset1['ultimo_llamado'])) . ")";
+                                        } else {
+                                            echo "Ninguno";
+                                        }
+                                        ?>
+                                    </span>
+                                </div>
                             </td>
                             <td align="left" style="border-bottom: 1px solid #D5D5D5; font-size: 11px; color: #444; padding: 5px;"><?php echo htmlspecialchars($row_Recordset1['comentario']); ?></td>
                             <td align="center" style="border-bottom: 1px solid #D5D5D5; font-size: 11px;">
@@ -294,7 +358,7 @@ function chequearEnvio() {
 
                                     <div style="display: flex; gap: 4px; margin-top: 2px;">
                                         <a href="alertas_edit.php?recordID=<?php echo $row_Recordset1['Idalertas']; ?>" style="flex: 1; text-align: center; text-decoration: none; padding: 4px; font-weight: bold; background: #F90; color: #FFF; border: 1px solid #E08000; border-radius: 3px; font-size: 10px; line-height: 1.4;">EDITAR</a>
-                                        <button class="btn-ver-historial" data-id="<?php echo $row_Recordset1['Idalertas']; ?>" data-nombre="<?php echo htmlspecialchars($row_Recordset1['nombrealerta']); ?>" style="flex: 1; cursor: pointer; padding: 4px; font-weight: bold; background: #6E6C64; color: #FFF; border: 1px solid #555; border-radius: 3px; font-size: 10px;">HISTORIAL</button>
+                                        <button type="button" onclick="abrirHistorial(<?php echo $row_Recordset1['Idalertas']; ?>, '<?php echo htmlspecialchars(addslashes($row_Recordset1['nombrealerta']), ENT_QUOTES, 'UTF-8'); ?>')" class="btn-ver-historial" style="flex: 1; cursor: pointer; padding: 4px; font-weight: bold; background: #6E6C64; color: #FFF; border: 1px solid #555; border-radius: 3px; font-size: 10px;">HISTORIAL</button>
                                     </div>
                                 </div>
                             </td>
@@ -310,7 +374,7 @@ function chequearEnvio() {
                 <div class="modal-content border-0 shadow">
                   <div class="modal-header bg-dark text-white">
                     <h5 class="modal-title" id="historialModalLabel" style="font-size: 15px; font-weight: bold;">Historial de Alerta</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close" style="font-size: 24px; border: none; background: none; opacity: 0.8;">
+                    <button onclick="cerrarHistorial()" type="button" class="close text-white" aria-label="Close" style="font-size: 24px; border: none; background: none; opacity: 0.8; cursor: pointer;">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
@@ -320,47 +384,60 @@ function chequearEnvio() {
                     </div>
                   </div>
                   <div class="modal-footer bg-light">
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal" data-bs-dismiss="modal">Cerrar</button>
+                    <button onclick="cerrarHistorial()" type="button" class="btn btn-sm btn-secondary" style="cursor: pointer;">Cerrar</button>
                   </div>
                 </div>
               </div>
             </div>
 
             <script>
-            $(document).ready(function() {
-                // Delegacion para cerrar la modal al hacer clic en los botones de cierre o fuera de la caja
-                $(document).on('click', '#historialModal [data-dismiss="modal"], #historialModal [data-bs-dismiss="modal"], #historialModal .close', function() {
-                    $('#historialModal').removeClass('show');
-                    document.body.classList.remove('modal-open');
-                });
-
-                $(document).on('click', '#historialModal', function(e) {
-                    if (e.target === this) {
-                        $('#historialModal').removeClass('show');
-                        document.body.classList.remove('modal-open');
-                    }
-                });
-
-                // Accion para abrir y cargar el historial via AJAX
-                $(document).on('click', '.btn-ver-historial', function() {
-                    var idAlerta = $(this).data('id');
-                    var nombreAlerta = $(this).data('nombre');
-                    
-                    // Configurar titulo y spinner de carga
-                    $('#historialModalLabel').text('Historial: ' + nombreAlerta + ' (ID: ' + idAlerta + ')');
-                    $('#historialModalBody').html('<div class="text-center py-4"><span class="spinner-ia"></span> Cargando historial...</div>');
-                    
-                    // Mostrar modal y añadir la clase al body
-                    $('#historialModal').addClass('show');
-                    document.body.classList.add('modal-open');
-                    
-                    // Carga AJAX
-                    $('#historialModalBody').load('alertas_historial_ajax.php?id=' + idAlerta, function(response, status, xhr) {
-                        if (status == "error") {
-                            $('#historialModalBody').html('<div class="alert alert-danger m-3">Error al cargar el historial. Intente de nuevo.</div>');
+            function abrirHistorial(idAlerta, nombreAlerta) {
+                console.log('abrirHistorial nativo invocado para ID:', idAlerta, 'Nombre:', nombreAlerta);
+                
+                var modalLabel = document.getElementById('historialModalLabel');
+                var modalBody = document.getElementById('historialModalBody');
+                var modal = document.getElementById('historialModal');
+                
+                if (modalLabel) modalLabel.innerText = 'Historial: ' + nombreAlerta + ' (ID: ' + idAlerta + ')';
+                if (modalBody) modalBody.innerHTML = '<div class="text-center py-4"><span class="spinner-ia"></span> Cargando historial...</div>';
+                
+                if (modal) {
+                    modal.classList.add('show');
+                    modal.style.setProperty('display', 'flex', 'important');
+                }
+                document.body.classList.add('modal-open');
+                
+                // Petición AJAX nativa sin jQuery
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'alertas_historial_ajax.php?id=' + idAlerta + '&_t=' + new Date().getTime(), true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        console.log('AJAX completado nativo. Status:', xhr.status);
+                        if (xhr.status === 200) {
+                            if (modalBody) modalBody.innerHTML = xhr.responseText;
+                        } else {
+                            if (modalBody) modalBody.innerHTML = '<div class="alert alert-danger m-3">Error al cargar el historial (Código: ' + xhr.status + '). Intente de nuevo.</div>';
                         }
-                    });
-                });
+                    }
+                };
+                xhr.send();
+            }
+
+            function cerrarHistorial() {
+                console.log('cerrarHistorial nativo invocado');
+                var modal = document.getElementById('historialModal');
+                if (modal) {
+                    modal.classList.remove('show');
+                    modal.style.setProperty('display', 'none', 'important');
+                }
+                document.body.classList.remove('modal-open');
+            }
+
+            window.addEventListener('click', function(e) {
+                var modal = document.getElementById('historialModal');
+                if (e.target === modal) {
+                    cerrarHistorial();
+                }
             });
             </script>
         <?php } else { ?>
