@@ -28,4 +28,4 @@
 - **Verificación 2026-05-22**: Los ajustes correctivos de la interfaz y botones en el módulo de alertas se realizaron sin modificar la estructura o esquema de base de datos.
 - **Verificación 2026-05-22 (2)**: La corrección quirúrgica del modal de historial asíncrono se completó sin alteraciones a las tablas, campos o datos en la base de datos.
 - **Verificación 2026-05-22 (3)**: Se optimizó el Recordset 1 en `admin/alertas_lista.php` utilizando subconsultas atómicas con `MAX(fecha_hora)` sobre la tabla `alertas_registros` para obtener la fecha/hora de la última ejecución y último llamado de manera directa y eficiente.
-
+- **Verificación 2026-05-22 (4)**: Se adaptó la capa de visualización de `admin/alertas_lista.php` y `admin/alertas_historial_ajax.php` para sumar un offset de +6 horas a los registros de fecha/hora de la tabla `alertas_registros` (mostrados en horario de Venezuela, VET, UTC-4) sin alterar cómo se guardan en horario de Hawaii (HST, UTC-10) en MariaDB.

@@ -293,7 +293,7 @@ function chequearEnvio() {
                                     <span style="color: #2b7a1d; font-weight: bold;">
                                         <?php 
                                         if (!empty($row_Recordset1['ultima_ejecucion'])) {
-                                            echo tiempoTranscurridoAlerta($row_Recordset1['ultima_ejecucion']) . " (" . date('d/m h:i A', strtotime($row_Recordset1['ultima_ejecucion'])) . ")";
+                                            echo tiempoTranscurridoAlerta($row_Recordset1['ultima_ejecucion']) . " (" . date('d/m h:i A', strtotime('+6 hour', strtotime($row_Recordset1['ultima_ejecucion']))) . ")";
                                         } else {
                                             echo "Ninguna registrada";
                                         }
@@ -304,7 +304,7 @@ function chequearEnvio() {
                                     <span style="color: #777;">
                                         <?php 
                                         if (!empty($row_Recordset1['ultimo_llamado'])) {
-                                            echo tiempoTranscurridoAlerta($row_Recordset1['ultimo_llamado']) . " (" . date('d/m h:i A', strtotime($row_Recordset1['ultimo_llamado'])) . ")";
+                                            echo tiempoTranscurridoAlerta($row_Recordset1['ultimo_llamado']) . " (" . date('d/m h:i A', strtotime('+6 hour', strtotime($row_Recordset1['ultimo_llamado']))) . ")";
                                         } else {
                                             echo "Ninguno";
                                         }

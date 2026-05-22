@@ -62,4 +62,4 @@
 | **chequearEnvio** | Función JavaScript | Función global de seguridad que previene envíos redundantes o dobles clics en formularios usando la bandera `statusEnvio` con un timeout de seguridad de 5 segundos para su desbloqueo automático. |
 | **tiempoTranscurridoAlerta** | Función PHP | Calcula dinámicamente y con soporte retroactivo PHP 5.6/8.3 el tiempo relativo transcurrido desde un timestamp ("Hace X min", "Hace X horas"). |
 | **Subconsultas de Ejecución Recordset 1** | Lógica SQL | JOIN implícito mediante subconsultas `MAX(fecha_hora)` en la query principal de alertas para obtener de forma eficiente la última ejecución (tipo 1) y el último llamado (tipo 0). |
-
+| **Conversión Horaria VET (+6h)** | Conversión de Tiempo | Lógica aplicada al renderizar timestamps absolutos de la base de datos (guardados en Hawaii Time) sumando un offset de 6 horas para mostrarlos en horario de Venezuela (VET) en `alertas_lista.php` y `alertas_historial_ajax.php`. |
